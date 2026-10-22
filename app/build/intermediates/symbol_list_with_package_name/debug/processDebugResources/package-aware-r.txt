@@ -3010,6 +3010,8 @@ drawable bg_apple_btn_primary
 drawable bg_apple_btn_secondary
 drawable bg_apple_card
 drawable bg_apple_dot_status
+drawable bg_apple_hero_card
+drawable bg_apple_hero_card_accent
 drawable bg_apple_input_field
 drawable bg_apple_key
 drawable bg_apple_pill_status
@@ -3218,7 +3220,6 @@ id beginning
 id bestChoice
 id blocking
 id bottom
-id bottomBarLayout
 id bounce
 id bounceBoth
 id bounceEnd
@@ -3231,10 +3232,13 @@ id btnBlackScreen
 id btnCalibrate
 id btnCloseSettings
 id btnClutch
-id btnCycleMode
 id btnFullscreen
+id btnKbMouseLeft
+id btnKbMouseRight
 id btnKeyBackspace
 id btnKeyEsc
+id btnKeyPgDn
+id btnKeyPgUp
 id btnKeyReturn
 id btnKeySpace
 id btnKeyTab
@@ -3256,7 +3260,6 @@ id btnShortcutPaste
 id btnShortcutSearch
 id btnShortcutSelectAll
 id btnShortcutUndo
-id btnToggleTelemetry
 id btnTorchPointer
 id btnVolDown
 id btnVolUp
@@ -3653,6 +3656,7 @@ id toggle
 id top
 id topPanel
 id touch_outside
+id trackpadCanvas
 id transitionToEnd
 id transitionToStart
 id transition_clip
@@ -3674,7 +3678,6 @@ id tvLabelSensY
 id tvMotionReadout
 id tvSlideTimer
 id tvSubtitle
-id tvTelemetryLog
 id tvTitle
 id tvWifiServerInfo
 id unchecked

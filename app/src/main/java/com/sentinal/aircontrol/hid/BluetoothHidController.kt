@@ -213,6 +213,10 @@ class BluetoothHidController(private val context: Context) {
         onActionFeedback?.invoke()
     }
 
+    fun mouseMove(dx: Byte, dy: Byte) {
+        sendMouseReport(dx, dy, 0, currentButtons)
+    }
+
     fun mousePress(button: Byte) {
         currentButtons = (currentButtons.toInt() or button.toInt()).toByte()
         sendMouseReport(0, 0, 0, currentButtons)
@@ -353,6 +357,8 @@ class BluetoothHidController(private val context: Context) {
     fun arrowDown() = sendKey(HidKeyCodes.KEY_DOWN_ARROW)
     fun arrowLeft() = sendKey(HidKeyCodes.KEY_LEFT_ARROW)
     fun arrowRight() = sendKey(HidKeyCodes.KEY_RIGHT_ARROW)
+    fun keyPageUp() = sendKey(HidKeyCodes.KEY_PAGE_UP)
+    fun keyPageDown() = sendKey(HidKeyCodes.KEY_PAGE_DOWN)
 
     // Common Shortcuts (Windows Ctrl / Mac Cmd)
     fun copy(isMac: Boolean = false) {

@@ -153,10 +153,10 @@ class MainActivity : AppCompatActivity() {
             if (now - lastTelemetryUpdate > 100) {
                 lastTelemetryUpdate = now
                 runOnUiThread {
-                    binding.tvTelemetryLog.text = String.format(
+                    binding.tvMotionReadout.text = String.format(
                         Locale.US,
-                        "[IMU 100Hz] Gx: %+.1f Gy: %+.1f Gz: %+.1f | FiltX: %+.2f FiltY: %+.2f",
-                        gx, gy, gz, filtX, filtY
+                        "dX: %+.1f  dY: %+.1f",
+                        filtX, filtY
                     )
                 }
             }
@@ -324,17 +324,10 @@ class MainActivity : AppCompatActivity() {
             }, 60)
         }
 
-        // Bottom Controls
-        binding.btnCycleMode.setOnClickListener {
-            haptics.modeChangeFeedback(currentMode.id)
-            val nextModeId = (currentMode.id + 1) % 4
-            setOperatingMode(OperatingMode.fromId(nextModeId))
-        }
-
-        binding.btnToggleTelemetry.setOnClickListener {
+        // Status Pill tap opens settings and device connection
+        binding.statusPillLayout.setOnClickListener {
             haptics.tickFeedback()
-            val isVisible = binding.tvTelemetryLog.visibility == View.VISIBLE
-            binding.tvTelemetryLog.visibility = if (isVisible) View.GONE else View.VISIBLE
+            showSettingsDialog()
         }
 
         // Settings Dialog
@@ -454,6 +447,68 @@ class MainActivity : AppCompatActivity() {
             haptics.heavyClickFeedback()
             hidController.searchSpotlight()
         }
+
+        binding.btnKeyPgUp.setOnClickListener {
+            haptics.tickFeedback()
+            hidController.keyPageUp()
+        }
+
+        binding.btnKeyPgDn.setOnClickListener {
+            haptics.tickFeedback()
+            hidController.keyPageDown()
+        }
+
+        binding.btnKbMouseLeft.setOnClickListener {
+            haptics.clickFeedback()
+            hidController.mouseClick(HidKeyCodes.MOUSE_LEFT)
+        }
+
+        binding.btnKbMouseRight.setOnClickListener {
+            haptics.clickFeedback()
+            hidController.mouseClick(HidKeyCodes.MOUSE_RIGHT)
+        }
+
+        // Integrated Trackpad Touch Canvas
+        var trackStartX = 0f
+        var trackStartY = 0f
+        var lastTrackX = 0f
+        var lastTrackY = 0f
+        var hasMoved = false
+
+        binding.trackpadCanvas.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    trackStartX = event.x
+                    trackStartY = event.y
+                    lastTrackX = event.x
+                    lastTrackY = event.y
+                    hasMoved = false
+                    haptics.tickFeedback()
+                    true
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    val dx = (event.x - lastTrackX) * 1.25f
+                    val dy = (event.y - lastTrackY) * 1.25f
+                    if (Math.hypot((event.x - trackStartX).toDouble(), (event.y - trackStartY).toDouble()) > 8) {
+                        hasMoved = true
+                    }
+                    if (Math.abs(dx) >= 0.5f || Math.abs(dy) >= 0.5f) {
+                        hidController.mouseMove(dx.toInt().coerceIn(-127, 127).toByte(), dy.toInt().coerceIn(-127, 127).toByte())
+                        lastTrackX = event.x
+                        lastTrackY = event.y
+                    }
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    if (!hasMoved) {
+                        haptics.clickFeedback()
+                        hidController.mouseClick(HidKeyCodes.MOUSE_LEFT)
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     /**
@@ -465,10 +520,11 @@ class MainActivity : AppCompatActivity() {
             binding.btnNextSlide, binding.btnPrevSlide, binding.btnFullscreen, binding.btnBlackScreen,
             binding.btnLeftClick, binding.btnRightClick, binding.btnScrollUp, binding.btnScrollDown,
             binding.btnCalibrate, binding.btnNextReel, binding.btnPrevReel, binding.btnPlayPauseReel,
-            binding.btnVolUp, binding.btnVolDown, binding.btnLike, binding.btnCycleMode, binding.btnSettings,
+            binding.btnVolUp, binding.btnVolDown, binding.btnLike, binding.btnSettings,
             binding.btnKeyEsc, binding.btnKeyTab, binding.btnKeySpace, binding.btnKeyBackspace,
             binding.btnKeyReturn, binding.btnArrowUp, binding.btnArrowDown, binding.btnArrowLeft,
-            binding.btnArrowRight, binding.btnShortcutUndo, binding.btnShortcutCopy,
+            binding.btnArrowRight, binding.btnKeyPgUp, binding.btnKeyPgDn, binding.btnKbMouseLeft,
+            binding.btnKbMouseRight, binding.btnShortcutUndo, binding.btnShortcutCopy,
             binding.btnShortcutPaste, binding.btnShortcutSelectAll, binding.btnShortcutSearch,
             binding.btnSendText
         )

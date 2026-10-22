@@ -25,9 +25,6 @@ public final class ActivityMainBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
-  public final LinearLayout bottomBarLayout;
-
-  @NonNull
   public final Button btnArrowDown;
 
   @NonNull
@@ -49,16 +46,25 @@ public final class ActivityMainBinding implements ViewBinding {
   public final Button btnClutch;
 
   @NonNull
-  public final Button btnCycleMode;
+  public final Button btnFullscreen;
 
   @NonNull
-  public final Button btnFullscreen;
+  public final Button btnKbMouseLeft;
+
+  @NonNull
+  public final Button btnKbMouseRight;
 
   @NonNull
   public final Button btnKeyBackspace;
 
   @NonNull
   public final Button btnKeyEsc;
+
+  @NonNull
+  public final Button btnKeyPgDn;
+
+  @NonNull
+  public final Button btnKeyPgUp;
 
   @NonNull
   public final Button btnKeyReturn;
@@ -124,9 +130,6 @@ public final class ActivityMainBinding implements ViewBinding {
   public final Button btnShortcutUndo;
 
   @NonNull
-  public final Button btnToggleTelemetry;
-
-  @NonNull
   public final Button btnTorchPointer;
 
   @NonNull
@@ -184,6 +187,9 @@ public final class ActivityMainBinding implements ViewBinding {
   public final TextView tabReels;
 
   @NonNull
+  public final FrameLayout trackpadCanvas;
+
+  @NonNull
   public final TextView tvConnectionStatus;
 
   @NonNull
@@ -202,27 +208,23 @@ public final class ActivityMainBinding implements ViewBinding {
   public final TextView tvSubtitle;
 
   @NonNull
-  public final TextView tvTelemetryLog;
-
-  @NonNull
   public final TextView tvTitle;
 
-  private ActivityMainBinding(@NonNull ConstraintLayout rootView,
-      @NonNull LinearLayout bottomBarLayout, @NonNull Button btnArrowDown,
+  private ActivityMainBinding(@NonNull ConstraintLayout rootView, @NonNull Button btnArrowDown,
       @NonNull Button btnArrowLeft, @NonNull Button btnArrowRight, @NonNull Button btnArrowUp,
       @NonNull Button btnBlackScreen, @NonNull Button btnCalibrate, @NonNull Button btnClutch,
-      @NonNull Button btnCycleMode, @NonNull Button btnFullscreen, @NonNull Button btnKeyBackspace,
-      @NonNull Button btnKeyEsc, @NonNull Button btnKeyReturn, @NonNull Button btnKeySpace,
-      @NonNull Button btnKeyTab, @NonNull Button btnLeftClick, @NonNull Button btnLike,
-      @NonNull Button btnNextReel, @NonNull Button btnNextSlide, @NonNull Button btnPlayPauseReel,
-      @NonNull Button btnPrevReel, @NonNull Button btnPrevSlide, @NonNull Button btnResetTimer,
-      @NonNull Button btnRightClick, @NonNull Button btnScrollDown, @NonNull Button btnScrollUp,
-      @NonNull Button btnSendText, @NonNull ImageButton btnSettings,
+      @NonNull Button btnFullscreen, @NonNull Button btnKbMouseLeft,
+      @NonNull Button btnKbMouseRight, @NonNull Button btnKeyBackspace, @NonNull Button btnKeyEsc,
+      @NonNull Button btnKeyPgDn, @NonNull Button btnKeyPgUp, @NonNull Button btnKeyReturn,
+      @NonNull Button btnKeySpace, @NonNull Button btnKeyTab, @NonNull Button btnLeftClick,
+      @NonNull Button btnLike, @NonNull Button btnNextReel, @NonNull Button btnNextSlide,
+      @NonNull Button btnPlayPauseReel, @NonNull Button btnPrevReel, @NonNull Button btnPrevSlide,
+      @NonNull Button btnResetTimer, @NonNull Button btnRightClick, @NonNull Button btnScrollDown,
+      @NonNull Button btnScrollUp, @NonNull Button btnSendText, @NonNull ImageButton btnSettings,
       @NonNull Button btnShortcutCopy, @NonNull Button btnShortcutPaste,
       @NonNull Button btnShortcutSearch, @NonNull Button btnShortcutSelectAll,
-      @NonNull Button btnShortcutUndo, @NonNull Button btnToggleTelemetry,
-      @NonNull Button btnTorchPointer, @NonNull Button btnVolDown, @NonNull Button btnVolUp,
-      @NonNull View dotConnection, @NonNull EditText etKeyboardInput,
+      @NonNull Button btnShortcutUndo, @NonNull Button btnTorchPointer, @NonNull Button btnVolDown,
+      @NonNull Button btnVolUp, @NonNull View dotConnection, @NonNull EditText etKeyboardInput,
       @NonNull LinearLayout headerLayout, @NonNull LinearLayout modeTabBar,
       @NonNull LinearLayout panelAirMouse, @NonNull LinearLayout panelKeyboard,
       @NonNull LinearLayout panelPresentation, @NonNull LinearLayout panelReels,
@@ -230,12 +232,11 @@ public final class ActivityMainBinding implements ViewBinding {
       @NonNull LinearLayout scrollWheelLayout, @NonNull LinearLayout statusPillLayout,
       @NonNull TextView tabAirMouse, @NonNull TextView tabKeyboard,
       @NonNull TextView tabPresentation, @NonNull TextView tabReels,
-      @NonNull TextView tvConnectionStatus, @NonNull TextView tvDeviceTarget,
-      @NonNull TextView tvGyroState, @NonNull TextView tvMotionReadout,
-      @NonNull TextView tvSlideTimer, @NonNull TextView tvSubtitle,
-      @NonNull TextView tvTelemetryLog, @NonNull TextView tvTitle) {
+      @NonNull FrameLayout trackpadCanvas, @NonNull TextView tvConnectionStatus,
+      @NonNull TextView tvDeviceTarget, @NonNull TextView tvGyroState,
+      @NonNull TextView tvMotionReadout, @NonNull TextView tvSlideTimer,
+      @NonNull TextView tvSubtitle, @NonNull TextView tvTitle) {
     this.rootView = rootView;
-    this.bottomBarLayout = bottomBarLayout;
     this.btnArrowDown = btnArrowDown;
     this.btnArrowLeft = btnArrowLeft;
     this.btnArrowRight = btnArrowRight;
@@ -243,10 +244,13 @@ public final class ActivityMainBinding implements ViewBinding {
     this.btnBlackScreen = btnBlackScreen;
     this.btnCalibrate = btnCalibrate;
     this.btnClutch = btnClutch;
-    this.btnCycleMode = btnCycleMode;
     this.btnFullscreen = btnFullscreen;
+    this.btnKbMouseLeft = btnKbMouseLeft;
+    this.btnKbMouseRight = btnKbMouseRight;
     this.btnKeyBackspace = btnKeyBackspace;
     this.btnKeyEsc = btnKeyEsc;
+    this.btnKeyPgDn = btnKeyPgDn;
+    this.btnKeyPgUp = btnKeyPgUp;
     this.btnKeyReturn = btnKeyReturn;
     this.btnKeySpace = btnKeySpace;
     this.btnKeyTab = btnKeyTab;
@@ -268,7 +272,6 @@ public final class ActivityMainBinding implements ViewBinding {
     this.btnShortcutSearch = btnShortcutSearch;
     this.btnShortcutSelectAll = btnShortcutSelectAll;
     this.btnShortcutUndo = btnShortcutUndo;
-    this.btnToggleTelemetry = btnToggleTelemetry;
     this.btnTorchPointer = btnTorchPointer;
     this.btnVolDown = btnVolDown;
     this.btnVolUp = btnVolUp;
@@ -288,13 +291,13 @@ public final class ActivityMainBinding implements ViewBinding {
     this.tabKeyboard = tabKeyboard;
     this.tabPresentation = tabPresentation;
     this.tabReels = tabReels;
+    this.trackpadCanvas = trackpadCanvas;
     this.tvConnectionStatus = tvConnectionStatus;
     this.tvDeviceTarget = tvDeviceTarget;
     this.tvGyroState = tvGyroState;
     this.tvMotionReadout = tvMotionReadout;
     this.tvSlideTimer = tvSlideTimer;
     this.tvSubtitle = tvSubtitle;
-    this.tvTelemetryLog = tvTelemetryLog;
     this.tvTitle = tvTitle;
   }
 
@@ -325,12 +328,6 @@ public final class ActivityMainBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.bottomBarLayout;
-      LinearLayout bottomBarLayout = ViewBindings.findChildViewById(rootView, id);
-      if (bottomBarLayout == null) {
-        break missingId;
-      }
-
       id = R.id.btnArrowDown;
       Button btnArrowDown = ViewBindings.findChildViewById(rootView, id);
       if (btnArrowDown == null) {
@@ -373,15 +370,21 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.btnCycleMode;
-      Button btnCycleMode = ViewBindings.findChildViewById(rootView, id);
-      if (btnCycleMode == null) {
-        break missingId;
-      }
-
       id = R.id.btnFullscreen;
       Button btnFullscreen = ViewBindings.findChildViewById(rootView, id);
       if (btnFullscreen == null) {
+        break missingId;
+      }
+
+      id = R.id.btnKbMouseLeft;
+      Button btnKbMouseLeft = ViewBindings.findChildViewById(rootView, id);
+      if (btnKbMouseLeft == null) {
+        break missingId;
+      }
+
+      id = R.id.btnKbMouseRight;
+      Button btnKbMouseRight = ViewBindings.findChildViewById(rootView, id);
+      if (btnKbMouseRight == null) {
         break missingId;
       }
 
@@ -394,6 +397,18 @@ public final class ActivityMainBinding implements ViewBinding {
       id = R.id.btnKeyEsc;
       Button btnKeyEsc = ViewBindings.findChildViewById(rootView, id);
       if (btnKeyEsc == null) {
+        break missingId;
+      }
+
+      id = R.id.btnKeyPgDn;
+      Button btnKeyPgDn = ViewBindings.findChildViewById(rootView, id);
+      if (btnKeyPgDn == null) {
+        break missingId;
+      }
+
+      id = R.id.btnKeyPgUp;
+      Button btnKeyPgUp = ViewBindings.findChildViewById(rootView, id);
+      if (btnKeyPgUp == null) {
         break missingId;
       }
 
@@ -523,12 +538,6 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.btnToggleTelemetry;
-      Button btnToggleTelemetry = ViewBindings.findChildViewById(rootView, id);
-      if (btnToggleTelemetry == null) {
-        break missingId;
-      }
-
       id = R.id.btnTorchPointer;
       Button btnTorchPointer = ViewBindings.findChildViewById(rootView, id);
       if (btnTorchPointer == null) {
@@ -639,6 +648,12 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.trackpadCanvas;
+      FrameLayout trackpadCanvas = ViewBindings.findChildViewById(rootView, id);
+      if (trackpadCanvas == null) {
+        break missingId;
+      }
+
       id = R.id.tvConnectionStatus;
       TextView tvConnectionStatus = ViewBindings.findChildViewById(rootView, id);
       if (tvConnectionStatus == null) {
@@ -675,30 +690,24 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.tvTelemetryLog;
-      TextView tvTelemetryLog = ViewBindings.findChildViewById(rootView, id);
-      if (tvTelemetryLog == null) {
-        break missingId;
-      }
-
       id = R.id.tvTitle;
       TextView tvTitle = ViewBindings.findChildViewById(rootView, id);
       if (tvTitle == null) {
         break missingId;
       }
 
-      return new ActivityMainBinding((ConstraintLayout) rootView, bottomBarLayout, btnArrowDown,
-          btnArrowLeft, btnArrowRight, btnArrowUp, btnBlackScreen, btnCalibrate, btnClutch,
-          btnCycleMode, btnFullscreen, btnKeyBackspace, btnKeyEsc, btnKeyReturn, btnKeySpace,
-          btnKeyTab, btnLeftClick, btnLike, btnNextReel, btnNextSlide, btnPlayPauseReel,
-          btnPrevReel, btnPrevSlide, btnResetTimer, btnRightClick, btnScrollDown, btnScrollUp,
-          btnSendText, btnSettings, btnShortcutCopy, btnShortcutPaste, btnShortcutSearch,
-          btnShortcutSelectAll, btnShortcutUndo, btnToggleTelemetry, btnTorchPointer, btnVolDown,
+      return new ActivityMainBinding((ConstraintLayout) rootView, btnArrowDown, btnArrowLeft,
+          btnArrowRight, btnArrowUp, btnBlackScreen, btnCalibrate, btnClutch, btnFullscreen,
+          btnKbMouseLeft, btnKbMouseRight, btnKeyBackspace, btnKeyEsc, btnKeyPgDn, btnKeyPgUp,
+          btnKeyReturn, btnKeySpace, btnKeyTab, btnLeftClick, btnLike, btnNextReel, btnNextSlide,
+          btnPlayPauseReel, btnPrevReel, btnPrevSlide, btnResetTimer, btnRightClick, btnScrollDown,
+          btnScrollUp, btnSendText, btnSettings, btnShortcutCopy, btnShortcutPaste,
+          btnShortcutSearch, btnShortcutSelectAll, btnShortcutUndo, btnTorchPointer, btnVolDown,
           btnVolUp, dotConnection, etKeyboardInput, headerLayout, modeTabBar, panelAirMouse,
           panelKeyboard, panelPresentation, panelReels, panelsContainer, rootLayout,
           scrollWheelLayout, statusPillLayout, tabAirMouse, tabKeyboard, tabPresentation, tabReels,
-          tvConnectionStatus, tvDeviceTarget, tvGyroState, tvMotionReadout, tvSlideTimer,
-          tvSubtitle, tvTelemetryLog, tvTitle);
+          trackpadCanvas, tvConnectionStatus, tvDeviceTarget, tvGyroState, tvMotionReadout,
+          tvSlideTimer, tvSubtitle, tvTitle);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
