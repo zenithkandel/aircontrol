@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- True OLED Apple Dark Mode Canvas -->
+    <color name="apple_canvas">#000000</color>
+    
+    <!-- Apple Dark Mode Elevated Surfaces -->
+    <color name="apple_elevated_1">#161618</color>
+    <color name="apple_elevated_2">#1C1C1E</color>
+    <color name="apple_well">#2C2C2E</color>
+    <color name="apple_selected">#3A3A3C</color>
+    <color name="apple_pressed">#48484A</color>
+
+    <!-- Apple Hairline Borders & Specular Light Catch -->
+    <color name="apple_hairline">#28282A</color>
+    <color name="apple_catchlight">#38383A</color>
+    <color name="apple_subtle_divider">#1F1F21</color>
+
+    <!-- Apple SF Semantic Accents -->
+    <color name="apple_blue">#0A84FF</color>
+    <color name="apple_blue_subtle">#1A2B44</color>
+    <color name="apple_blue_pressed">#0071E3</color>
+
+    <color name="apple_amber">#FF9F0A</color>
+    <color name="apple_amber_subtle">#33220A</color>
+
+    <color name="apple_green">#30D158</color>
+    <color name="apple_green_subtle">#0F2E18</color>
+
+    <color name="apple_red">#FF453A</color>
+
+    <!-- Apple SF Pro Optical Typography -->
+    <color name="apple_text_primary">#F5F5F7</color>
+    <color name="apple_text_secondary">#86868B</color>
+    <color name="apple_text_tertiary">#636366</color>
+</resources>

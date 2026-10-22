@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.AirControl" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/apple_blue</item>
+        <item name="colorPrimaryVariant">@color/apple_blue</item>
+        <item name="colorOnPrimary">@color/apple_canvas</item>
+        <item name="colorSecondary">@color/apple_amber</item>
+        <item name="colorSecondaryVariant">@color/apple_amber</item>
+        <item name="colorOnSecondary">@color/apple_canvas</item>
+        <item name="android:statusBarColor">@color/apple_canvas</item>
+        <item name="android:navigationBarColor">@color/apple_canvas</item>
+        <item name="android:windowBackground">@color/apple_canvas</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="materialButtonStyle">@style/AppleMaterialButton</item>
+    </style>
+</resources>
