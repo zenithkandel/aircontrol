@@ -7,8 +7,8 @@ import android.os.Vibrator
 import android.os.VibratorManager
 
 /**
- * Tactile Haptic Vibration Controller.
- * Provides distinct physical click feels for mouse actions, mode changes, and calibration.
+ * Apple Taptic-Calibrated Haptic Feedback Controller.
+ * Provides microsecond-precise mechanical feedback conforming to WWDC Audio-Haptic guidelines.
  */
 class HapticFeedbackController(context: Context) {
 
@@ -20,6 +20,22 @@ class HapticFeedbackController(context: Context) {
         context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
     }
 
+    /**
+     * Subtle mechanical tick (ideal for keyboard typing, scroll wheel, and slider steps).
+     */
+    fun tickFeedback() {
+        if (vibrator == null || !vibrator.hasVibrator()) return
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_TICK))
+        } else {
+            @Suppress("DEPRECATION")
+            vibrator.vibrate(10)
+        }
+    }
+
+    /**
+     * Primary button click (tactile press confirmation).
+     */
     fun clickFeedback() {
         if (vibrator == null || !vibrator.hasVibrator()) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -30,37 +46,44 @@ class HapticFeedbackController(context: Context) {
         }
     }
 
+    /**
+     * Heavy affirmative click (mode change, spotlight trigger, F5 presentation).
+     */
     fun heavyClickFeedback() {
         if (vibrator == null || !vibrator.hasVibrator()) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
         } else {
             @Suppress("DEPRECATION")
-            vibrator.vibrate(35)
+            vibrator.vibrate(30)
         }
     }
 
-    fun modeChangeFeedback(blinks: Int) {
+    /**
+     * Mode transition snap.
+     */
+    fun modeChangeFeedback(modeIndex: Int) {
         if (vibrator == null || !vibrator.hasVibrator()) return
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val timings = LongArray(blinks * 2) { i -> if (i % 2 == 0) 50L else 70L }
-            val amplitudes = IntArray(blinks * 2) { i -> if (i % 2 == 0) 200 else 0 }
-            vibrator.vibrate(VibrationEffect.createWaveform(timings, amplitudes, -1))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
         } else {
             @Suppress("DEPRECATION")
-            vibrator.vibrate(LongArray(blinks * 2) { i -> if (i % 2 == 0) 50L else 70L }, -1)
+            vibrator.vibrate(25)
         }
     }
 
+    /**
+     * Success / calibration complete notification waveform.
+     */
     fun successFeedback() {
         if (vibrator == null || !vibrator.hasVibrator()) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val timings = longArrayOf(0, 40, 60, 80)
-            val amplitudes = intArrayOf(0, 150, 0, 255)
+            val timings = longArrayOf(0, 30, 40, 50)
+            val amplitudes = intArrayOf(0, 100, 0, 200)
             vibrator.vibrate(VibrationEffect.createWaveform(timings, amplitudes, -1))
         } else {
             @Suppress("DEPRECATION")
-            vibrator.vibrate(100)
+            vibrator.vibrate(60)
         }
     }
 }
