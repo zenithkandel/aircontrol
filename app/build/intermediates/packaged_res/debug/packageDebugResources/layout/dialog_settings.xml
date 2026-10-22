@@ -226,6 +226,56 @@
                 android:layout_marginTop="4dp" />
         </LinearLayout>
 
+        <!-- ABOUT & ATTRIBUTION GROUP -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ABOUT"
+            android:textColor="@color/apple_text_tertiary"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.06"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:id="@+id/cardAboutAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_apple_card"
+            android:padding="14dp"
+            android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AirControl"
+                android:textColor="@color/apple_text_primary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:letterSpacing="-0.01" />
+
+            <TextView
+                android:id="@+id/tvAuthorMention"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="made by zenithkandel.com.np Zenith Kandel"
+                android:textColor="@color/apple_blue"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tap to open zenithkandel.com.np"
+                android:textColor="@color/apple_text_tertiary"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
         <!-- Close Button -->
         <Button
             android:id="@+id/btnCloseSettings"

@@ -84,6 +84,7 @@ id btnThemeToggle
 id btnTorchPointer
 id btnVolDown
 id btnVolUp
+id cardAboutAuthor
 id containerDeviceList
 id dotConnection
 id etKeyboardInput
@@ -112,6 +113,7 @@ id tabKeyboard
 id tabPresentation
 id tabReels
 id trackpadCanvas
+id tvAuthorMention
 id tvConnectionStatus
 id tvDeviceMac
 id tvDeviceName

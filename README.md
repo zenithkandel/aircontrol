@@ -1,110 +1,95 @@
-# AirControl — Sentinal 3-in-1 Wireless Air Mouse & Controller for Android
+# AirControl — Universal Wireless Spatial Remote & Trackpad for Android
 
 [![Platform](https://img.shields.io/badge/Platform-Android%209.0%2B%20%28API%2028%2B%29-brightgreen.svg)]()
+[![Language](https://img.shields.io/badge/Language-Kotlin%20%2F%20Android%20SDK-purple.svg)]()
+[![Design](https://img.shields.io/badge/Design-Apple%20Human%20Interface-007AFF.svg)]()
+[![Author](https://img.shields.io/badge/Author-Zenith%20Kandel-black.svg)](https://zenithkandel.com.np)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)]()
-[![Hardware Source](https://img.shields.io/badge/Origin-Sentinal%20ESP32--S3-orange.svg)](https://github.com/sakshyambastakoti/sentinal)
 
-**AirControl** is the Android adaptation of [Sentinal](https://github.com/sakshyambastakoti/sentinal), the production-grade ESP32-S3 wireless air mouse and HID controller.
+**AirControl** is a high-precision, wireless spatial controller and multi-touch trackpad application for Android. Built upon native **Bluetooth Low Energy (BLE) / Classic HID Peripheral architecture** (`android.bluetooth.BluetoothHidDevice`), AirControl transforms your smartphone into a driverless, universal hardware remote control compatible with **Windows 10/11, macOS, Linux, iPadOS, Android TV, and ChromeOS**.
 
-Using Android's native **Bluetooth HID Device profile** (`android.bluetooth.BluetoothHidDevice`), your smartphone transforms into a genuine **Composite Bluetooth Peripheral (Mouse + Keyboard + Consumer Control)** that connects seamlessly to **Windows 10/11, macOS, Linux, iPadOS, Android TV, and ChromeOS** — **without installing any desktop software**.
-
----
-
-## 🌟 Features at a Glance
-
-| Feature | Sentinal Hardware (ESP32-S3) | AirControl (Android App) |
-| :--- | :--- | :--- |
-| **Connectivity** | NimBLE BLE HID Composite Device | Native Android `BluetoothHidDevice` + Wi-Fi Fallback |
-| **Motion Sensor** | MPU6050 6-Axis IMU (I2C) | Phone 6-Axis Gyroscope & Accelerometer (100 Hz Pipeline) |
-| **Motion Pipeline** | Deadzone + EMA ($\alpha=0.45$) + Acceleration | **Exact 1:1 Port** of Sentinal's C++ `MotionProcessor` |
-| **Mode 1: Presentation** | Next/Prev Slide, F5, Pause Motion | Next/Prev Slide, F5, Blank Screen, Slide Timer, Pause |
-| **Mode 2: Air Mouse** | Left/Right Click, Gyro Aiming, Recalibrate | Left/Right Click, Center Scroll Strip, Clutch Freeze, Recalib |
-| **Mode 3: Reel Scroller** | TikTok / Instagram Shorts Scroller | Down/Up Arrow, Play/Pause, Volume, Like, Assistive Scroll |
-| **Laser Pointer** | 5V Diode Hardware Wire | **Torch Spotlight Beam** (Ultra-Bright Camera LED Flash) |
-| **Tactile Buttons** | 3 GPIO Tactile Push Buttons | High-impact UI Pads + **Physical Phone Volume Rocker** |
-| **Visual Indicators** | Tri-Color LED (Mode, Status, Action) | **Digital Tri-LED Simulation** (Exact blink & flash patterns) |
-| **Feedback** | Single Action LED | **Rich Haptic Feedback** (Distinct vibration waveforms) |
+No client software, background daemons, or device drivers are required on the host computer. Pair via Bluetooth and control immediately.
 
 ---
 
-## 🕹️ 3 Operating Modes
+## 🌟 Key Capabilities
 
-### Mode 1: Presentation Remote (1 LED Blink)
-Designed for PowerPoint, Apple Keynote, Google Slides, and Canva.
-- **Gyro Cursor Motion:** Paused automatically to eliminate shaky hands during presentations.
-- **Next Slide:** Tap big Next button (Sends `KEY_PAGE_DOWN` / Left Click fallback).
-- **Previous Slide:** Tap Previous button (Sends `KEY_PAGE_UP` / Wheel Up fallback).
-- **Fullscreen Slideshow:** Tap `F5 FULLSCREEN` button.
-- **Black Screen:** Tap `BLACK SCREEN` (`KEY_B`) to focus audience attention on the speaker.
-- **Slide Stopwatch:** Built-in presentation timer with live elapsed minutes & seconds.
-- **Torch Spotlight Pointer:** Hold to shine your smartphone's high-intensity camera flash at the projection screen or whiteboard!
-
-### Mode 2: 6-Axis Gyro Air Mouse (2 LED Blinks)
-Transforms your smartphone into an air mouse pointer driven by natural wrist rotation.
-- **100 Hz Gyroscope Engine:** Direct port of Sentinal's angular velocity pipeline:
-  - Micro-tremor continuous deadzone ramp ($1.25^\circ/\text{s}$)
-  - First-order IIR smoothing filter ($\alpha = 0.45$)
-  - Non-linear cursor acceleration curve ($22.0^\circ/\text{s}$ threshold, $3.5\times$ max scale)
-  - Sub-pixel fractional accumulator for precision micro-aiming.
-- **Left Click (Button A):** Large primary click pad.
-- **Right Click (Button B):** Secondary context click pad.
-- **Tactile Scroll Wheel:** Vertical strip for smooth document and web scrolling.
-- **Hold to Freeze Pointer (Clutch):** Hold while adjusting wrist position so the cursor remains steady.
-- **Stationary Recalibration:** 2-second zero-rate bias calibration with motion disturbance rejection.
-
-### Mode 3: Social Reel / Short Video Scroller (3 LED Blinks)
-Pure keyboard shortcut navigation for TikTok, Instagram Reels, and YouTube Shorts.
-- **Next Reel:** Down arrow + scroll wheel down.
-- **Previous Reel:** Up arrow + scroll wheel up.
-- **Play / Pause:** Spacebar toggle.
-- **Volume & Like:** Quick media keys.
+- **Native Bluetooth HID Peripheral:** Registers as a composite hardware device (Mouse + Keyboard + Consumer Media Control) directly in host Bluetooth menus.
+- **Glass-Feel Multi-Touch Trackpad:** Apple-inspired virtual trackpad surface with 1-finger tracking, physical velocity acceleration, tap-to-click, and smooth two-finger kinetic scrolling.
+- **Presentation Remote Mode:** Designed for PowerPoint, Keynote, Google Slides, and Canva with slide advance, back, fullscreen toggle (F5), blank screen (B), and a live stopwatch.
+- **Short-Form Media Controller:** Seamless scrolling and playback controls for TikTok, YouTube Shorts, and Instagram Reels with swipe cues, play/pause toggle, and audio adjustment.
+- **Flashlight Spotlight Beam:** Utilizes the rear camera flash LED to provide an optical spotlight beam during live presentations.
+- **Taptic Audio-Haptic Response:** Calibrated micro-vibrations for tactile clicks, mode changes, and dial snaps.
+- **Hardware Volume Rocker Integration:** Physical volume buttons trigger slides, media, or mouse clicks without looking at the screen.
+- **Wi-Fi Companion Fallback:** Built-in high-speed WebSocket server (`port 8765`) and Python companion receiver for devices without Bluetooth.
 
 ---
 
-## ⚡ Hardware Volume Rocker Support
+## 🕹️ Operational Modes
 
-You can control your computer or presentation **completely hands-free without looking at your phone**:
-- **In Presentation Mode:** Volume Up = Next Slide, Volume Down = Prev Slide.
-- **In Air Mouse Mode:** Volume Up = Left Click, Volume Down = Right Click.
-- **In Reel Scroller Mode:** Volume Up = Previous Reel, Volume Down = Next Reel.
+### 1. Presentation Remote (`SLIDES`)
+- **Next Slide:** Large primary advance pad (Sends `KEY_PAGE_DOWN`).
+- **Previous Slide:** Secondary advance pad (Sends `KEY_PAGE_UP`).
+- **Fullscreen Show:** F5 toggle.
+- **Black Screen:** Instant blanking (`KEY_B`) to focus audience attention.
+- **Presentation Timer:** On-screen stopwatch with elapsed minutes and seconds.
+- **Spotlight Beam:** Hold button to project device camera flash onto presentation screens.
+
+### 2. Multi-Touch Air Mouse & Trackpad (`TOUCHPAD`)
+- **Single Finger Navigation:** Smooth cursor motion with non-linear velocity scaling.
+- **Tap to Click:** Primary left click with instant haptic confirmation.
+- **Two-Finger Scroll:** Natural kinetic scrolling for long web pages and documents.
+- **Dedicated Click Pads:** Physical Left Click and Right Click context buttons.
+- **Clutch Freeze:** Hold freeze pad to reposition hand without moving the host cursor.
+- **6-Axis Motion Pipeline:** Optional 100 Hz angular velocity gyroscope tracking with bias subtraction and low-pass filtering.
+
+### 3. Keyboard & Text Input (`KEYBOARD`)
+- **Direct Keystroke Transmission:** Full HID keystroke emulation for rapid text entry and system shortcuts.
+- **Standard Controls:** Return, Backspace, Tab, Space, Esc, and arrow keys.
+
+### 4. Media & Social Reels (`MEDIA`)
+- **Next / Previous Reel:** Seamless up/down navigation.
+- **Play / Pause:** Spacebar media toggle.
+- **Volume & Likes:** Quick media controls for TikTok, Instagram Reels, and YouTube Shorts.
 
 ---
 
-## 🔦 Flashlight / Torch Pointer (Laser Alternative)
+## ⚙️ Hardware Volume Button Remapping
 
-Because standard smartphones lack a built-in laser diode, AirControl includes a **Torch Spotlight Beam**:
-- Holding the Torch button triggers the phone's rear ultra-bright camera LED.
-- Illuminates presentations, projector screens, or whiteboards from across the room.
+Control presentations and media completely hands-free:
+- **In Presentation Mode:** Volume Up = Next Slide, Volume Down = Previous Slide.
+- **In Trackpad Mode:** Volume Up = Left Click, Volume Down = Right Click.
+- **In Media Mode:** Volume Up = Previous Reel, Volume Down = Next Reel.
 
 ---
 
-## 📡 Connectivity Modes
+## 📡 Connectivity Options
 
-### 1. Native Bluetooth HID (Recommended)
-1. Turn on Bluetooth on your Android phone and launch **AirControl**.
-2. The app registers as a standard Bluetooth HID Device named **`Sentinal`**.
-3. On your PC, Mac, iPad, or TV, open **Bluetooth Settings** and click **Pair "Sentinal"**.
-4. The Status LED turns solid blue. No PC software or drivers needed!
+### 1. Direct Bluetooth HID (Default & Recommended)
+1. Turn on Bluetooth on your Android device and open **AirControl**.
+2. Tap the **Bluetooth Status Pill** in the app header or select **Pair Host**.
+3. On your PC, Mac, iPad, or TV, open **Bluetooth Settings** and select **AirControl**.
+4. Once paired, control works instantly across all operating systems without any software installation.
 
 ### 2. Wi-Fi Local Companion (Fallback)
-If your computer lacks Bluetooth or your Android ROM restricts Bluetooth HID:
-1. Run the Python companion on your computer:
+If your computer lacks Bluetooth or host security blocks Bluetooth HID devices:
+1. Run the Python companion receiver on your computer:
    ```bash
    pip install websockets pyautogui
-   python companion/sentinal_companion.py
+   python companion/aircontrol_companion.py
    ```
-2. The phone transmits motion and keypresses over your local Wi-Fi with ultra-low latency.
+2. Both devices connect over the same local Wi-Fi network on port `8765` with low-latency WebSocket communication.
 
 ---
 
-## 🛠️ Project Structure
+## 📁 Repository Structure
 
 ```
 aircontrol/
 ├── app/
 │   ├── src/main/
 │   │   ├── AndroidManifest.xml
-│   │   ├── java/com/sentinal/aircontrol/
+│   │   ├── java/com/aircontrol/
 │   │   │   ├── AirControlApp.kt
 │   │   │   ├── hardware/
 │   │   │   │   ├── HapticFeedbackController.kt
@@ -125,28 +110,57 @@ aircontrol/
 │   │       ├── drawable/
 │   │       ├── layout/
 │   │       │   ├── activity_main.xml
-│   │       │   └── dialog_settings.xml
+│   │       │   ├── dialog_device_picker.xml
+│   │       │   ├── dialog_settings.xml
+│   │       │   └── item_paired_device.xml
 │   │       └── values/
-│   └── build.gradle.kts
+│   │           ├── colors.xml
+│   │           ├── strings.xml
+│   │           └── styles.xml
+│   ├── build.gradle.kts
+│   └── proguard-rules.pro
 ├── companion/
-│   └── sentinal_companion.py
+│   └── aircontrol_companion.py
 ├── build.gradle.kts
 ├── settings.gradle.kts
-└── gradlew.bat
+├── gradlew
+├── gradlew.bat
+└── install.bat
 ```
 
 ---
 
-## 🚀 Building & Installing
+## 🛠️ Building & Deploying
 
-### Command Line
+### Prerequisites
+- Android Studio Ladybug / Koala or Android SDK Command-Line Tools
+- Java JDK 17+
+- Android Device running Android 9.0+ (API 28+) with Bluetooth support
+
+### Build via Command Line
 ```bash
-# Build debug APK
+# Build Debug APK
 .\gradlew.bat assembleDebug
 
-# Install directly to connected Android phone via ADB
-adb install app/build/outputs/apk/debug/app-debug.apk
+# Deploy to connected device via ADB
+.\install.bat
 ```
 
-### Android Studio
-Open the `aircontrol` folder in Android Studio and press **Run (Shift + F10)**.
+### Manual ADB Install
+```bash
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+adb shell am start -n com.aircontrol/.ui.MainActivity
+```
+
+---
+
+## 👨‍💻 Author & Attribution
+
+**AirControl** is designed and crafted by:
+- **Zenith Kandel** — [zenithkandel.com.np](https://zenithkandel.com.np)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.

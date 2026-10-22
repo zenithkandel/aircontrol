@@ -4,7 +4,7 @@
     "type": "PROCESSED_RES",
     "kind": "Directory"
   },
-  "applicationId": "com.sentinal.aircontrol",
+  "applicationId": "com.aircontrol",
   "variantName": "debug",
   "elements": [
     {

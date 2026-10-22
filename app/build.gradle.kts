@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.sentinal.aircontrol"
+    namespace = "com.aircontrol"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.sentinal.aircontrol"
+        applicationId = "com.aircontrol"
         minSdk = 28
         targetSdk = 35
         versionCode = 1

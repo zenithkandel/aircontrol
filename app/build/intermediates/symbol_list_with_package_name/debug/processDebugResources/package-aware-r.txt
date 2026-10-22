@@ -1,4 +1,4 @@
-com.sentinal.aircontrol
+com.aircontrol
 anim abc_fade_in
 anim abc_fade_out
 anim abc_grow_fade_in_from_bottom
@@ -3278,6 +3278,7 @@ id buttonPanel
 id cache_measures
 id callMeasure
 id cancel_button
+id cardAboutAuthor
 id carryVelocity
 id center
 id centerCrop
@@ -3681,6 +3682,7 @@ id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
 id triangle
+id tvAuthorMention
 id tvConnectionStatus
 id tvDeviceMac
 id tvDeviceName

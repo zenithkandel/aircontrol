@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.sentinal.aircontrol.app-mergeDebugResources-32:/values-ur/values-ur.xml",
+            "outputFile": "com.aircontrol.app-mergeDebugResources-32:/values-ur/values-ur.xml",
             "map": [
                 {
                     "source": "C:\\Users\\zenith\\.gradle\\caches\\8.14.3\\transforms\\0733d4093b25b6c1f148708121f79922\\transformed\\material-1.12.0\\res\\values-ur\\values-ur.xml",
