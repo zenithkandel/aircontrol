@@ -64,13 +64,14 @@ class BluetoothHidController(private val context: Context) {
     private val hidCallback = object : BluetoothHidDevice.Callback() {
         override fun onAppStatusChanged(pluggedDevice: BluetoothDevice?, registered: Boolean) {
             isAppRegistered = registered
-            Log.d(TAG, "HID App registered: $registered")
+            Log.d(TAG, "HID App registered: $registered, plugged: ${pluggedDevice?.name}")
             if (registered) {
-                notifyState(ConnectionState.ADVERTISING, pluggedDevice)
-                // If there's an already bonded target device, attempt connect
-                pluggedDevice?.let {
-                    targetDevice = it
-                    hidDevice?.connect(it)
+                val connected = pluggedDevice ?: hidDevice?.connectedDevices?.firstOrNull()
+                if (connected != null) {
+                    targetDevice = connected
+                    notifyState(ConnectionState.CONNECTED, connected)
+                } else {
+                    notifyState(ConnectionState.ADVERTISING, null)
                 }
             } else {
                 notifyState(ConnectionState.DISCONNECTED, null)
@@ -88,10 +89,14 @@ class BluetoothHidController(private val context: Context) {
                     notifyState(ConnectionState.CONNECTING, device)
                 }
                 BluetoothProfile.STATE_DISCONNECTED -> {
-                    if (targetDevice == device) {
+                    val remaining = hidDevice?.connectedDevices?.firstOrNull()
+                    if (remaining != null) {
+                        targetDevice = remaining
+                        notifyState(ConnectionState.CONNECTED, remaining)
+                    } else {
                         targetDevice = null
+                        notifyState(ConnectionState.ADVERTISING, null)
                     }
-                    notifyState(ConnectionState.ADVERTISING, null)
                 }
             }
         }
@@ -173,8 +178,12 @@ class BluetoothHidController(private val context: Context) {
     // =========================================================================
 
     fun sendMouseReport(dx: Byte, dy: Byte, wheel: Byte, buttons: Byte = currentButtons): Boolean {
-        val dev = targetDevice ?: return false
+        val dev = targetDevice ?: hidDevice?.connectedDevices?.firstOrNull() ?: return false
         val hid = hidDevice ?: return false
+        if (targetDevice == null) {
+            targetDevice = dev
+            notifyState(ConnectionState.CONNECTED, dev)
+        }
 
         // Suppression filter
         if (dx.toInt() == 0 && dy.toInt() == 0 && wheel.toInt() == 0 && buttons == lastReportedButtons) {
@@ -220,8 +229,12 @@ class BluetoothHidController(private val context: Context) {
     // =========================================================================
 
     fun sendKey(keyCode: Byte, modifier: Byte = HidKeyCodes.MOD_NONE) {
-        val dev = targetDevice ?: return
+        val dev = targetDevice ?: hidDevice?.connectedDevices?.firstOrNull() ?: return
         val hid = hidDevice ?: return
+        if (targetDevice == null) {
+            targetDevice = dev
+            notifyState(ConnectionState.CONNECTED, dev)
+        }
 
         // 8-byte report: [modifier, reserved, key1, key2, key3, key4, key5, key6]
         val keyReport = byteArrayOf(modifier, 0x00, keyCode, 0x00, 0x00, 0x00, 0x00, 0x00)
@@ -240,8 +253,12 @@ class BluetoothHidController(private val context: Context) {
     // =========================================================================
 
     fun sendConsumer(usage: Short) {
-        val dev = targetDevice ?: return
+        val dev = targetDevice ?: hidDevice?.connectedDevices?.firstOrNull() ?: return
         val hid = hidDevice ?: return
+        if (targetDevice == null) {
+            targetDevice = dev
+            notifyState(ConnectionState.CONNECTED, dev)
+        }
 
         val report = byteArrayOf((usage.toInt() and 0xFF).toByte(), ((usage.toInt() shr 8) and 0xFF).toByte())
         hid.sendReport(dev, HidDescriptors.REPORT_ID_CONSUMER.toInt(), report)
