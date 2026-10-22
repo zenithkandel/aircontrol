@@ -1,13 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Theme.AirControl" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/cyan_accent</item>
-        <item name="colorPrimaryVariant">@color/cyan_accent</item>
-        <item name="colorOnPrimary">@color/bg_dark</item>
-        <item name="colorSecondary">@color/amber_accent</item>
-        <item name="colorSecondaryVariant">@color/amber_accent</item>
-        <item name="colorOnSecondary">@color/bg_dark</item>
-        <item name="android:statusBarColor">@color/bg_dark</item>
-        <item name="android:navigationBarColor">@color/bg_dark</item>
-        <item name="android:windowBackground">@color/bg_dark</item>
+        <item name="colorPrimary">@color/apple_blue</item>
+        <item name="colorPrimaryVariant">@color/apple_blue</item>
+        <item name="colorOnPrimary">@color/apple_canvas</item>
+        <item name="colorSecondary">@color/apple_amber</item>
+        <item name="colorSecondaryVariant">@color/apple_amber</item>
+        <item name="colorOnSecondary">@color/apple_canvas</item>
+        <item name="android:statusBarColor">@color/apple_canvas</item>
+        <item name="android:navigationBarColor">@color/apple_canvas</item>
+        <item name="android:windowBackground">@color/apple_canvas</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>
 </resources>
