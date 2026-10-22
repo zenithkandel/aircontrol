@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.sentinal.aircontrol.app-mergeDebugResources-33:/layout/activity_main.xml",
+        "source": "com.sentinal.aircontrol.app-main-36:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.sentinal.aircontrol.app-mergeDebugResources-33:/layout/dialog_settings.xml",
+        "source": "com.sentinal.aircontrol.app-main-36:/layout/dialog_settings.xml"
+    }
+]

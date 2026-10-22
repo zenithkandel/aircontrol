@@ -1,0 +1,42 @@
+[
+    {
+        "merged": "com.sentinal.aircontrol.app-debug-34:/layout_dialog_settings.xml.flat",
+        "source": "com.sentinal.aircontrol.app-main-36:/layout/dialog_settings.xml"
+    },
+    {
+        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_card_rounded.xml.flat",
+        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_card_rounded.xml"
+    },
+    {
+        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_btn_secondary.xml.flat",
+        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_btn_secondary.xml"
+    },
+    {
+        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_ic_launcher.xml.flat",
+        "source": "com.sentinal.aircontrol.app-main-36:/drawable/ic_launcher.xml"
+    },
+    {
+        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_tab_selected.xml.flat",
+        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_tab_selected.xml"
+    },
+    {
+        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_btn_primary.xml.flat",
+        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_btn_primary.xml"
+    },
+    {
+        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_tab_unselected.xml.flat",
+        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_tab_unselected.xml"
+    },
+    {
+        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_led_circle.xml.flat",
+        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_led_circle.xml"
+    },
+    {
+        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_btn_accent.xml.flat",
+        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_btn_accent.xml"
+    },
+    {
+        "merged": "com.sentinal.aircontrol.app-debug-34:/layout_activity_main.xml.flat",
+        "source": "com.sentinal.aircontrol.app-main-36:/layout/activity_main.xml"
+    }
+]

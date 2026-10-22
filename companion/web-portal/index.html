@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirControl — Sentinal 3-in-1 Wireless Air Mouse &amp; Controller</title>
+    <style>
+        :root {
+            --bg-dark: #080a0f;
+            --bg-surface: #121620;
+            --bg-card: #1a212e;
+            --border-subtle: #2a364b;
+            --cyan-accent: #00e5ff;
+            --cyan-glow: rgba(0, 229, 255, 0.2);
+            --amber-accent: #ffab00;
+            --amber-glow: rgba(255, 171, 0, 0.2);
+            --neon-green: #00e676;
+            --neon-pink: #ff3366;
+            --text-primary: #f0f4fc;
+            --text-secondary: #8a9bb5;
+            --text-muted: #4e5d78;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 16px;
+        }
+
+        .phone-frame {
+            width: 100%;
+            max-width: 420px;
+            height: 860px;
+            background: var(--bg-surface);
+            border: 2px solid var(--border-subtle);
+            border-radius: 36px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 229, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Status Bar */
+        .status-header {
+            padding: 16px 20px 8px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .brand-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            color: var(--text-primary);
+        }
+
+        .brand-sub {
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            color: var(--cyan-accent);
+            font-weight: 600;
+        }
+
+        /* LED Array */
+        .led-array {
+            display: flex;
+            gap: 12px;
+            background: var(--bg-card);
+            padding: 6px 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .led-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .led-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #202634;
+            transition: all 0.1s ease;
+        }
+
+        .led-dot.mode-active {
+            background: var(--amber-accent);
+            box-shadow: 0 0 10px var(--amber-accent);
+        }
+
+        .led-dot.ble-active {
+            background: var(--cyan-accent);
+            box-shadow: 0 0 10px var(--cyan-accent);
+        }
+
+        .led-dot.act-active {
+            background: var(--neon-pink);
+            box-shadow: 0 0 10px var(--neon-pink);
+        }
+
+        .led-label {
+            font-size: 0.55rem;
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+
+        /* Connection Pill */
+        .conn-pill {
+            margin: 12px 20px 0 20px;
+            padding: 8px 14px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.75rem;
+        }
+
+        .conn-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--cyan-accent);
+            font-weight: 700;
+        }
+
+        .conn-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--cyan-accent);
+            box-shadow: 0 0 8px var(--cyan-accent);
+        }
+
+        .conn-target {
+            color: var(--text-secondary);
+            font-size: 0.7rem;
+        }
+
+        /* Mode Switcher Tabs */
+        .mode-tabs {
+            margin: 12px 20px 0 20px;
+            background: var(--bg-card);
+            padding: 4px;
+            border-radius: 14px;
+            display: flex;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 0;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn.active {
+            background: #243447;
+            color: var(--cyan-accent);
+            border: 1px solid var(--cyan-accent);
+            box-shadow: 0 0 12px var(--cyan-glow);
+        }
+
+        /* Main View Container */
+        .panels-wrapper {
+            flex: 1;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .panel {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            animation: fadeIn 0.25s ease-in-out;
+        }
+
+        .panel.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Button Common */
+        .btn {
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.12s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+            filter: brightness(1.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1a283b, #203650);
+            color: var(--cyan-accent);
+            border: 2px solid var(--cyan-accent);
+            box-shadow: 0 0 16px var(--cyan-glow);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .btn-accent {
+            background: linear-gradient(135deg, #332400, #4d3600);
+            color: var(--amber-accent);
+            border: 2px solid var(--amber-accent);
+            box-shadow: 0 0 16px var(--amber-glow);
+        }
+
+        /* Mode 1: Presentation Remote */
+        .timer-bar {
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .timer-digits {
+            font-family: monospace;
+            font-size: 1.25rem;
+            color: var(--amber-accent);
+            font-weight: 700;
+        }
+
+        .btn-next-slide {
+            flex: 1.4;
+            font-size: 1.35rem;
+            margin-bottom: 12px;
+        }
+
+        .btn-prev-slide {
+            flex: 1;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+
+        .quick-actions-row {
+            display: flex;
+            gap: 8px;
+            height: 52px;
+            margin-bottom: 12px;
+        }
+
+        .quick-actions-row .btn {
+            flex: 1;
+            font-size: 0.72rem;
+            padding: 0 4px;
+            text-align: center;
+        }
+
+        /* Mode 2: Air Mouse */
+        .gyro-radar {
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .gyro-status-txt {
+            color: var(--neon-green);
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .gyro-readout {
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .mouse-action-area {
+            flex: 1;
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .mouse-btn-left {
+            flex: 1.2;
+            font-size: 1.05rem;
+        }
+
+        .scroll-strip {
+            width: 60px;
+            background: var(--bg-card);
+            border-radius: 14px;
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+        }
+
+        .scroll-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .mouse-btn-right {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+
+        .air-mouse-footer-row {
+            display: flex;
+            gap: 8px;
+            height: 50px;
+        }
+
+        .air-mouse-footer-row .btn {
+            flex: 1;
+            font-size: 0.72rem;
+        }
+
+        /* Mode 3: Reels */
+        .btn-next-reel {
+            flex: 1.3;
+            font-size: 1.35rem;
+            margin-bottom: 12px;
+        }
+
+        .reels-center-row {
+            flex: 1;
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .reels-center-row .btn {
+            flex: 1;
+            font-size: 1rem;
+        }
+
+        .reels-media-row {
+            display: flex;
+            gap: 8px;
+            height: 48px;
+            margin-bottom: 10px;
+        }
+
+        .reels-media-row .btn {
+            flex: 1;
+            font-size: 0.8rem;
+        }
+
+        /* Volume Hint */
+        .vol-hint {
+            text-align: center;
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Bottom Cycle Bar */
+        .bottom-bar {
+            padding: 12px 20px 18px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .telemetry-box {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 6px 10px;
+            font-family: monospace;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            border: 1px solid var(--border-subtle);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .cycle-btn-row {
+            display: flex;
+            gap: 8px;
+            height: 46px;
+        }
+
+        .btn-cycle {
+            flex: 1;
+            font-size: 0.78rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="phone-frame">
+    <!-- Header -->
+    <div class="status-header">
+        <div>
+            <div class="brand-title">SENTINAL</div>
+            <div class="brand-sub">AIRCONTROL • BLE HID</div>
+        </div>
+        <div class="led-array">
+            <div class="led-unit">
+                <div id="ledMode" class="led-dot"></div>
+                <div class="led-label">MODE</div>
+            </div>
+            <div class="led-unit">
+                <div id="ledBle" class="led-dot ble-active"></div>
+                <div class="led-label">BLE</div>
+            </div>
+            <div class="led-unit">
+                <div id="ledAct" class="led-dot"></div>
+                <div class="led-label">ACT</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Connection Status -->
+    <div class="conn-pill">
+        <div class="conn-status">
+            <div class="conn-dot"></div>
+            <span id="connState">ADVERTISING AS 'SENTINAL'</span>
+        </div>
+        <div class="conn-target" id="connTarget">PAIR IN PC BLUETOOTH</div>
+    </div>
+
+    <!-- Operating Mode Tabs -->
+    <div class="mode-tabs">
+        <button class="tab-btn active" onclick="switchMode(0)">1: SLIDES</button>
+        <button class="tab-btn" onclick="switchMode(1)">2: MOUSE</button>
+        <button class="tab-btn" onclick="switchMode(2)">3: REELS</button>
+    </div>
+
+    <!-- Panels Container -->
+    <div class="panels-wrapper">
+        <!-- MODE 1: PRESENTATION REMOTE -->
+        <div id="panel0" class="panel active">
+            <div class="timer-bar">
+                <span style="font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.05em;">SLIDE TIMER</span>
+                <span id="timerText" class="timer-digits">00:00</span>
+                <button class="btn btn-secondary" onclick="resetTimer()" style="padding: 4px 10px; font-size: 0.65rem;">RESET</button>
+            </div>
+            <button class="btn btn-primary btn-next-slide" onclick="triggerAction('presentation_next')">NEXT SLIDE  ▶</button>
+            <button class="btn btn-secondary btn-prev-slide" onclick="triggerAction('presentation_prev')">◀  PREV SLIDE</button>
+            <div class="quick-actions-row">
+                <button class="btn btn-secondary" onclick="triggerAction('presentation_f5')">F5 FULLSCREEN</button>
+                <button class="btn btn-secondary" onclick="triggerAction('presentation_black')">BLACK SCREEN</button>
+                <button id="torchBtn" class="btn btn-accent" onmousedown="startTorch()" onmouseup="stopTorch()" ontouchstart="startTorch()" ontouchend="stopTorch()">🔦 TORCH BEAM</button>
+            </div>
+            <div class="vol-hint">⚡ Physical volume keys advance &amp; reverse slides hands-free</div>
+        </div>
+
+        <!-- MODE 2: 6-AXIS AIR MOUSE -->
+        <div id="panel1" class="panel">
+            <div class="gyro-radar">
+                <div id="gyroState" class="gyro-status-txt">GYRO ACTIVE (100 Hz)</div>
+                <div id="gyroDeltas" class="gyro-readout">dX: 0  dY: 0</div>
+            </div>
+            <div class="mouse-action-area">
+                <button class="btn btn-primary mouse-btn-left" onclick="triggerAction('mouse_left')">LEFT CLICK<br><span style="font-size:0.75rem; opacity:0.8;">(BUTTON A)</span></button>
+                <div class="scroll-strip">
+                    <button class="scroll-btn" onclick="triggerAction('scroll_up')">▲</button>
+                    <span style="font-size: 0.55rem; color: var(--text-muted); font-weight: bold;">SCROLL</span>
+                    <button class="scroll-btn" onclick="triggerAction('scroll_down')">▼</button>
+                </div>
+                <button class="btn btn-secondary mouse-btn-right" onclick="triggerAction('mouse_right')">RIGHT CLICK<br><span style="font-size:0.75rem; opacity:0.8;">(BUTTON B)</span></button>
+            </div>
+            <div class="air-mouse-footer-row">
+                <button class="btn btn-accent" onmousedown="pauseGyro()" onmouseup="resumeGyro()">HOLD TO FREEZE POINTER</button>
+                <button class="btn btn-secondary" onclick="recalibrate()">RECALIBRATE</button>
+            </div>
+            <div class="vol-hint" style="margin-top: 8px;">⚡ Tilt wrist to steer pointer • Volume keys click</div>
+        </div>
+
+        <!-- MODE 3: REEL / SHORT SCROLLER -->
+        <div id="panel2" class="panel">
+            <button class="btn btn-primary btn-next-reel" onclick="triggerAction('reel_next')">NEXT VIDEO  ▼</button>
+            <div class="reels-center-row">
+                <button class="btn btn-secondary" onclick="triggerAction('reel_prev')">▲  PREV VIDEO</button>
+                <button class="btn btn-accent" onclick="triggerAction('reel_play_pause')">⏯ PLAY / PAUSE</button>
+            </div>
+            <div class="reels-media-row">
+                <button class="btn btn-secondary" onclick="triggerAction('vol_down')">VOL -</button>
+                <button class="btn btn-secondary" onclick="triggerAction('vol_up')">VOL +</button>
+                <button class="btn btn-secondary" style="color: var(--neon-pink);" onclick="triggerAction('like')">❤️ LIKE</button>
+            </div>
+            <div class="vol-hint">⚡ TikTok, Instagram Reels, YouTube Shorts compatible</div>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="bottom-bar">
+        <div id="telemetryLog" class="telemetry-box">[CDC] Ready. Tap 'CYCLE OPERATING MODE' to switch 1 ➔ 2 ➔ 3.</div>
+        <div class="cycle-btn-row">
+            <button class="btn btn-secondary btn-cycle" onclick="cycleMode()">CYCLE OPERATING MODE  (1 ➔ 2 ➔ 3)</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentMode = 0;
+    let timerSeconds = 0;
+    let timerInterval = null;
+    let gyroActive = false;
+
+    const modeBlinks = [1, 2, 3];
+
+    function switchMode(modeIndex) {
+        currentMode = modeIndex;
+        document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+            btn.classList.toggle('active', idx === modeIndex);
+        });
+        document.querySelectorAll('.panel').forEach((p, idx) => {
+            p.classList.toggle('active', idx === modeIndex);
+        });
+
+        // Blink Mode LED N times
+        blinkModeLed(modeBlinks[modeIndex]);
+        updateTelemetry(`[MODE] Switched to Mode ${modeIndex + 1}: ${['Presentation', 'Air Mouse', 'Reel Scroller'][modeIndex]}`);
+
+        if (modeIndex === 1) {
+            gyroActive = true;
+            document.getElementById('gyroState').innerText = "GYRO ACTIVE (100 Hz)";
+            document.getElementById('gyroState').style.color = "var(--neon-green)";
+        } else {
+            gyroActive = false;
+        }
+
+        // Haptic simulation if available
+        if (navigator.vibrate) navigator.vibrate(modeBlinks[modeIndex] * 40);
+    }
+
+    function cycleMode() {
+        switchMode((currentMode + 1) % 3);
+    }
+
+    function blinkModeLed(times) {
+        const led = document.getElementById('ledMode');
+        let count = 0;
+        const interval = setInterval(() => {
+            led.classList.toggle('mode-active');
+            count++;
+            if (count >= times * 2) {
+                clearInterval(interval);
+                led.classList.remove('mode-active');
+            }
+        }, 120);
+    }
+
+    function flashActionLed() {
+        const led = document.getElementById('ledAct');
+        led.classList.add('act-active');
+        setTimeout(() => led.classList.remove('act-active'), 80);
+    }
+
+    function triggerAction(actionName) {
+        flashActionLed();
+        if (navigator.vibrate) navigator.vibrate(25);
+        updateTelemetry(`[ACTION] ${actionName.toUpperCase()}`);
+
+        if (actionName === 'presentation_next' || actionName === 'presentation_prev') {
+            startTimer();
+        }
+    }
+
+    function startTimer() {
+        if (!timerInterval) {
+            timerInterval = setInterval(() => {
+                timerSeconds++;
+                const mins = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+                const secs = String(timerSeconds % 60).padStart(2, '0');
+                document.getElementById('timerText').innerText = `${mins}:${secs}`;
+            }, 1000);
+        }
+    }
+
+    function resetTimer() {
+        timerSeconds = 0;
+        document.getElementById('timerText').innerText = '00:00';
+    }
+
+    function startTorch() {
+        flashActionLed();
+        document.getElementById('torchBtn').innerText = "⚡ BEAM ACTIVE";
+        updateTelemetry("[TORCH] Camera flashlight beam ON");
+    }
+
+    function stopTorch() {
+        document.getElementById('torchBtn').innerText = "🔦 TORCH BEAM";
+        updateTelemetry("[TORCH] Camera flashlight beam OFF");
+    }
+
+    function pauseGyro() {
+        gyroActive = false;
+        document.getElementById('gyroState').innerText = "POINTER FROZEN (CLUTCH)";
+        document.getElementById('gyroState').style.color = "var(--amber-accent)";
+        updateTelemetry("[CLUTCH] Hand repositioning active");
+    }
+
+    function resumeGyro() {
+        gyroActive = true;
+        document.getElementById('gyroState').innerText = "GYRO ACTIVE (100 Hz)";
+        document.getElementById('gyroState').style.color = "var(--neon-green)";
+    }
+
+    function recalibrate() {
+        updateTelemetry("[CALIB] 2s stationary zero-rate calibration starting...");
+        setTimeout(() => {
+            updateTelemetry("[CALIB] Calibration successful! Zero offsets stored.");
+            if (navigator.vibrate) navigator.vibrate([40, 60, 80]);
+        }, 2000);
+    }
+
+    function updateTelemetry(msg) {
+        document.getElementById('telemetryLog').innerText = msg;
+    }
+
+    // Interactive mouse drag on screen to simulate air mouse movement
+    window.addEventListener('mousemove', (e) => {
+        if (currentMode === 1 && gyroActive) {
+            const dx = Math.round(e.movementX * 0.4);
+            const dy = Math.round(e.movementY * 0.4);
+            document.getElementById('gyroDeltas').innerText = `dX: ${dx}  dY: ${dy}`;
+        }
+    });
+</script>
+</body>
+</html>

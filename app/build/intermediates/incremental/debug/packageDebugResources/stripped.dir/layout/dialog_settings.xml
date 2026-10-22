@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_surface"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SETTINGS &amp; TUNING"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.05"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Sensitivity X -->
+        <TextView
+            android:id="@+id/tvLabelSensX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sensitivity X (Yaw): 0.22"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp" />
+
+        <SeekBar
+            android:id="@+id/seekSensX"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="22"
+            android:progressTint="@color/cyan_accent"
+            android:thumbTint="@color/cyan_accent"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Sensitivity Y -->
+        <TextView
+            android:id="@+id/tvLabelSensY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sensitivity Y (Pitch): 0.22"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp" />
+
+        <SeekBar
+            android:id="@+id/seekSensY"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="22"
+            android:progressTint="@color/cyan_accent"
+            android:thumbTint="@color/cyan_accent"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Gyro Deadzone -->
+        <TextView
+            android:id="@+id/tvLabelDeadzone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gyro Deadzone: 1.25 deg/s"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp" />
+
+        <SeekBar
+            android:id="@+id/seekDeadzone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="50"
+            android:progress="12"
+            android:progressTint="@color/amber_accent"
+            android:thumbTint="@color/amber_accent"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Smoothing Alpha -->
+        <TextView
+            android:id="@+id/tvLabelAlpha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter Smoothing Alpha: 0.45"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp" />
+
+        <SeekBar
+            android:id="@+id/seekAlpha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="45"
+            android:progressTint="@color/neon_green"
+            android:thumbTint="@color/neon_green"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Toggle Switches -->
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchAccel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dynamic Velocity Acceleration"
+            android:textColor="@color/text_primary"
+            android:checked="true"
+            app:thumbTint="@color/cyan_accent"
+            app:trackTint="@color/cyan_glow" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchInvertX"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Invert Horizontal Axis (X)"
+            android:textColor="@color/text_primary"
+            android:checked="true"
+            app:thumbTint="@color/cyan_accent"
+            app:trackTint="@color/cyan_glow" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchInvertY"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Invert Vertical Axis (Y)"
+            android:textColor="@color/text_primary"
+            android:checked="true"
+            app:thumbTint="@color/cyan_accent"
+            app:trackTint="@color/cyan_glow" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchVolumeKeys"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hardware Volume Rocker Actions"
+            android:textColor="@color/text_primary"
+            android:checked="true"
+            app:thumbTint="@color/amber_accent"
+            app:trackTint="@color/amber_glow" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchHaptics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tactile Vibration Haptics"
+            android:textColor="@color/text_primary"
+            android:checked="true"
+            app:thumbTint="@color/neon_green"
+            app:trackTint="@color/neon_green_glow" />
+
+        <!-- Wi-Fi Companion Information -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card_rounded"
+            android:padding="12dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WI-FI COMPANION SERVER (FALLBACK)"
+                android:textColor="@color/cyan_accent"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvWifiServerInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Port: ws://0.0.0.0:8765\nUseful when PC has no Bluetooth or Bluetooth HID is restricted."
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+
+        <!-- Close Button -->
+        <Button
+            android:id="@+id/btnCloseSettings"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="SAVE &amp; CLOSE"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:background="@drawable/bg_btn_primary" />
+
+    </LinearLayout>
+</ScrollView>
