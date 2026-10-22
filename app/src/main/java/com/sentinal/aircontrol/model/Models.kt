@@ -5,7 +5,7 @@ package com.sentinal.aircontrol.model
  */
 enum class OperatingMode(val id: Int, val title: String, val subtitle: String, val blinks: Int) {
     PRESENTATION(0, "SLIDES", "Keynote / PowerPoint", 1),
-    AIR_MOUSE(1, "AIR MOUSE", "Motion Pointer", 2),
+    AIR_MOUSE(1, "TOUCHPAD", "Multi-Touch Glass Trackpad", 2),
     KEYBOARD(2, "KEYBOARD", "Wireless Text & Shortcuts", 3),
     REEL_SCROLLER(3, "MEDIA", "Social & Reels", 4);
 

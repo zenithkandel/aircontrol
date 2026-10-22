@@ -9,7 +9,7 @@
         <item name="android:statusBarColor">@color/apple_canvas</item>
         <item name="android:navigationBarColor">@color/apple_canvas</item>
         <item name="android:windowBackground">@color/apple_canvas</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="materialButtonStyle">@style/AppleMaterialButton</item>
     </style>
 
