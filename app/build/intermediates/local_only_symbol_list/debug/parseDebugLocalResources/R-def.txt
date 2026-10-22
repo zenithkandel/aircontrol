@@ -24,6 +24,7 @@ drawable bg_apple_btn_amber
 drawable bg_apple_btn_primary
 drawable bg_apple_btn_secondary
 drawable bg_apple_card
+drawable bg_apple_dot_status
 drawable bg_apple_input_field
 drawable bg_apple_key
 drawable bg_apple_pill_status
