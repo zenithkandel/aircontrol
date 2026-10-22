@@ -47,7 +47,10 @@ data class SettingsState(
     var invertY: Boolean = true,
     var volumeKeysEnabled: Boolean = true,
     var hapticsEnabled: Boolean = true,
-    var torchPointerEnabled: Boolean = true
+    var torchPointerEnabled: Boolean = true,
+    var isDarkMode: Boolean = true,
+    var touchpadSensitivity: Float = 1.2f,
+    var touchpadScrollSpeed: Float = 1.0f
 )
 
 /**
@@ -141,6 +144,8 @@ object HidKeyCodes {
     const val CONSUMER_VOLUME_INCREMENT: Short = 0x00E9
     const val CONSUMER_VOLUME_DECREMENT: Short = 0x00EA
     const val CONSUMER_MUTE: Short = 0x00E2
+    const val CONSUMER_BRIGHTNESS_INCREMENT: Short = 0x006F
+    const val CONSUMER_BRIGHTNESS_DECREMENT: Short = 0x0070
 
     /**
      * Maps an ASCII character to its HID (keyCode, modifier) pair.

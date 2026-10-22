@@ -15,149 +15,197 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Settings &amp; Tuning"
+            android:text="Settings"
             android:textColor="@color/apple_text_primary"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold"
-            android:letterSpacing="-0.015"
-            android:layout_marginBottom="16dp" />
+            android:letterSpacing="-0.02"
+            android:layout_marginBottom="4dp" />
 
-        <!-- Sensitivity X -->
         <TextView
-            android:id="@+id/tvLabelSensX"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sensitivity X (Yaw): 0.22"
+            android:text="Preferences &amp; Controller Behavior"
             android:textColor="@color/apple_text_secondary"
-            android:textSize="13sp" />
+            android:textSize="12sp"
+            android:layout_marginBottom="20dp" />
 
-        <SeekBar
-            android:id="@+id/seekSensX"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="100"
-            android:progress="22"
-            android:progressTint="@color/apple_blue"
-            android:thumbTint="@color/apple_blue"
-            android:layout_marginBottom="12dp" />
-
-        <!-- Sensitivity Y -->
+        <!-- APPEARANCE GROUP -->
         <TextView
-            android:id="@+id/tvLabelSensY"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sensitivity Y (Pitch): 0.22"
-            android:textColor="@color/apple_text_secondary"
-            android:textSize="13sp" />
+            android:text="APPEARANCE"
+            android:textColor="@color/apple_text_tertiary"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.06"
+            android:layout_marginBottom="8dp" />
 
-        <SeekBar
-            android:id="@+id/seekSensY"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:max="100"
-            android:progress="22"
-            android:progressTint="@color/apple_blue"
-            android:thumbTint="@color/apple_blue"
-            android:layout_marginBottom="12dp" />
+            android:orientation="vertical"
+            android:background="@drawable/bg_apple_card"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp"
+            android:layout_marginBottom="18dp">
 
-        <!-- Gyro Deadzone -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchDarkMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dark Appearance"
+                android:textColor="@color/apple_text_primary"
+                android:textSize="14sp"
+                android:checked="true"
+                app:thumbTint="@color/apple_blue"
+                app:trackTint="@color/apple_blue_subtle" />
+        </LinearLayout>
+
+        <!-- HAPTICS & FEEDBACK GROUP -->
         <TextView
-            android:id="@+id/tvLabelDeadzone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gyro Deadzone: 1.25 deg/s"
-            android:textColor="@color/apple_text_secondary"
-            android:textSize="13sp" />
+            android:text="FEEDBACK"
+            android:textColor="@color/apple_text_tertiary"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.06"
+            android:layout_marginBottom="8dp" />
 
-        <SeekBar
-            android:id="@+id/seekDeadzone"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:max="50"
-            android:progress="12"
-            android:progressTint="@color/apple_amber"
-            android:thumbTint="@color/apple_amber"
-            android:layout_marginBottom="12dp" />
+            android:orientation="vertical"
+            android:background="@drawable/bg_apple_card"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp"
+            android:layout_marginBottom="18dp">
 
-        <!-- Smoothing Alpha -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchHaptics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Taptic Haptic Feedback"
+                android:textColor="@color/apple_text_primary"
+                android:textSize="14sp"
+                android:checked="true"
+                app:thumbTint="@color/apple_green"
+                app:trackTint="@color/apple_green_subtle" />
+        </LinearLayout>
+
+        <!-- TRACKPAD & INPUT GROUP -->
         <TextView
-            android:id="@+id/tvLabelAlpha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Filter Smoothing Alpha: 0.45"
-            android:textColor="@color/apple_text_secondary"
-            android:textSize="13sp" />
+            android:text="TRACKPAD &amp; GESTURES"
+            android:textColor="@color/apple_text_tertiary"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.06"
+            android:layout_marginBottom="8dp" />
 
-        <SeekBar
-            android:id="@+id/seekAlpha"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:max="100"
-            android:progress="45"
-            android:progressTint="@color/apple_green"
-            android:thumbTint="@color/apple_green"
-            android:layout_marginBottom="16dp" />
+            android:orientation="vertical"
+            android:background="@drawable/bg_apple_card"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="12dp"
+            android:layout_marginBottom="18dp">
 
-        <!-- Apple Switches -->
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switchAccel"
+            <!-- Sensitivity -->
+            <TextView
+                android:id="@+id/tvLabelTouchpadSens"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tracking Speed: 1.2x"
+                android:textColor="@color/apple_text_primary"
+                android:textSize="13sp" />
+
+            <SeekBar
+                android:id="@+id/seekTouchpadSens"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="30"
+                android:progress="12"
+                android:progressTint="@color/apple_blue"
+                android:thumbTint="@color/apple_blue"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Scroll Speed -->
+            <TextView
+                android:id="@+id/tvLabelScrollSpeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Two-Finger Scroll Speed: 1.0x"
+                android:textColor="@color/apple_text_primary"
+                android:textSize="13sp" />
+
+            <SeekBar
+                android:id="@+id/seekTouchpadScroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="25"
+                android:progress="10"
+                android:progressTint="@color/apple_amber"
+                android:thumbTint="@color/apple_amber"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="8dp" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchAccel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pointer Acceleration"
+                android:textColor="@color/apple_text_primary"
+                android:textSize="14sp"
+                android:checked="true"
+                app:thumbTint="@color/apple_blue"
+                app:trackTint="@color/apple_blue_subtle" />
+        </LinearLayout>
+
+        <!-- HARDWARE SHORTCUTS -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HARDWARE CONTROLS"
+            android:textColor="@color/apple_text_tertiary"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.06"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Velocity Acceleration"
-            android:textColor="@color/apple_text_primary"
-            android:checked="true"
-            app:thumbTint="@color/apple_blue"
-            app:trackTint="@color/apple_blue_subtle" />
+            android:orientation="vertical"
+            android:background="@drawable/bg_apple_card"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp"
+            android:layout_marginBottom="18dp">
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switchInvertX"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Invert Horizontal Axis (X)"
-            android:textColor="@color/apple_text_primary"
-            android:checked="true"
-            app:thumbTint="@color/apple_blue"
-            app:trackTint="@color/apple_blue_subtle" />
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchVolumeKeys"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Physical Volume Buttons Control Slides &amp; Media"
+                android:textColor="@color/apple_text_primary"
+                android:textSize="14sp"
+                android:checked="true"
+                app:thumbTint="@color/apple_amber"
+                app:trackTint="@color/apple_amber_subtle" />
+        </LinearLayout>
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switchInvertY"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Invert Vertical Axis (Y)"
-            android:textColor="@color/apple_text_primary"
-            android:checked="true"
-            app:thumbTint="@color/apple_blue"
-            app:trackTint="@color/apple_blue_subtle" />
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switchVolumeKeys"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Physical Volume Rocker Shortcuts"
-            android:textColor="@color/apple_text_primary"
-            android:checked="true"
-            app:thumbTint="@color/apple_amber"
-            app:trackTint="@color/apple_amber_subtle" />
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switchHaptics"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Taptic Haptic Feedback"
-            android:textColor="@color/apple_text_primary"
-            android:checked="true"
-            app:thumbTint="@color/apple_green"
-            app:trackTint="@color/apple_green_subtle" />
-
-        <!-- Wi-Fi Companion Information -->
+        <!-- WI-FI SERVER CARD -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/bg_apple_card"
             android:padding="14dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="20dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -172,7 +220,7 @@
                 android:id="@+id/tvWifiServerInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="WebSocket Server Active on port 8765\nAllows zero-bluetooth operation on local network."
+                android:text="WebSocket Server Active on port 8765\nCompanion web controller accessible on local network."
                 android:textColor="@color/apple_text_secondary"
                 android:textSize="11sp"
                 android:layout_marginTop="4dp" />

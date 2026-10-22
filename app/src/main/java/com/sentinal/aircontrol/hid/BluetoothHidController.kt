@@ -347,6 +347,15 @@ class BluetoothHidController(private val context: Context) {
 
     fun reelPlayPause() = sendKey(HidKeyCodes.KEY_SPACE)
 
+    fun brightnessUp() = sendConsumer(HidKeyCodes.CONSUMER_BRIGHTNESS_INCREMENT)
+    fun brightnessDown() = sendConsumer(HidKeyCodes.CONSUMER_BRIGHTNESS_DECREMENT)
+
+    // Touchpad Multi-Finger Gestures
+    fun taskView() = sendShortcut(HidKeyCodes.KEY_TAB, gui = true)
+    fun showDesktop() = sendShortcut(HidKeyCodes.KEY_D, gui = true)
+    fun switchDesktopNext() = sendShortcut(HidKeyCodes.KEY_RIGHT_ARROW, ctrl = true, gui = true)
+    fun switchDesktopPrev() = sendShortcut(HidKeyCodes.KEY_LEFT_ARROW, ctrl = true, gui = true)
+
     fun keyReturn() = sendKey(HidKeyCodes.KEY_RETURN)
     fun keyBackspace() = sendKey(HidKeyCodes.KEY_BACKSPACE)
     fun keyEscape() = sendKey(HidKeyCodes.KEY_ESCAPE)

@@ -6,6 +6,8 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 
+import com.sentinal.aircontrol.AirControlApp
+
 /**
  * Apple Taptic-Calibrated Haptic Feedback Controller.
  * Provides microsecond-precise mechanical feedback conforming to WWDC Audio-Haptic guidelines.
@@ -20,11 +22,14 @@ class HapticFeedbackController(context: Context) {
         context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
     }
 
+    private val isEnabled: Boolean
+        get() = AirControlApp.instance.settingsState.hapticsEnabled
+
     /**
      * Subtle mechanical tick (ideal for keyboard typing, scroll wheel, and slider steps).
      */
     fun tickFeedback() {
-        if (vibrator == null || !vibrator.hasVibrator()) return
+        if (!isEnabled || vibrator == null || !vibrator.hasVibrator()) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_TICK))
         } else {
@@ -37,7 +42,7 @@ class HapticFeedbackController(context: Context) {
      * Primary button click (tactile press confirmation).
      */
     fun clickFeedback() {
-        if (vibrator == null || !vibrator.hasVibrator()) return
+        if (!isEnabled || vibrator == null || !vibrator.hasVibrator()) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
         } else {
@@ -50,7 +55,7 @@ class HapticFeedbackController(context: Context) {
      * Heavy affirmative click (mode change, spotlight trigger, F5 presentation).
      */
     fun heavyClickFeedback() {
-        if (vibrator == null || !vibrator.hasVibrator()) return
+        if (!isEnabled || vibrator == null || !vibrator.hasVibrator()) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
         } else {
@@ -63,7 +68,7 @@ class HapticFeedbackController(context: Context) {
      * Mode transition snap.
      */
     fun modeChangeFeedback(modeIndex: Int) {
-        if (vibrator == null || !vibrator.hasVibrator()) return
+        if (!isEnabled || vibrator == null || !vibrator.hasVibrator()) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
         } else {
@@ -76,7 +81,7 @@ class HapticFeedbackController(context: Context) {
      * Success / calibration complete notification waveform.
      */
     fun successFeedback() {
-        if (vibrator == null || !vibrator.hasVibrator()) return
+        if (!isEnabled || vibrator == null || !vibrator.hasVibrator()) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val timings = longArrayOf(0, 30, 40, 50)
             val amplitudes = intArrayOf(0, 100, 0, 200)
