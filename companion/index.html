@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirControl — Direct Install</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background-color: #000000;
+            color: #F5F5F7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 24px;
+        }
+        .card {
+            background: #161618;
+            border: 1px solid #28282A;
+            border-radius: 28px;
+            padding: 36px 28px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+        .icon {
+            width: 80px;
+            height: 80px;
+            background: #1C1C1E;
+            border: 1px solid #38383A;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .icon svg {
+            width: 44px;
+            height: 44px;
+            fill: #0A84FF;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+        p.sub {
+            font-size: 13px;
+            color: #86868B;
+            margin-bottom: 28px;
+        }
+        .btn-download {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: #0A84FF;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 16px;
+            transition: transform 0.1s ease, background 0.2s ease;
+            box-shadow: 0 4px 14px rgba(10, 132, 255, 0.4);
+        }
+        .btn-download:active {
+            transform: scale(0.97);
+            background: #0071E3;
+        }
+        .pill {
+            display: inline-block;
+            background: #1C1C1E;
+            border: 1px solid #28282A;
+            color: #30D158;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-top: 24px;
+            letter-spacing: 0.04em;
+        }
+        .info {
+            margin-top: 16px;
+            font-size: 11px;
+            color: #636366;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="icon">
+            <svg viewBox="0 0 24 24">
+                <path d="M20,18c1.1,0 2,-0.9 2,-2V6c0,-1.1 -0.9,-2 -2,-2H4C2.9,4 2,4.9 2,6v10c0,1.1 0.9,2 2,2H0v2h24v-2h-4zM4,6h16v10H4V6z"/>
+            </svg>
+        </div>
+        <h1>AirControl</h1>
+        <p class="sub">Apple Multi-Touch Trackpad &amp; Remote</p>
+
+        <a href="app-debug.apk" class="btn-download" download>
+            Download &amp; Install APK
+        </a>
+
+        <div class="pill">BUILD VERIFIED &bull; 12.8 MB</div>
+
+        <p class="info">
+            Tap download, then open the file in your notifications or Downloads to install.<br>
+            Allow "Install unknown apps" if prompted.
+        </p>
+    </div>
+</body>
+</html>
