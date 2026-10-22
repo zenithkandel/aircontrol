@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">AirControl</string>
+    <string name="sentinal_tagline">Sentinal 3-in-1 Wireless HID</string>
+    <string name="mode_presentation">PRESENTATION</string>
+    <string name="mode_air_mouse">AIR MOUSE</string>
+    <string name="mode_reels">REELS</string>
+    <string name="status_disconnected">DISCONNECTED</string>
+    <string name="status_advertising">ADVERTISING (SENTINAL)</string>
+    <string name="status_connecting">CONNECTING...</string>
+    <string name="status_connected">CONNECTED</string>
+</resources>
