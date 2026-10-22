@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="http://schemas.android.com/tools">
+    <color name="apple_amber">#FF9F0A</color>
+    <color name="apple_amber_subtle">#33220A</color>
+    <color name="apple_blue">#0A84FF</color>
+    <color name="apple_blue_pressed">#0071E3</color>
+    <color name="apple_blue_subtle">#1A2B44</color>
+    <color name="apple_canvas">#000000</color>
+    <color name="apple_catchlight">#38383A</color>
+    <color name="apple_elevated_1">#161618</color>
+    <color name="apple_elevated_2">#1C1C1E</color>
+    <color name="apple_green">#30D158</color>
+    <color name="apple_green_subtle">#0F2E18</color>
+    <color name="apple_hairline">#28282A</color>
+    <color name="apple_pressed">#48484A</color>
+    <color name="apple_red">#FF453A</color>
+    <color name="apple_selected">#3A3A3C</color>
+    <color name="apple_subtle_divider">#1F1F21</color>
+    <color name="apple_text_primary">#F5F5F7</color>
+    <color name="apple_text_secondary">#86868B</color>
+    <color name="apple_text_tertiary">#636366</color>
+    <color name="apple_well">#2C2C2E</color>
+    <string name="aircontrol_tagline">Spatial Remote &amp; Controller</string>
+    <string name="app_name">AirControl</string>
+    <string name="mode_air_mouse">AIR MOUSE</string>
+    <string name="mode_keyboard">KEYBOARD</string>
+    <string name="mode_presentation">SLIDES</string>
+    <string name="mode_reels">MEDIA</string>
+    <string name="status_advertising">PAIRING: AIRCONTROL</string>
+    <string name="status_connected">CONNECTED</string>
+    <string name="status_connecting">CONNECTING...</string>
+    <string name="status_disconnected">DISCONNECTED</string>
+    <style name="AppleMaterialButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@null</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingRight">4dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+    <style name="Theme.AirControl" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/apple_blue</item>
+        <item name="colorPrimaryVariant">@color/apple_blue</item>
+        <item name="colorOnPrimary">@color/apple_canvas</item>
+        <item name="colorSecondary">@color/apple_amber</item>
+        <item name="colorSecondaryVariant">@color/apple_amber</item>
+        <item name="colorOnSecondary">@color/apple_canvas</item>
+        <item name="android:statusBarColor">@color/apple_canvas</item>
+        <item name="android:navigationBarColor">@color/apple_canvas</item>
+        <item name="android:windowBackground">@color/apple_canvas</item>
+        <item name="android:windowLightStatusBar" ns1:targetApi="m">false</item>
+        <item name="materialButtonStyle">@style/AppleMaterialButton</item>
+    </style>
+</resources>

@@ -120,4 +120,5 @@ string status_advertising
 string status_connected
 string status_connecting
 string status_disconnected
+style AppleMaterialButton
 style Theme.AirControl

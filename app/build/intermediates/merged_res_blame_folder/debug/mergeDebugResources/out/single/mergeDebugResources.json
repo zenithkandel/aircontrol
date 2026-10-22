@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_apple_dot_status.xml.flat",
+        "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_apple_dot_status.xml"
+    },
+    {
         "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_apple_segmented_track.xml.flat",
         "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_apple_segmented_track.xml"
     },
@@ -30,10 +34,6 @@
     {
         "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_apple_input_field.xml.flat",
         "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_apple_input_field.xml"
-    },
-    {
-        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_apple_dot_status.xml.flat",
-        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_apple_dot_status.xml"
     },
     {
         "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\layout_dialog_settings.xml.flat",
