@@ -41,18 +41,29 @@
                 android:id="@+id/tvSubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Spatial Remote &amp; Controller"
+                android:text="Precision Remote &amp; Touchpad"
                 android:textColor="@color/apple_text_secondary"
                 android:textSize="11sp" />
         </LinearLayout>
 
-        <!-- Settings Button -->
+        <!-- Light / Dark Appearance Toggle Button -->
+        <ImageButton
+            android:id="@+id/btnThemeToggle"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_apple_btn_secondary"
+            android:src="@drawable/ic_theme_toggle"
+            app:tint="@color/apple_text_secondary"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="Appearance" />
+
+        <!-- Settings Button (Gear Icon) -->
         <ImageButton
             android:id="@+id/btnSettings"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:background="@drawable/bg_apple_btn_secondary"
-            android:src="@android:drawable/ic_menu_manage"
+            android:src="@drawable/ic_gear"
             app:tint="@color/apple_text_secondary"
             android:contentDescription="Settings" />
     </LinearLayout>
@@ -103,7 +114,7 @@
                 android:id="@+id/tvDeviceTarget"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" • Select Device ▾"
+                android:text=" • Select Device"
                 android:textColor="@color/apple_text_primary"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -155,7 +166,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Mouse"
+            android:text="Touchpad"
             android:textSize="12sp"
             android:textStyle="normal"
             android:textColor="@color/apple_text_secondary"
@@ -257,7 +268,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1.6"
-                android:text="Next Slide  ›"
+                android:text="Next Slide"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="@color/apple_text_primary"
@@ -270,7 +281,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1.0"
-                android:text="‹  Previous Slide"
+                android:text="Previous Slide"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/apple_text_primary"
@@ -311,7 +322,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.2"
-                    android:text="🔦 Spotlight"
+                    android:text="Spotlight"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="@color/apple_amber"
@@ -322,13 +333,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Volume rocker advances &amp; reverses slides hands-free"
+                android:text="Volume keys advance &amp; reverse slides hands-free"
                 android:textColor="@color/apple_text_tertiary"
                 android:textSize="11sp" />
         </LinearLayout>
 
         <!-- ============================================================= -->
-        <!-- MODE 2: AIR MOUSE                                             -->
+        <!-- MODE 2: TOUCHPAD (APPLE MULTI-TOUCH GLASS TRACKPAD)           -->
         <!-- ============================================================= -->
         <LinearLayout
             android:id="@+id/panelAirMouse"
@@ -337,7 +348,7 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <!-- Gyro Telemetry Capsule -->
+            <!-- Trackpad Status & Fullscreen Trigger Header -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -346,124 +357,102 @@
                 android:background="@drawable/bg_apple_card"
                 android:paddingHorizontal="14dp"
                 android:paddingVertical="9dp"
-                android:layout_marginBottom="12dp">
+                android:layout_marginBottom="10dp">
 
                 <TextView
-                    android:id="@+id/tvGyroState"
+                    android:id="@+id/tvTouchpadInfo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Pointer Active (100 Hz)"
-                    android:textColor="@color/apple_green"
+                    android:text="Multi-Finger Precision Trackpad"
+                    android:textColor="@color/apple_blue"
                     android:textSize="11sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tvMotionReadout"
+                <Button
+                    android:id="@+id/btnEnterFullscreen"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="dX: 0  dY: 0"
-                    android:textColor="@color/apple_text_secondary"
-                    android:fontFamily="monospace"
-                    android:textSize="11sp" />
+                    android:layout_height="32dp"
+                    android:text="Fullscreen"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/apple_blue"
+                    android:background="@drawable/bg_apple_btn_secondary"
+                    android:paddingHorizontal="10dp" />
             </LinearLayout>
 
-            <!-- Dual Click & Center Scroll Area -->
-            <LinearLayout
+            <!-- Large Glass Touch Canvas -->
+            <FrameLayout
+                android:id="@+id/mainTouchpadCanvas"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1.6"
-                android:orientation="horizontal"
-                android:layout_marginBottom="12dp">
+                android:background="@drawable/bg_apple_hero_card"
+                android:layout_marginBottom="10dp">
 
-                <!-- Left Click Surface -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="GLASS TOUCHPAD"
+                        android:textColor="@color/apple_text_tertiary"
+                        android:textSize="10sp"
+                        android:letterSpacing="0.08" />
+
+                    <TextView
+                        android:id="@+id/tvTouchpadHint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1-Finger Cursor • 2-Finger Scroll • 3-Finger Swipe"
+                        android:textColor="@color/apple_text_secondary"
+                        android:textSize="11sp"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Bottom Click Pads & Task View Shortcuts -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal">
+
                 <Button
                     android:id="@+id/btnLeftClick"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.2"
                     android:text="Left Click"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:textColor="@color/apple_text_primary"
-                    android:background="@drawable/bg_apple_hero_card_accent"
+                    android:background="@drawable/bg_apple_btn_secondary"
                     android:layout_marginEnd="8dp" />
 
-                <!-- Vertical Scroll Strip -->
-                <LinearLayout
-                    android:id="@+id/scrollWheelLayout"
-                    android:layout_width="54dp"
+                <Button
+                    android:id="@+id/btnTaskView"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_apple_card"
-                    android:gravity="center"
-                    android:layout_marginEnd="8dp">
+                    android:layout_weight="0.9"
+                    android:text="Tasks"
+                    android:textSize="13sp"
+                    android:textColor="@color/apple_blue"
+                    android:background="@drawable/bg_apple_btn_secondary"
+                    android:layout_marginEnd="8dp" />
 
-                    <Button
-                        android:id="@+id/btnScrollUp"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="▲"
-                        android:textSize="15sp"
-                        android:textColor="@color/apple_text_primary"
-                        android:background="@android:color/transparent" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="SCROLL"
-                        android:textSize="8sp"
-                        android:textColor="@color/apple_text_tertiary" />
-
-                    <Button
-                        android:id="@+id/btnScrollDown"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="▼"
-                        android:textSize="15sp"
-                        android:textColor="@color/apple_text_primary"
-                        android:background="@android:color/transparent" />
-                </LinearLayout>
-
-                <!-- Right Click Surface -->
                 <Button
                     android:id="@+id/btnRightClick"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.0"
+                    android:layout_weight="1.2"
                     android:text="Right Click"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
-                    android:textColor="@color/apple_text_primary"
-                    android:background="@drawable/bg_apple_hero_card" />
-            </LinearLayout>
-
-            <!-- Clutch & Recalibrate Controls -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnClutch"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.3"
-                    android:text="Hold to Freeze Pointer"
-                    android:textSize="12sp"
-                    android:textColor="@color/apple_amber"
-                    android:background="@drawable/bg_apple_btn_amber"
-                    android:layout_marginEnd="8dp" />
-
-                <Button
-                    android:id="@+id/btnCalibrate"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:text="Recalibrate"
-                    android:textSize="12sp"
                     android:textColor="@color/apple_text_primary"
                     android:background="@drawable/bg_apple_btn_secondary" />
             </LinearLayout>
@@ -507,7 +496,7 @@
                     android:id="@+id/btnSendText"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
-                    android:text="Send ↵"
+                    android:text="Send"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="@color/apple_text_primary"
@@ -515,7 +504,7 @@
                     android:paddingHorizontal="14dp" />
             </LinearLayout>
 
-            <!-- Modifiers Row: esc, tab, space, del, return -->
+            <!-- Modifiers Row: esc, tab, space, Delete, return -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
@@ -560,8 +549,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.1"
-                    android:text="⌫"
-                    android:textSize="15sp"
+                    android:text="Delete"
+                    android:textSize="11sp"
                     android:textColor="@color/apple_text_primary"
                     android:background="@drawable/bg_apple_key"
                     android:layout_marginEnd="6dp" />
@@ -571,7 +560,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.3"
-                    android:text="return"
+                    android:text="Return"
                     android:textSize="11sp"
                     android:textColor="@color/apple_text_primary"
                     android:background="@drawable/bg_apple_key" />
@@ -639,7 +628,7 @@
                     android:background="@drawable/bg_apple_key" />
             </LinearLayout>
 
-            <!-- Directional Navigation & Mouse Clicker Cluster -->
+            <!-- Directional Navigation & Integrated Trackpad -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -683,7 +672,7 @@
                     </LinearLayout>
                 </FrameLayout>
 
-                <!-- Arrow Up Row (PgUp | ▲ | PgDn) -->
+                <!-- Arrow Up Row (PgUp | Up | PgDn) -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
@@ -704,8 +693,8 @@
                         android:id="@+id/btnArrowUp"
                         android:layout_width="72dp"
                         android:layout_height="match_parent"
-                        android:text="▲"
-                        android:textSize="16sp"
+                        android:text="Up"
+                        android:textSize="14sp"
                         android:textColor="@color/apple_text_primary"
                         android:background="@drawable/bg_apple_key"
                         android:layout_marginEnd="10dp" />
@@ -720,7 +709,7 @@
                         android:background="@drawable/bg_apple_key" />
                 </LinearLayout>
 
-                <!-- Arrow Bottom Row (◀ | ▼ | ▶) -->
+                <!-- Arrow Bottom Row (Left | Down | Right) -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
@@ -731,8 +720,8 @@
                         android:id="@+id/btnArrowLeft"
                         android:layout_width="72dp"
                         android:layout_height="match_parent"
-                        android:text="◀"
-                        android:textSize="16sp"
+                        android:text="Left"
+                        android:textSize="14sp"
                         android:textColor="@color/apple_text_primary"
                         android:background="@drawable/bg_apple_key"
                         android:layout_marginEnd="10dp" />
@@ -741,8 +730,8 @@
                         android:id="@+id/btnArrowDown"
                         android:layout_width="72dp"
                         android:layout_height="match_parent"
-                        android:text="▼"
-                        android:textSize="16sp"
+                        android:text="Down"
+                        android:textSize="14sp"
                         android:textColor="@color/apple_text_primary"
                         android:background="@drawable/bg_apple_key"
                         android:layout_marginEnd="10dp" />
@@ -751,8 +740,8 @@
                         android:id="@+id/btnArrowRight"
                         android:layout_width="72dp"
                         android:layout_height="match_parent"
-                        android:text="▶"
-                        android:textSize="16sp"
+                        android:text="Right"
+                        android:textSize="14sp"
                         android:textColor="@color/apple_text_primary"
                         android:background="@drawable/bg_apple_key" />
                 </LinearLayout>
@@ -788,7 +777,7 @@
         </LinearLayout>
 
         <!-- ============================================================= -->
-        <!-- MODE 4: MEDIA (REELS / SHORTS / MUSIC SCROLLER)               -->
+        <!-- MODE 4: MEDIA (REELS / SHORTS / MUSIC CONTROLLER)             -->
         <!-- ============================================================= -->
         <LinearLayout
             android:id="@+id/panelReels"
@@ -803,7 +792,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1.6"
-                android:text="Next Video  ⌄"
+                android:text="Next Video"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="@color/apple_text_primary"
@@ -823,7 +812,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="⌃  Previous Video"
+                    android:text="Previous Video"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@color/apple_text_primary"
@@ -835,19 +824,19 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="⏯  Play / Pause"
+                    android:text="Play / Pause"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@color/apple_text_primary"
                     android:background="@drawable/bg_apple_hero_card" />
             </LinearLayout>
 
-            <!-- Volume & Quick Action Row -->
+            <!-- Volume Controller Row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:orientation="horizontal"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="8dp">
 
                 <Button
                     android:id="@+id/btnVolDown"
@@ -868,17 +857,35 @@
                     android:text="Volume +"
                     android:textSize="13sp"
                     android:textColor="@color/apple_text_primary"
+                    android:background="@drawable/bg_apple_btn_secondary" />
+            </LinearLayout>
+
+            <!-- Brightness Controller Row (Explicitly Requested) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <Button
+                    android:id="@+id/btnBrightnessDown"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Brightness −"
+                    android:textSize="13sp"
+                    android:textColor="@color/apple_text_primary"
                     android:background="@drawable/bg_apple_btn_secondary"
                     android:layout_marginEnd="8dp" />
 
                 <Button
-                    android:id="@+id/btnLike"
+                    android:id="@+id/btnBrightnessUp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Like ❤️"
+                    android:text="Brightness +"
                     android:textSize="13sp"
-                    android:textColor="@color/apple_red"
+                    android:textColor="@color/apple_text_primary"
                     android:background="@drawable/bg_apple_btn_secondary" />
             </LinearLayout>
 
@@ -890,6 +897,70 @@
                 android:textColor="@color/apple_text_tertiary"
                 android:textSize="11sp" />
         </LinearLayout>
+    </FrameLayout>
+
+    <!-- ================================================================= -->
+    <!-- FULLSCREEN TOUCHPAD OVERLAY                                       -->
+    <!-- ================================================================= -->
+    <FrameLayout
+        android:id="@+id/fullscreenTouchpadOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/apple_canvas"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Massive full screen trackpad canvas -->
+        <View
+            android:id="@+id/fullscreenTouchpadCanvas"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- Floating Apple Top Pill with Exit Button and Status -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_apple_pill_status"
+            android:paddingStart="16dp"
+            android:paddingEnd="8dp">
+
+            <TextView
+                android:id="@+id/tvFullscreenGestureHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fullscreen Trackpad"
+                android:textColor="@color/apple_text_secondary"
+                android:textSize="12sp"
+                android:layout_marginEnd="12dp" />
+
+            <Button
+                android:id="@+id/btnExitFullscreen"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="Exit"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="@color/apple_red"
+                android:background="@drawable/bg_apple_btn_secondary"
+                android:paddingHorizontal="12dp" />
+        </LinearLayout>
+
+        <!-- Centered Watermark -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Tap: Click  •  2-Finger: Scroll &amp; Menu  •  3-Finger: Swipe"
+            android:textColor="@color/apple_text_tertiary"
+            android:textSize="13sp"
+            android:letterSpacing="0.04" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

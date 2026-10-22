@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/apple_canvas"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textColor="@color/apple_text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:letterSpacing="-0.02"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Preferences &amp; Controller Behavior"
+            android:textColor="@color/apple_text_secondary"
+            android:textSize="12sp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- APPEARANCE GROUP -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="APPEARANCE"
+            android:textColor="@color/apple_text_tertiary"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.06"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_apple_card"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp"
+            android:layout_marginBottom="18dp">
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchDarkMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dark Appearance"
+                android:textColor="@color/apple_text_primary"
+                android:textSize="14sp"
+                android:checked="true"
+                app:thumbTint="@color/apple_blue"
+                app:trackTint="@color/apple_blue_subtle" />
+        </LinearLayout>
+
+        <!-- HAPTICS & FEEDBACK GROUP -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FEEDBACK"
+            android:textColor="@color/apple_text_tertiary"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.06"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_apple_card"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp"
+            android:layout_marginBottom="18dp">
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchHaptics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Taptic Haptic Feedback"
+                android:textColor="@color/apple_text_primary"
+                android:textSize="14sp"
+                android:checked="true"
+                app:thumbTint="@color/apple_green"
+                app:trackTint="@color/apple_green_subtle" />
+        </LinearLayout>
+
+        <!-- TRACKPAD & INPUT GROUP -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TRACKPAD &amp; GESTURES"
+            android:textColor="@color/apple_text_tertiary"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.06"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_apple_card"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="12dp"
+            android:layout_marginBottom="18dp">
+
+            <!-- Sensitivity -->
+            <TextView
+                android:id="@+id/tvLabelTouchpadSens"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tracking Speed: 1.2x"
+                android:textColor="@color/apple_text_primary"
+                android:textSize="13sp" />
+
+            <SeekBar
+                android:id="@+id/seekTouchpadSens"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="30"
+                android:progress="12"
+                android:progressTint="@color/apple_blue"
+                android:thumbTint="@color/apple_blue"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Scroll Speed -->
+            <TextView
+                android:id="@+id/tvLabelScrollSpeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Two-Finger Scroll Speed: 1.0x"
+                android:textColor="@color/apple_text_primary"
+                android:textSize="13sp" />
+
+            <SeekBar
+                android:id="@+id/seekTouchpadScroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="25"
+                android:progress="10"
+                android:progressTint="@color/apple_amber"
+                android:thumbTint="@color/apple_amber"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="8dp" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchAccel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pointer Acceleration"
+                android:textColor="@color/apple_text_primary"
+                android:textSize="14sp"
+                android:checked="true"
+                app:thumbTint="@color/apple_blue"
+                app:trackTint="@color/apple_blue_subtle" />
+        </LinearLayout>
+
+        <!-- HARDWARE SHORTCUTS -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HARDWARE CONTROLS"
+            android:textColor="@color/apple_text_tertiary"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.06"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_apple_card"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp"
+            android:layout_marginBottom="18dp">
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchVolumeKeys"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Physical Volume Buttons Control Slides &amp; Media"
+                android:textColor="@color/apple_text_primary"
+                android:textSize="14sp"
+                android:checked="true"
+                app:thumbTint="@color/apple_amber"
+                app:trackTint="@color/apple_amber_subtle" />
+        </LinearLayout>
+
+        <!-- WI-FI SERVER CARD -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_apple_card"
+            android:padding="14dp"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WI-FI COMPANION SERVER"
+                android:textColor="@color/apple_blue"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.05" />
+
+            <TextView
+                android:id="@+id/tvWifiServerInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WebSocket Server Active on port 8765\nCompanion web controller accessible on local network."
+                android:textColor="@color/apple_text_secondary"
+                android:textSize="11sp"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+
+        <!-- Close Button -->
+        <Button
+            android:id="@+id/btnCloseSettings"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Save &amp; Close"
+            android:textColor="@color/apple_text_primary"
+            android:textStyle="bold"
+            android:background="@drawable/bg_apple_btn_primary" />
+
+    </LinearLayout>
+</ScrollView>

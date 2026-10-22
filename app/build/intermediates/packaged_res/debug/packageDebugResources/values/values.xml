@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="http://schemas.android.com/tools">
-    <color name="apple_amber">#FF9F0A</color>
-    <color name="apple_amber_subtle">#33220A</color>
-    <color name="apple_blue">#0A84FF</color>
-    <color name="apple_blue_pressed">#0071E3</color>
-    <color name="apple_blue_subtle">#1A2B44</color>
-    <color name="apple_canvas">#000000</color>
-    <color name="apple_catchlight">#38383A</color>
-    <color name="apple_elevated_1">#161618</color>
-    <color name="apple_elevated_2">#1C1C1E</color>
-    <color name="apple_green">#30D158</color>
-    <color name="apple_green_subtle">#0F2E18</color>
-    <color name="apple_hairline">#28282A</color>
-    <color name="apple_pressed">#48484A</color>
-    <color name="apple_red">#FF453A</color>
-    <color name="apple_selected">#3A3A3C</color>
-    <color name="apple_subtle_divider">#1F1F21</color>
-    <color name="apple_text_primary">#F5F5F7</color>
-    <color name="apple_text_secondary">#86868B</color>
-    <color name="apple_text_tertiary">#636366</color>
-    <color name="apple_well">#2C2C2E</color>
+    <color name="apple_amber">#FF9500</color>
+    <color name="apple_amber_subtle">#FFF4E5</color>
+    <color name="apple_blue">#007AFF</color>
+    <color name="apple_blue_pressed">#0056B3</color>
+    <color name="apple_blue_subtle">#E5F0FF</color>
+    <color name="apple_canvas">#F2F2F7</color>
+    <color name="apple_catchlight">#E5E5EA</color>
+    <color name="apple_elevated_1">#FFFFFF</color>
+    <color name="apple_elevated_2">#E5E5EA</color>
+    <color name="apple_green">#34C759</color>
+    <color name="apple_green_subtle">#E8F8EC</color>
+    <color name="apple_hairline">#D1D1D6</color>
+    <color name="apple_pressed">#AEAEB2</color>
+    <color name="apple_red">#FF3B30</color>
+    <color name="apple_selected">#C7C7CC</color>
+    <color name="apple_subtle_divider">#E5E5EA</color>
+    <color name="apple_text_primary">#1C1C1E</color>
+    <color name="apple_text_secondary">#6C6C70</color>
+    <color name="apple_text_tertiary">#8E8E93</color>
+    <color name="apple_well">#D1D1D6</color>
     <string name="aircontrol_tagline">Spatial Remote &amp; Controller</string>
     <string name="app_name">AirControl</string>
     <string name="mode_air_mouse">AIR MOUSE</string>
@@ -53,7 +53,7 @@
         <item name="android:statusBarColor">@color/apple_canvas</item>
         <item name="android:navigationBarColor">@color/apple_canvas</item>
         <item name="android:windowBackground">@color/apple_canvas</item>
-        <item name="android:windowLightStatusBar" ns1:targetApi="m">false</item>
+        <item name="android:windowLightStatusBar" ns1:targetApi="m">true</item>
         <item name="materialButtonStyle">@style/AppleMaterialButton</item>
     </style>
 </resources>

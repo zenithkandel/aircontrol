@@ -26,70 +26,48 @@ public final class DialogSettingsBinding implements ViewBinding {
   public final Button btnCloseSettings;
 
   @NonNull
-  public final SeekBar seekAlpha;
+  public final SeekBar seekTouchpadScroll;
 
   @NonNull
-  public final SeekBar seekDeadzone;
-
-  @NonNull
-  public final SeekBar seekSensX;
-
-  @NonNull
-  public final SeekBar seekSensY;
+  public final SeekBar seekTouchpadSens;
 
   @NonNull
   public final SwitchMaterial switchAccel;
 
   @NonNull
+  public final SwitchMaterial switchDarkMode;
+
+  @NonNull
   public final SwitchMaterial switchHaptics;
-
-  @NonNull
-  public final SwitchMaterial switchInvertX;
-
-  @NonNull
-  public final SwitchMaterial switchInvertY;
 
   @NonNull
   public final SwitchMaterial switchVolumeKeys;
 
   @NonNull
-  public final TextView tvLabelAlpha;
+  public final TextView tvLabelScrollSpeed;
 
   @NonNull
-  public final TextView tvLabelDeadzone;
-
-  @NonNull
-  public final TextView tvLabelSensX;
-
-  @NonNull
-  public final TextView tvLabelSensY;
+  public final TextView tvLabelTouchpadSens;
 
   @NonNull
   public final TextView tvWifiServerInfo;
 
   private DialogSettingsBinding(@NonNull ScrollView rootView, @NonNull Button btnCloseSettings,
-      @NonNull SeekBar seekAlpha, @NonNull SeekBar seekDeadzone, @NonNull SeekBar seekSensX,
-      @NonNull SeekBar seekSensY, @NonNull SwitchMaterial switchAccel,
-      @NonNull SwitchMaterial switchHaptics, @NonNull SwitchMaterial switchInvertX,
-      @NonNull SwitchMaterial switchInvertY, @NonNull SwitchMaterial switchVolumeKeys,
-      @NonNull TextView tvLabelAlpha, @NonNull TextView tvLabelDeadzone,
-      @NonNull TextView tvLabelSensX, @NonNull TextView tvLabelSensY,
+      @NonNull SeekBar seekTouchpadScroll, @NonNull SeekBar seekTouchpadSens,
+      @NonNull SwitchMaterial switchAccel, @NonNull SwitchMaterial switchDarkMode,
+      @NonNull SwitchMaterial switchHaptics, @NonNull SwitchMaterial switchVolumeKeys,
+      @NonNull TextView tvLabelScrollSpeed, @NonNull TextView tvLabelTouchpadSens,
       @NonNull TextView tvWifiServerInfo) {
     this.rootView = rootView;
     this.btnCloseSettings = btnCloseSettings;
-    this.seekAlpha = seekAlpha;
-    this.seekDeadzone = seekDeadzone;
-    this.seekSensX = seekSensX;
-    this.seekSensY = seekSensY;
+    this.seekTouchpadScroll = seekTouchpadScroll;
+    this.seekTouchpadSens = seekTouchpadSens;
     this.switchAccel = switchAccel;
+    this.switchDarkMode = switchDarkMode;
     this.switchHaptics = switchHaptics;
-    this.switchInvertX = switchInvertX;
-    this.switchInvertY = switchInvertY;
     this.switchVolumeKeys = switchVolumeKeys;
-    this.tvLabelAlpha = tvLabelAlpha;
-    this.tvLabelDeadzone = tvLabelDeadzone;
-    this.tvLabelSensX = tvLabelSensX;
-    this.tvLabelSensY = tvLabelSensY;
+    this.tvLabelScrollSpeed = tvLabelScrollSpeed;
+    this.tvLabelTouchpadSens = tvLabelTouchpadSens;
     this.tvWifiServerInfo = tvWifiServerInfo;
   }
 
@@ -126,27 +104,15 @@ public final class DialogSettingsBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.seekAlpha;
-      SeekBar seekAlpha = ViewBindings.findChildViewById(rootView, id);
-      if (seekAlpha == null) {
+      id = R.id.seekTouchpadScroll;
+      SeekBar seekTouchpadScroll = ViewBindings.findChildViewById(rootView, id);
+      if (seekTouchpadScroll == null) {
         break missingId;
       }
 
-      id = R.id.seekDeadzone;
-      SeekBar seekDeadzone = ViewBindings.findChildViewById(rootView, id);
-      if (seekDeadzone == null) {
-        break missingId;
-      }
-
-      id = R.id.seekSensX;
-      SeekBar seekSensX = ViewBindings.findChildViewById(rootView, id);
-      if (seekSensX == null) {
-        break missingId;
-      }
-
-      id = R.id.seekSensY;
-      SeekBar seekSensY = ViewBindings.findChildViewById(rootView, id);
-      if (seekSensY == null) {
+      id = R.id.seekTouchpadSens;
+      SeekBar seekTouchpadSens = ViewBindings.findChildViewById(rootView, id);
+      if (seekTouchpadSens == null) {
         break missingId;
       }
 
@@ -156,21 +122,15 @@ public final class DialogSettingsBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.switchDarkMode;
+      SwitchMaterial switchDarkMode = ViewBindings.findChildViewById(rootView, id);
+      if (switchDarkMode == null) {
+        break missingId;
+      }
+
       id = R.id.switchHaptics;
       SwitchMaterial switchHaptics = ViewBindings.findChildViewById(rootView, id);
       if (switchHaptics == null) {
-        break missingId;
-      }
-
-      id = R.id.switchInvertX;
-      SwitchMaterial switchInvertX = ViewBindings.findChildViewById(rootView, id);
-      if (switchInvertX == null) {
-        break missingId;
-      }
-
-      id = R.id.switchInvertY;
-      SwitchMaterial switchInvertY = ViewBindings.findChildViewById(rootView, id);
-      if (switchInvertY == null) {
         break missingId;
       }
 
@@ -180,27 +140,15 @@ public final class DialogSettingsBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.tvLabelAlpha;
-      TextView tvLabelAlpha = ViewBindings.findChildViewById(rootView, id);
-      if (tvLabelAlpha == null) {
+      id = R.id.tvLabelScrollSpeed;
+      TextView tvLabelScrollSpeed = ViewBindings.findChildViewById(rootView, id);
+      if (tvLabelScrollSpeed == null) {
         break missingId;
       }
 
-      id = R.id.tvLabelDeadzone;
-      TextView tvLabelDeadzone = ViewBindings.findChildViewById(rootView, id);
-      if (tvLabelDeadzone == null) {
-        break missingId;
-      }
-
-      id = R.id.tvLabelSensX;
-      TextView tvLabelSensX = ViewBindings.findChildViewById(rootView, id);
-      if (tvLabelSensX == null) {
-        break missingId;
-      }
-
-      id = R.id.tvLabelSensY;
-      TextView tvLabelSensY = ViewBindings.findChildViewById(rootView, id);
-      if (tvLabelSensY == null) {
+      id = R.id.tvLabelTouchpadSens;
+      TextView tvLabelTouchpadSens = ViewBindings.findChildViewById(rootView, id);
+      if (tvLabelTouchpadSens == null) {
         break missingId;
       }
 
@@ -210,10 +158,9 @@ public final class DialogSettingsBinding implements ViewBinding {
         break missingId;
       }
 
-      return new DialogSettingsBinding((ScrollView) rootView, btnCloseSettings, seekAlpha,
-          seekDeadzone, seekSensX, seekSensY, switchAccel, switchHaptics, switchInvertX,
-          switchInvertY, switchVolumeKeys, tvLabelAlpha, tvLabelDeadzone, tvLabelSensX,
-          tvLabelSensY, tvWifiServerInfo);
+      return new DialogSettingsBinding((ScrollView) rootView, btnCloseSettings, seekTouchpadScroll,
+          seekTouchpadSens, switchAccel, switchDarkMode, switchHaptics, switchVolumeKeys,
+          tvLabelScrollSpeed, tvLabelTouchpadSens, tvWifiServerInfo);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

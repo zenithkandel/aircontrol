@@ -14,14 +14,14 @@
     android:focusable="true">
 
     <!-- Device Icon -->
-    <TextView
-        android:id="@+id/tvDeviceIcon"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:gravity="center"
-        android:text="💻"
-        android:textSize="18sp"
-        android:layout_marginEnd="10dp" />
+    <ImageView
+        android:id="@+id/ivDeviceIcon"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_laptop"
+        android:tint="@color/apple_text_secondary"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="Device" />
 
     <!-- Name and MAC Address -->
     <LinearLayout

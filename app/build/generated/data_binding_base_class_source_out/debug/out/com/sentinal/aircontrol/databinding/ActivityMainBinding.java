@@ -40,13 +40,19 @@ public final class ActivityMainBinding implements ViewBinding {
   public final Button btnBlackScreen;
 
   @NonNull
-  public final Button btnCalibrate;
+  public final Button btnBrightnessDown;
 
   @NonNull
-  public final Button btnClutch;
+  public final Button btnBrightnessUp;
 
   @NonNull
   public final Button btnDisconnect;
+
+  @NonNull
+  public final Button btnEnterFullscreen;
+
+  @NonNull
+  public final Button btnExitFullscreen;
 
   @NonNull
   public final Button btnFullscreen;
@@ -82,9 +88,6 @@ public final class ActivityMainBinding implements ViewBinding {
   public final Button btnLeftClick;
 
   @NonNull
-  public final Button btnLike;
-
-  @NonNull
   public final Button btnNextReel;
 
   @NonNull
@@ -104,12 +107,6 @@ public final class ActivityMainBinding implements ViewBinding {
 
   @NonNull
   public final Button btnRightClick;
-
-  @NonNull
-  public final Button btnScrollDown;
-
-  @NonNull
-  public final Button btnScrollUp;
 
   @NonNull
   public final LinearLayout btnSelectDevice;
@@ -136,6 +133,12 @@ public final class ActivityMainBinding implements ViewBinding {
   public final Button btnShortcutUndo;
 
   @NonNull
+  public final Button btnTaskView;
+
+  @NonNull
+  public final ImageButton btnThemeToggle;
+
+  @NonNull
   public final Button btnTorchPointer;
 
   @NonNull
@@ -151,7 +154,16 @@ public final class ActivityMainBinding implements ViewBinding {
   public final EditText etKeyboardInput;
 
   @NonNull
+  public final View fullscreenTouchpadCanvas;
+
+  @NonNull
+  public final FrameLayout fullscreenTouchpadOverlay;
+
+  @NonNull
   public final LinearLayout headerLayout;
+
+  @NonNull
+  public final FrameLayout mainTouchpadCanvas;
 
   @NonNull
   public final LinearLayout modeTabBar;
@@ -173,9 +185,6 @@ public final class ActivityMainBinding implements ViewBinding {
 
   @NonNull
   public final ConstraintLayout rootLayout;
-
-  @NonNull
-  public final LinearLayout scrollWheelLayout;
 
   @NonNull
   public final LinearLayout statusPillLayout;
@@ -202,10 +211,7 @@ public final class ActivityMainBinding implements ViewBinding {
   public final TextView tvDeviceTarget;
 
   @NonNull
-  public final TextView tvGyroState;
-
-  @NonNull
-  public final TextView tvMotionReadout;
+  public final TextView tvFullscreenGestureHint;
 
   @NonNull
   public final TextView tvSlideTimer;
@@ -216,42 +222,53 @@ public final class ActivityMainBinding implements ViewBinding {
   @NonNull
   public final TextView tvTitle;
 
+  @NonNull
+  public final TextView tvTouchpadHint;
+
+  @NonNull
+  public final TextView tvTouchpadInfo;
+
   private ActivityMainBinding(@NonNull ConstraintLayout rootView, @NonNull Button btnArrowDown,
       @NonNull Button btnArrowLeft, @NonNull Button btnArrowRight, @NonNull Button btnArrowUp,
-      @NonNull Button btnBlackScreen, @NonNull Button btnCalibrate, @NonNull Button btnClutch,
-      @NonNull Button btnDisconnect, @NonNull Button btnFullscreen, @NonNull Button btnKbMouseLeft,
+      @NonNull Button btnBlackScreen, @NonNull Button btnBrightnessDown,
+      @NonNull Button btnBrightnessUp, @NonNull Button btnDisconnect,
+      @NonNull Button btnEnterFullscreen, @NonNull Button btnExitFullscreen,
+      @NonNull Button btnFullscreen, @NonNull Button btnKbMouseLeft,
       @NonNull Button btnKbMouseRight, @NonNull Button btnKeyBackspace, @NonNull Button btnKeyEsc,
       @NonNull Button btnKeyPgDn, @NonNull Button btnKeyPgUp, @NonNull Button btnKeyReturn,
       @NonNull Button btnKeySpace, @NonNull Button btnKeyTab, @NonNull Button btnLeftClick,
-      @NonNull Button btnLike, @NonNull Button btnNextReel, @NonNull Button btnNextSlide,
-      @NonNull Button btnPlayPauseReel, @NonNull Button btnPrevReel, @NonNull Button btnPrevSlide,
-      @NonNull Button btnResetTimer, @NonNull Button btnRightClick, @NonNull Button btnScrollDown,
-      @NonNull Button btnScrollUp, @NonNull LinearLayout btnSelectDevice,
+      @NonNull Button btnNextReel, @NonNull Button btnNextSlide, @NonNull Button btnPlayPauseReel,
+      @NonNull Button btnPrevReel, @NonNull Button btnPrevSlide, @NonNull Button btnResetTimer,
+      @NonNull Button btnRightClick, @NonNull LinearLayout btnSelectDevice,
       @NonNull Button btnSendText, @NonNull ImageButton btnSettings,
       @NonNull Button btnShortcutCopy, @NonNull Button btnShortcutPaste,
       @NonNull Button btnShortcutSearch, @NonNull Button btnShortcutSelectAll,
-      @NonNull Button btnShortcutUndo, @NonNull Button btnTorchPointer, @NonNull Button btnVolDown,
-      @NonNull Button btnVolUp, @NonNull View dotConnection, @NonNull EditText etKeyboardInput,
-      @NonNull LinearLayout headerLayout, @NonNull LinearLayout modeTabBar,
+      @NonNull Button btnShortcutUndo, @NonNull Button btnTaskView,
+      @NonNull ImageButton btnThemeToggle, @NonNull Button btnTorchPointer,
+      @NonNull Button btnVolDown, @NonNull Button btnVolUp, @NonNull View dotConnection,
+      @NonNull EditText etKeyboardInput, @NonNull View fullscreenTouchpadCanvas,
+      @NonNull FrameLayout fullscreenTouchpadOverlay, @NonNull LinearLayout headerLayout,
+      @NonNull FrameLayout mainTouchpadCanvas, @NonNull LinearLayout modeTabBar,
       @NonNull LinearLayout panelAirMouse, @NonNull LinearLayout panelKeyboard,
       @NonNull LinearLayout panelPresentation, @NonNull LinearLayout panelReels,
       @NonNull FrameLayout panelsContainer, @NonNull ConstraintLayout rootLayout,
-      @NonNull LinearLayout scrollWheelLayout, @NonNull LinearLayout statusPillLayout,
-      @NonNull TextView tabAirMouse, @NonNull TextView tabKeyboard,
-      @NonNull TextView tabPresentation, @NonNull TextView tabReels,
+      @NonNull LinearLayout statusPillLayout, @NonNull TextView tabAirMouse,
+      @NonNull TextView tabKeyboard, @NonNull TextView tabPresentation, @NonNull TextView tabReels,
       @NonNull FrameLayout trackpadCanvas, @NonNull TextView tvConnectionStatus,
-      @NonNull TextView tvDeviceTarget, @NonNull TextView tvGyroState,
-      @NonNull TextView tvMotionReadout, @NonNull TextView tvSlideTimer,
-      @NonNull TextView tvSubtitle, @NonNull TextView tvTitle) {
+      @NonNull TextView tvDeviceTarget, @NonNull TextView tvFullscreenGestureHint,
+      @NonNull TextView tvSlideTimer, @NonNull TextView tvSubtitle, @NonNull TextView tvTitle,
+      @NonNull TextView tvTouchpadHint, @NonNull TextView tvTouchpadInfo) {
     this.rootView = rootView;
     this.btnArrowDown = btnArrowDown;
     this.btnArrowLeft = btnArrowLeft;
     this.btnArrowRight = btnArrowRight;
     this.btnArrowUp = btnArrowUp;
     this.btnBlackScreen = btnBlackScreen;
-    this.btnCalibrate = btnCalibrate;
-    this.btnClutch = btnClutch;
+    this.btnBrightnessDown = btnBrightnessDown;
+    this.btnBrightnessUp = btnBrightnessUp;
     this.btnDisconnect = btnDisconnect;
+    this.btnEnterFullscreen = btnEnterFullscreen;
+    this.btnExitFullscreen = btnExitFullscreen;
     this.btnFullscreen = btnFullscreen;
     this.btnKbMouseLeft = btnKbMouseLeft;
     this.btnKbMouseRight = btnKbMouseRight;
@@ -263,7 +280,6 @@ public final class ActivityMainBinding implements ViewBinding {
     this.btnKeySpace = btnKeySpace;
     this.btnKeyTab = btnKeyTab;
     this.btnLeftClick = btnLeftClick;
-    this.btnLike = btnLike;
     this.btnNextReel = btnNextReel;
     this.btnNextSlide = btnNextSlide;
     this.btnPlayPauseReel = btnPlayPauseReel;
@@ -271,8 +287,6 @@ public final class ActivityMainBinding implements ViewBinding {
     this.btnPrevSlide = btnPrevSlide;
     this.btnResetTimer = btnResetTimer;
     this.btnRightClick = btnRightClick;
-    this.btnScrollDown = btnScrollDown;
-    this.btnScrollUp = btnScrollUp;
     this.btnSelectDevice = btnSelectDevice;
     this.btnSendText = btnSendText;
     this.btnSettings = btnSettings;
@@ -281,12 +295,17 @@ public final class ActivityMainBinding implements ViewBinding {
     this.btnShortcutSearch = btnShortcutSearch;
     this.btnShortcutSelectAll = btnShortcutSelectAll;
     this.btnShortcutUndo = btnShortcutUndo;
+    this.btnTaskView = btnTaskView;
+    this.btnThemeToggle = btnThemeToggle;
     this.btnTorchPointer = btnTorchPointer;
     this.btnVolDown = btnVolDown;
     this.btnVolUp = btnVolUp;
     this.dotConnection = dotConnection;
     this.etKeyboardInput = etKeyboardInput;
+    this.fullscreenTouchpadCanvas = fullscreenTouchpadCanvas;
+    this.fullscreenTouchpadOverlay = fullscreenTouchpadOverlay;
     this.headerLayout = headerLayout;
+    this.mainTouchpadCanvas = mainTouchpadCanvas;
     this.modeTabBar = modeTabBar;
     this.panelAirMouse = panelAirMouse;
     this.panelKeyboard = panelKeyboard;
@@ -294,7 +313,6 @@ public final class ActivityMainBinding implements ViewBinding {
     this.panelReels = panelReels;
     this.panelsContainer = panelsContainer;
     this.rootLayout = rootLayout;
-    this.scrollWheelLayout = scrollWheelLayout;
     this.statusPillLayout = statusPillLayout;
     this.tabAirMouse = tabAirMouse;
     this.tabKeyboard = tabKeyboard;
@@ -303,11 +321,12 @@ public final class ActivityMainBinding implements ViewBinding {
     this.trackpadCanvas = trackpadCanvas;
     this.tvConnectionStatus = tvConnectionStatus;
     this.tvDeviceTarget = tvDeviceTarget;
-    this.tvGyroState = tvGyroState;
-    this.tvMotionReadout = tvMotionReadout;
+    this.tvFullscreenGestureHint = tvFullscreenGestureHint;
     this.tvSlideTimer = tvSlideTimer;
     this.tvSubtitle = tvSubtitle;
     this.tvTitle = tvTitle;
+    this.tvTouchpadHint = tvTouchpadHint;
+    this.tvTouchpadInfo = tvTouchpadInfo;
   }
 
   @Override
@@ -367,21 +386,33 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.btnCalibrate;
-      Button btnCalibrate = ViewBindings.findChildViewById(rootView, id);
-      if (btnCalibrate == null) {
+      id = R.id.btnBrightnessDown;
+      Button btnBrightnessDown = ViewBindings.findChildViewById(rootView, id);
+      if (btnBrightnessDown == null) {
         break missingId;
       }
 
-      id = R.id.btnClutch;
-      Button btnClutch = ViewBindings.findChildViewById(rootView, id);
-      if (btnClutch == null) {
+      id = R.id.btnBrightnessUp;
+      Button btnBrightnessUp = ViewBindings.findChildViewById(rootView, id);
+      if (btnBrightnessUp == null) {
         break missingId;
       }
 
       id = R.id.btnDisconnect;
       Button btnDisconnect = ViewBindings.findChildViewById(rootView, id);
       if (btnDisconnect == null) {
+        break missingId;
+      }
+
+      id = R.id.btnEnterFullscreen;
+      Button btnEnterFullscreen = ViewBindings.findChildViewById(rootView, id);
+      if (btnEnterFullscreen == null) {
+        break missingId;
+      }
+
+      id = R.id.btnExitFullscreen;
+      Button btnExitFullscreen = ViewBindings.findChildViewById(rootView, id);
+      if (btnExitFullscreen == null) {
         break missingId;
       }
 
@@ -451,12 +482,6 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.btnLike;
-      Button btnLike = ViewBindings.findChildViewById(rootView, id);
-      if (btnLike == null) {
-        break missingId;
-      }
-
       id = R.id.btnNextReel;
       Button btnNextReel = ViewBindings.findChildViewById(rootView, id);
       if (btnNextReel == null) {
@@ -496,18 +521,6 @@ public final class ActivityMainBinding implements ViewBinding {
       id = R.id.btnRightClick;
       Button btnRightClick = ViewBindings.findChildViewById(rootView, id);
       if (btnRightClick == null) {
-        break missingId;
-      }
-
-      id = R.id.btnScrollDown;
-      Button btnScrollDown = ViewBindings.findChildViewById(rootView, id);
-      if (btnScrollDown == null) {
-        break missingId;
-      }
-
-      id = R.id.btnScrollUp;
-      Button btnScrollUp = ViewBindings.findChildViewById(rootView, id);
-      if (btnScrollUp == null) {
         break missingId;
       }
 
@@ -559,6 +572,18 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.btnTaskView;
+      Button btnTaskView = ViewBindings.findChildViewById(rootView, id);
+      if (btnTaskView == null) {
+        break missingId;
+      }
+
+      id = R.id.btnThemeToggle;
+      ImageButton btnThemeToggle = ViewBindings.findChildViewById(rootView, id);
+      if (btnThemeToggle == null) {
+        break missingId;
+      }
+
       id = R.id.btnTorchPointer;
       Button btnTorchPointer = ViewBindings.findChildViewById(rootView, id);
       if (btnTorchPointer == null) {
@@ -589,9 +614,27 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.fullscreenTouchpadCanvas;
+      View fullscreenTouchpadCanvas = ViewBindings.findChildViewById(rootView, id);
+      if (fullscreenTouchpadCanvas == null) {
+        break missingId;
+      }
+
+      id = R.id.fullscreenTouchpadOverlay;
+      FrameLayout fullscreenTouchpadOverlay = ViewBindings.findChildViewById(rootView, id);
+      if (fullscreenTouchpadOverlay == null) {
+        break missingId;
+      }
+
       id = R.id.headerLayout;
       LinearLayout headerLayout = ViewBindings.findChildViewById(rootView, id);
       if (headerLayout == null) {
+        break missingId;
+      }
+
+      id = R.id.mainTouchpadCanvas;
+      FrameLayout mainTouchpadCanvas = ViewBindings.findChildViewById(rootView, id);
+      if (mainTouchpadCanvas == null) {
         break missingId;
       }
 
@@ -632,12 +675,6 @@ public final class ActivityMainBinding implements ViewBinding {
       }
 
       ConstraintLayout rootLayout = (ConstraintLayout) rootView;
-
-      id = R.id.scrollWheelLayout;
-      LinearLayout scrollWheelLayout = ViewBindings.findChildViewById(rootView, id);
-      if (scrollWheelLayout == null) {
-        break missingId;
-      }
 
       id = R.id.statusPillLayout;
       LinearLayout statusPillLayout = ViewBindings.findChildViewById(rootView, id);
@@ -687,15 +724,9 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.tvGyroState;
-      TextView tvGyroState = ViewBindings.findChildViewById(rootView, id);
-      if (tvGyroState == null) {
-        break missingId;
-      }
-
-      id = R.id.tvMotionReadout;
-      TextView tvMotionReadout = ViewBindings.findChildViewById(rootView, id);
-      if (tvMotionReadout == null) {
+      id = R.id.tvFullscreenGestureHint;
+      TextView tvFullscreenGestureHint = ViewBindings.findChildViewById(rootView, id);
+      if (tvFullscreenGestureHint == null) {
         break missingId;
       }
 
@@ -717,18 +748,32 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tvTouchpadHint;
+      TextView tvTouchpadHint = ViewBindings.findChildViewById(rootView, id);
+      if (tvTouchpadHint == null) {
+        break missingId;
+      }
+
+      id = R.id.tvTouchpadInfo;
+      TextView tvTouchpadInfo = ViewBindings.findChildViewById(rootView, id);
+      if (tvTouchpadInfo == null) {
+        break missingId;
+      }
+
       return new ActivityMainBinding((ConstraintLayout) rootView, btnArrowDown, btnArrowLeft,
-          btnArrowRight, btnArrowUp, btnBlackScreen, btnCalibrate, btnClutch, btnDisconnect,
-          btnFullscreen, btnKbMouseLeft, btnKbMouseRight, btnKeyBackspace, btnKeyEsc, btnKeyPgDn,
-          btnKeyPgUp, btnKeyReturn, btnKeySpace, btnKeyTab, btnLeftClick, btnLike, btnNextReel,
-          btnNextSlide, btnPlayPauseReel, btnPrevReel, btnPrevSlide, btnResetTimer, btnRightClick,
-          btnScrollDown, btnScrollUp, btnSelectDevice, btnSendText, btnSettings, btnShortcutCopy,
-          btnShortcutPaste, btnShortcutSearch, btnShortcutSelectAll, btnShortcutUndo,
-          btnTorchPointer, btnVolDown, btnVolUp, dotConnection, etKeyboardInput, headerLayout,
-          modeTabBar, panelAirMouse, panelKeyboard, panelPresentation, panelReels, panelsContainer,
-          rootLayout, scrollWheelLayout, statusPillLayout, tabAirMouse, tabKeyboard,
-          tabPresentation, tabReels, trackpadCanvas, tvConnectionStatus, tvDeviceTarget,
-          tvGyroState, tvMotionReadout, tvSlideTimer, tvSubtitle, tvTitle);
+          btnArrowRight, btnArrowUp, btnBlackScreen, btnBrightnessDown, btnBrightnessUp,
+          btnDisconnect, btnEnterFullscreen, btnExitFullscreen, btnFullscreen, btnKbMouseLeft,
+          btnKbMouseRight, btnKeyBackspace, btnKeyEsc, btnKeyPgDn, btnKeyPgUp, btnKeyReturn,
+          btnKeySpace, btnKeyTab, btnLeftClick, btnNextReel, btnNextSlide, btnPlayPauseReel,
+          btnPrevReel, btnPrevSlide, btnResetTimer, btnRightClick, btnSelectDevice, btnSendText,
+          btnSettings, btnShortcutCopy, btnShortcutPaste, btnShortcutSearch, btnShortcutSelectAll,
+          btnShortcutUndo, btnTaskView, btnThemeToggle, btnTorchPointer, btnVolDown, btnVolUp,
+          dotConnection, etKeyboardInput, fullscreenTouchpadCanvas, fullscreenTouchpadOverlay,
+          headerLayout, mainTouchpadCanvas, modeTabBar, panelAirMouse, panelKeyboard,
+          panelPresentation, panelReels, panelsContainer, rootLayout, statusPillLayout, tabAirMouse,
+          tabKeyboard, tabPresentation, tabReels, trackpadCanvas, tvConnectionStatus,
+          tvDeviceTarget, tvFullscreenGestureHint, tvSlideTimer, tvSubtitle, tvTitle,
+          tvTouchpadHint, tvTouchpadInfo);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

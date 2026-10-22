@@ -4,6 +4,7 @@ package com.sentinal.aircontrol.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -20,10 +21,10 @@ public final class ItemPairedDeviceBinding implements ViewBinding {
   private final LinearLayout rootView;
 
   @NonNull
-  public final LinearLayout rowDeviceRoot;
+  public final ImageView ivDeviceIcon;
 
   @NonNull
-  public final TextView tvDeviceIcon;
+  public final LinearLayout rowDeviceRoot;
 
   @NonNull
   public final TextView tvDeviceMac;
@@ -34,13 +35,12 @@ public final class ItemPairedDeviceBinding implements ViewBinding {
   @NonNull
   public final TextView tvDeviceStatusBadge;
 
-  private ItemPairedDeviceBinding(@NonNull LinearLayout rootView,
-      @NonNull LinearLayout rowDeviceRoot, @NonNull TextView tvDeviceIcon,
-      @NonNull TextView tvDeviceMac, @NonNull TextView tvDeviceName,
-      @NonNull TextView tvDeviceStatusBadge) {
+  private ItemPairedDeviceBinding(@NonNull LinearLayout rootView, @NonNull ImageView ivDeviceIcon,
+      @NonNull LinearLayout rowDeviceRoot, @NonNull TextView tvDeviceMac,
+      @NonNull TextView tvDeviceName, @NonNull TextView tvDeviceStatusBadge) {
     this.rootView = rootView;
+    this.ivDeviceIcon = ivDeviceIcon;
     this.rowDeviceRoot = rowDeviceRoot;
-    this.tvDeviceIcon = tvDeviceIcon;
     this.tvDeviceMac = tvDeviceMac;
     this.tvDeviceName = tvDeviceName;
     this.tvDeviceStatusBadge = tvDeviceStatusBadge;
@@ -73,13 +73,13 @@ public final class ItemPairedDeviceBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      LinearLayout rowDeviceRoot = (LinearLayout) rootView;
-
-      id = R.id.tvDeviceIcon;
-      TextView tvDeviceIcon = ViewBindings.findChildViewById(rootView, id);
-      if (tvDeviceIcon == null) {
+      id = R.id.ivDeviceIcon;
+      ImageView ivDeviceIcon = ViewBindings.findChildViewById(rootView, id);
+      if (ivDeviceIcon == null) {
         break missingId;
       }
+
+      LinearLayout rowDeviceRoot = (LinearLayout) rootView;
 
       id = R.id.tvDeviceMac;
       TextView tvDeviceMac = ViewBindings.findChildViewById(rootView, id);
@@ -99,7 +99,7 @@ public final class ItemPairedDeviceBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemPairedDeviceBinding((LinearLayout) rootView, rowDeviceRoot, tvDeviceIcon,
+      return new ItemPairedDeviceBinding((LinearLayout) rootView, ivDeviceIcon, rowDeviceRoot,
           tvDeviceMac, tvDeviceName, tvDeviceStatusBadge);
     }
     String missingId = rootView.getResources().getResourceName(id);

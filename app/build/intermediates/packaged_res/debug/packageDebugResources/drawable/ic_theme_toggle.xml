@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Clean modern Moon/Sun theme glyph -->
+    <path
+        android:fillColor="@color/apple_text_secondary"
+        android:pathData="M12.3,2a10,10 0 0,0 -1.9,0.18a1,1 0 0,0 -0.79,1.14a1,1 0 0,0 1.09,0.82A8,8 0 0,1 18.7,11.85a8,8 0 0,1 -8.14,8.14a8,8 0 0,1 -6.71,-3.72a1,1 0 0,0 -1.1,-0.41a1,1 0 0,0 -0.67,1.06A10,10 0 1,0 12.3,2z"/>
+</vector>

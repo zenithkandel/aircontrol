@@ -8,15 +8,23 @@
         "source": "com.sentinal.aircontrol.app-main-36:/layout/item_paired_device.xml"
     },
     {
-        "merged": "com.sentinal.aircontrol.app-mergeDebugResources-33:/layout/dialog_device_picker.xml",
-        "source": "com.sentinal.aircontrol.app-main-36:/layout/dialog_device_picker.xml"
+        "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-mergeDebugResources-33:\\layout\\item_paired_device.xml",
+        "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\layout\\item_paired_device.xml"
     },
     {
         "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-mergeDebugResources-33:\\layout\\activity_main.xml",
         "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\layout\\activity_main.xml"
     },
     {
+        "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-mergeDebugResources-33:\\layout\\dialog_device_picker.xml",
+        "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\layout\\dialog_device_picker.xml"
+    },
+    {
         "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-mergeDebugResources-33:\\layout\\dialog_settings.xml",
         "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\layout\\dialog_settings.xml"
+    },
+    {
+        "merged": "com.sentinal.aircontrol.app-mergeDebugResources-33:/layout/dialog_settings.xml",
+        "source": "com.sentinal.aircontrol.app-main-36:/layout/dialog_settings.xml"
     }
 ]
