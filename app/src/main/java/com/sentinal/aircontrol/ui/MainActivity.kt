@@ -2,8 +2,10 @@ package com.sentinal.aircontrol.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
@@ -11,6 +13,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
@@ -27,7 +30,9 @@ import androidx.core.content.ContextCompat
 import com.sentinal.aircontrol.AirControlApp
 import com.sentinal.aircontrol.R
 import com.sentinal.aircontrol.databinding.ActivityMainBinding
+import com.sentinal.aircontrol.databinding.DialogDevicePickerBinding
 import com.sentinal.aircontrol.databinding.DialogSettingsBinding
+import com.sentinal.aircontrol.databinding.ItemPairedDeviceBinding
 import com.sentinal.aircontrol.hardware.HapticFeedbackController
 import com.sentinal.aircontrol.hardware.TorchPointerController
 import com.sentinal.aircontrol.hid.BluetoothHidController
@@ -324,10 +329,26 @@ class MainActivity : AppCompatActivity() {
             }, 60)
         }
 
-        // Status Pill tap opens settings and device connection
+        // Disconnect / Connect quick button
+        binding.btnDisconnect.setOnClickListener {
+            haptics.clickFeedback()
+            if (hidController.isConnected()) {
+                hidController.disconnectDevice()
+                Toast.makeText(this, "Disconnected from host", Toast.LENGTH_SHORT).show()
+            } else {
+                showDevicePickerDialog()
+            }
+        }
+
+        // Tap device selector or status pill to open Paired Devices picker
+        binding.btnSelectDevice.setOnClickListener {
+            haptics.clickFeedback()
+            showDevicePickerDialog()
+        }
+
         binding.statusPillLayout.setOnClickListener {
-            haptics.tickFeedback()
-            showSettingsDialog()
+            haptics.clickFeedback()
+            showDevicePickerDialog()
         }
 
         // Settings Dialog
@@ -526,7 +547,7 @@ class MainActivity : AppCompatActivity() {
             binding.btnArrowRight, binding.btnKeyPgUp, binding.btnKeyPgDn, binding.btnKbMouseLeft,
             binding.btnKbMouseRight, binding.btnShortcutUndo, binding.btnShortcutCopy,
             binding.btnShortcutPaste, binding.btnShortcutSelectAll, binding.btnShortcutSearch,
-            binding.btnSendText
+            binding.btnSendText, binding.btnDisconnect
         )
 
         interactiveButtons.forEach { view ->
@@ -657,26 +678,38 @@ class MainActivity : AppCompatActivity() {
             ConnectionState.CONNECTED -> {
                 binding.tvConnectionStatus.text = "CONNECTED"
                 binding.tvConnectionStatus.setTextColor(ContextCompat.getColor(this, R.color.apple_green))
-                binding.tvDeviceTarget.text = device?.name ?: "Host Computer"
+                binding.tvDeviceTarget.text = " • ${device?.name ?: "Host"} ▾"
                 dot?.setColor(ContextCompat.getColor(this, R.color.apple_green))
+                binding.btnDisconnect.text = "Disconnect"
+                binding.btnDisconnect.setTextColor(ContextCompat.getColor(this, R.color.apple_red))
+                binding.btnDisconnect.visibility = View.VISIBLE
             }
             ConnectionState.CONNECTING -> {
                 binding.tvConnectionStatus.text = "CONNECTING..."
                 binding.tvConnectionStatus.setTextColor(ContextCompat.getColor(this, R.color.apple_amber))
-                binding.tvDeviceTarget.text = device?.name ?: "Pairing"
+                binding.tvDeviceTarget.text = " • ${device?.name ?: "Host"} ▾"
                 dot?.setColor(ContextCompat.getColor(this, R.color.apple_amber))
+                binding.btnDisconnect.text = "Cancel"
+                binding.btnDisconnect.setTextColor(ContextCompat.getColor(this, R.color.apple_amber))
+                binding.btnDisconnect.visibility = View.VISIBLE
             }
             ConnectionState.ADVERTISING -> {
-                binding.tvConnectionStatus.text = "PAIRING: AIRCONTROL"
+                binding.tvConnectionStatus.text = "PAIRING"
                 binding.tvConnectionStatus.setTextColor(ContextCompat.getColor(this, R.color.apple_blue))
-                binding.tvDeviceTarget.text = "Ready to pair"
+                binding.tvDeviceTarget.text = " • Select Device ▾"
                 dot?.setColor(ContextCompat.getColor(this, R.color.apple_blue))
+                binding.btnDisconnect.text = "Connect"
+                binding.btnDisconnect.setTextColor(ContextCompat.getColor(this, R.color.apple_blue))
+                binding.btnDisconnect.visibility = View.VISIBLE
             }
             ConnectionState.DISCONNECTED, ConnectionState.REGISTERING -> {
-                binding.tvConnectionStatus.text = "DISCONNECTED"
+                binding.tvConnectionStatus.text = "READY"
                 binding.tvConnectionStatus.setTextColor(ContextCompat.getColor(this, R.color.apple_text_tertiary))
-                binding.tvDeviceTarget.text = "Enable Bluetooth"
+                binding.tvDeviceTarget.text = " • Select Device ▾"
                 dot?.setColor(ContextCompat.getColor(this, R.color.apple_well))
+                binding.btnDisconnect.text = "Connect"
+                binding.btnDisconnect.setTextColor(ContextCompat.getColor(this, R.color.apple_blue))
+                binding.btnDisconnect.visibility = View.VISIBLE
             }
         }
     }
@@ -801,6 +834,94 @@ class MainActivity : AppCompatActivity() {
         dialogBinding.btnCloseSettings.setOnClickListener {
             haptics.clickFeedback()
             app.saveSettings()
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    // =========================================================================
+    // Paired Bluetooth Host Device Picker
+    // =========================================================================
+
+    private fun showDevicePickerDialog() {
+        val dialogBinding = DialogDevicePickerBinding.inflate(layoutInflater)
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogBinding.root)
+            .create()
+
+        val adapter = BluetoothAdapter.getDefaultAdapter()
+        val bonded = adapter?.bondedDevices?.toList() ?: emptyList()
+        val currentConnected = hidController.getConnectedDevice()
+
+        dialogBinding.containerDeviceList.removeAllViews()
+
+        if (bonded.isEmpty()) {
+            dialogBinding.tvNoDevices.visibility = View.VISIBLE
+            dialogBinding.containerDeviceList.addView(dialogBinding.tvNoDevices)
+        } else {
+            dialogBinding.tvNoDevices.visibility = View.GONE
+            bonded.forEach { device ->
+                val itemBinding = ItemPairedDeviceBinding.inflate(layoutInflater, dialogBinding.containerDeviceList, false)
+                val isConnected = currentConnected != null && currentConnected.address == device.address
+
+                itemBinding.tvDeviceName.text = device.name ?: "Unknown Device"
+                itemBinding.tvDeviceMac.text = device.address
+
+                if (isConnected) {
+                    itemBinding.tvDeviceStatusBadge.text = "✓ CONNECTED"
+                    itemBinding.tvDeviceStatusBadge.setTextColor(ContextCompat.getColor(this, R.color.apple_green))
+                    itemBinding.tvDeviceIcon.text = "💻"
+                    itemBinding.rowDeviceRoot.setBackgroundResource(R.drawable.bg_apple_hero_card_accent)
+                } else {
+                    itemBinding.tvDeviceStatusBadge.text = "Connect ›"
+                    itemBinding.tvDeviceStatusBadge.setTextColor(ContextCompat.getColor(this, R.color.apple_blue))
+                    itemBinding.tvDeviceIcon.text = "🖥️"
+                    itemBinding.rowDeviceRoot.setBackgroundResource(R.drawable.bg_apple_btn_secondary)
+                }
+
+                itemBinding.rowDeviceRoot.setOnClickListener {
+                    haptics.clickFeedback()
+                    if (isConnected) {
+                        Toast.makeText(this, "Already connected to ${device.name ?: device.address}", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "Connecting to ${device.name ?: device.address}...", Toast.LENGTH_SHORT).show()
+                        hidController.connectDevice(device)
+                    }
+                    dialog.dismiss()
+                }
+
+                dialogBinding.containerDeviceList.addView(itemBinding.root)
+            }
+        }
+
+        // Disconnect Button in Dialog
+        if (currentConnected != null) {
+            dialogBinding.btnDisconnectDialog.visibility = View.VISIBLE
+            dialogBinding.btnDisconnectDialog.text = "Disconnect from ${currentConnected.name ?: "Device"}"
+            dialogBinding.btnDisconnectDialog.setOnClickListener {
+                haptics.heavyClickFeedback()
+                hidController.disconnectDevice()
+                Toast.makeText(this, "Disconnected from host", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }
+        } else {
+            dialogBinding.btnDisconnectDialog.visibility = View.GONE
+        }
+
+        // Pair New Device in Android System Settings
+        dialogBinding.btnPairNewDevice.setOnClickListener {
+            haptics.clickFeedback()
+            try {
+                startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
+            } catch (e: Exception) {
+                Toast.makeText(this, "Please open Android Bluetooth Settings", Toast.LENGTH_SHORT).show()
+            }
+            dialog.dismiss()
+        }
+
+        dialogBinding.btnCloseDevicePicker.setOnClickListener {
+            haptics.tickFeedback()
             dialog.dismiss()
         }
 

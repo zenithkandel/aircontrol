@@ -57,17 +57,17 @@
             android:contentDescription="Settings" />
     </LinearLayout>
 
-    <!-- Apple Dynamic Status Pill -->
+    <!-- Apple Dynamic Status Pill with Device Picker & Disconnect Button -->
     <LinearLayout
         android:id="@+id/statusPillLayout"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="@drawable/bg_apple_pill_status"
-        android:paddingHorizontal="14dp"
-        android:paddingVertical="8dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="6dp"
         app:layout_constraintTop_toBottomOf="@id/headerLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -79,23 +79,49 @@
             android:background="@drawable/bg_apple_dot_status"
             android:layout_marginEnd="10dp" />
 
-        <TextView
-            android:id="@+id/tvConnectionStatus"
+        <!-- Device Selector Trigger -->
+        <LinearLayout
+            android:id="@+id/btnSelectDevice"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="PAIRING: AIRCONTROL"
-            android:textColor="@color/apple_blue"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true">
 
-        <TextView
-            android:id="@+id/tvDeviceTarget"
+            <TextView
+                android:id="@+id/tvConnectionStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PAIRING"
+                android:textColor="@color/apple_blue"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDeviceTarget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" • Select Device ▾"
+                android:textColor="@color/apple_text_primary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:ellipsize="end"
+                android:maxLines="1" />
+        </LinearLayout>
+
+        <!-- Disconnect / Connect Quick Pill -->
+        <Button
+            android:id="@+id/btnDisconnect"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bluetooth Active"
-            android:textColor="@color/apple_text_tertiary"
-            android:textSize="11sp" />
+            android:layout_height="32dp"
+            android:text="Disconnect"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:textColor="@color/apple_red"
+            android:background="@drawable/bg_apple_btn_secondary"
+            android:paddingHorizontal="10dp" />
     </LinearLayout>
 
     <!-- Apple Segmented Mode Picker -->

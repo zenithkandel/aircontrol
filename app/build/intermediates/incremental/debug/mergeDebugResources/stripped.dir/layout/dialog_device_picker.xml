@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/apple_canvas"
+    android:padding="20dp">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Device"
+            android:textColor="@color/apple_text_primary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:letterSpacing="-0.015" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose paired laptop or computer to control"
+            android:textColor="@color/apple_text_secondary"
+            android:textSize="12sp"
+            android:layout_marginTop="2dp" />
+    </LinearLayout>
+
+    <!-- Scrollable Device List -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="320dp"
+        android:fadeScrollbars="false"
+        android:layout_marginBottom="16dp">
+
+        <LinearLayout
+            android:id="@+id/containerDeviceList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Empty state placeholder (hidden when devices exist) -->
+            <TextView
+                android:id="@+id/tvNoDevices"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No paired Bluetooth computers found.\nPair your computer in Android Settings first."
+                android:textColor="@color/apple_text_tertiary"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:paddingVertical="24dp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Action Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Disconnect Current Host Button -->
+        <Button
+            android:id="@+id/btnDisconnectDialog"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="Disconnect Active Device"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/apple_red"
+            android:background="@drawable/bg_apple_btn_secondary"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Pair New Device in Settings -->
+        <Button
+            android:id="@+id/btnPairNewDevice"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="Pair New Device (Settings)"
+            android:textSize="13sp"
+            android:textColor="@color/apple_blue"
+            android:background="@drawable/bg_apple_btn_secondary"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Close / Done Button -->
+        <Button
+            android:id="@+id/btnCloseDevicePicker"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:text="Done"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/apple_text_primary"
+            android:background="@drawable/bg_apple_btn_primary" />
+    </LinearLayout>
+
+</LinearLayout>

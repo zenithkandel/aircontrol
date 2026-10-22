@@ -40,8 +40,11 @@ id btnArrowRight
 id btnArrowUp
 id btnBlackScreen
 id btnCalibrate
+id btnCloseDevicePicker
 id btnCloseSettings
 id btnClutch
+id btnDisconnect
+id btnDisconnectDialog
 id btnFullscreen
 id btnKbMouseLeft
 id btnKbMouseRight
@@ -56,6 +59,7 @@ id btnLeftClick
 id btnLike
 id btnNextReel
 id btnNextSlide
+id btnPairNewDevice
 id btnPlayPauseReel
 id btnPrevReel
 id btnPrevSlide
@@ -63,6 +67,7 @@ id btnResetTimer
 id btnRightClick
 id btnScrollDown
 id btnScrollUp
+id btnSelectDevice
 id btnSendText
 id btnSettings
 id btnShortcutCopy
@@ -73,6 +78,7 @@ id btnShortcutUndo
 id btnTorchPointer
 id btnVolDown
 id btnVolUp
+id containerDeviceList
 id dotConnection
 id etKeyboardInput
 id headerLayout
@@ -83,6 +89,7 @@ id panelPresentation
 id panelReels
 id panelsContainer
 id rootLayout
+id rowDeviceRoot
 id scrollWheelLayout
 id seekAlpha
 id seekDeadzone
@@ -100,6 +107,10 @@ id tabPresentation
 id tabReels
 id trackpadCanvas
 id tvConnectionStatus
+id tvDeviceIcon
+id tvDeviceMac
+id tvDeviceName
+id tvDeviceStatusBadge
 id tvDeviceTarget
 id tvGyroState
 id tvLabelAlpha
@@ -107,12 +118,15 @@ id tvLabelDeadzone
 id tvLabelSensX
 id tvLabelSensY
 id tvMotionReadout
+id tvNoDevices
 id tvSlideTimer
 id tvSubtitle
 id tvTitle
 id tvWifiServerInfo
 layout activity_main
+layout dialog_device_picker
 layout dialog_settings
+layout item_paired_device
 string aircontrol_tagline
 string app_name
 string mode_air_mouse
