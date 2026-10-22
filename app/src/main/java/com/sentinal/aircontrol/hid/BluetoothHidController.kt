@@ -17,7 +17,7 @@ import com.sentinal.aircontrol.model.HidKeyCodes
 import java.util.concurrent.Executors
 
 /**
- * Universal Bluetooth HID Peripheral Controller.
+ * Universal Bluetooth HID Peripheral Controller for AirControl.
  * Enables Android to function natively as a Bluetooth Mouse + Keyboard + Consumer Peripheral.
  */
 @SuppressLint("MissingPermission")
@@ -25,7 +25,7 @@ class BluetoothHidController(private val context: Context) {
 
     companion object {
         private const val TAG = "BluetoothHidController"
-        const val DEVICE_NAME = "Sentinal"
+        const val DEVICE_NAME = "AirControl"
     }
 
     private val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
@@ -102,7 +102,6 @@ class BluetoothHidController(private val context: Context) {
         }
 
         override fun onGetReport(device: BluetoothDevice?, type: Byte, id: Byte, bufferSize: Int) {
-            // Reply with zero report
             hidDevice?.replyReport(device, type, id, ByteArray(bufferSize))
         }
 
@@ -141,16 +140,24 @@ class BluetoothHidController(private val context: Context) {
         }
     }
 
-    fun isConnected(): Boolean = targetDevice != null && isAppRegistered
+    fun isConnected(): Boolean {
+        if (targetDevice != null && isAppRegistered) return true
+        val connected = hidDevice?.connectedDevices?.firstOrNull()
+        if (connected != null && isAppRegistered) {
+            targetDevice = connected
+            return true
+        }
+        return false
+    }
 
-    fun getConnectedDevice(): BluetoothDevice? = targetDevice
+    fun getConnectedDevice(): BluetoothDevice? = targetDevice ?: hidDevice?.connectedDevices?.firstOrNull()
 
     private fun registerHidApp() {
         val dev = hidDevice ?: return
         val sdp = BluetoothHidDeviceAppSdpSettings(
             DEVICE_NAME,
-            "Sentinal 3-in-1 Air Mouse & Presentation Remote",
-            "Sentinal",
+            "AirControl Wireless Input Device",
+            "AirControl",
             BluetoothHidDevice.SUBCLASS1_COMBO,
             HidDescriptors.REPORT_MAP
         )
@@ -241,11 +248,56 @@ class BluetoothHidController(private val context: Context) {
         hid.sendReport(dev, HidDescriptors.REPORT_ID_KEYBOARD.toInt(), keyReport)
         onActionFeedback?.invoke()
 
-        // Release key after 50ms hold
+        // Release key after 45ms hold
         mainHandler.postDelayed({
             val emptyReport = ByteArray(8)
             hid.sendReport(dev, HidDescriptors.REPORT_ID_KEYBOARD.toInt(), emptyReport)
-        }, 50)
+        }, 45)
+    }
+
+    /**
+     * Sends a single character typed on keyboard.
+     */
+    fun sendChar(c: Char): Boolean {
+        val mapping = HidKeyCodes.charToHid(c) ?: return false
+        sendKey(mapping.first, mapping.second)
+        return true
+    }
+
+    /**
+     * Types an entire string of text sequentially over Bluetooth HID.
+     */
+    fun sendText(text: String, onComplete: (() -> Unit)? = null) {
+        executor.execute {
+            for (c in text) {
+                val mapping = HidKeyCodes.charToHid(c)
+                if (mapping != null) {
+                    val dev = targetDevice ?: hidDevice?.connectedDevices?.firstOrNull() ?: break
+                    val hid = hidDevice ?: break
+                    val keyReport = byteArrayOf(mapping.second, 0x00, mapping.first, 0x00, 0x00, 0x00, 0x00, 0x00)
+                    hid.sendReport(dev, HidDescriptors.REPORT_ID_KEYBOARD.toInt(), keyReport)
+                    Thread.sleep(25)
+                    hid.sendReport(dev, HidDescriptors.REPORT_ID_KEYBOARD.toInt(), ByteArray(8))
+                    Thread.sleep(15)
+                }
+            }
+            mainHandler.post {
+                onActionFeedback?.invoke()
+                onComplete?.invoke()
+            }
+        }
+    }
+
+    /**
+     * Sends a shortcut with modifiers (Ctrl, Alt, Shift, Cmd/Win).
+     */
+    fun sendShortcut(keyCode: Byte, ctrl: Boolean = false, shift: Boolean = false, alt: Boolean = false, gui: Boolean = false) {
+        var mod: Byte = HidKeyCodes.MOD_NONE
+        if (ctrl) mod = (mod.toInt() or HidKeyCodes.MOD_LCTRL.toInt()).toByte()
+        if (shift) mod = (mod.toInt() or HidKeyCodes.MOD_LSHIFT.toInt()).toByte()
+        if (alt) mod = (mod.toInt() or HidKeyCodes.MOD_LALT.toInt()).toByte()
+        if (gui) mod = (mod.toInt() or HidKeyCodes.MOD_LGUI.toInt()).toByte()
+        sendKey(keyCode, mod)
     }
 
     // =========================================================================
@@ -271,24 +323,13 @@ class BluetoothHidController(private val context: Context) {
     }
 
     // =========================================================================
-    // Sentinal Operational Actions
+    // AirControl Operational Shortcuts
     // =========================================================================
 
-    fun presentationNext() {
-        sendKey(HidKeyCodes.KEY_PAGE_DOWN)
-    }
-
-    fun presentationPrev() {
-        sendKey(HidKeyCodes.KEY_PAGE_UP)
-    }
-
-    fun presentationFullscreen() {
-        sendKey(HidKeyCodes.KEY_F5)
-    }
-
-    fun presentationBlackScreen() {
-        sendKey(HidKeyCodes.KEY_B)
-    }
+    fun presentationNext() = sendKey(HidKeyCodes.KEY_PAGE_DOWN)
+    fun presentationPrev() = sendKey(HidKeyCodes.KEY_PAGE_UP)
+    fun presentationFullscreen() = sendKey(HidKeyCodes.KEY_F5)
+    fun presentationBlackScreen() = sendKey(HidKeyCodes.KEY_B)
 
     fun reelNext() {
         sendKey(HidKeyCodes.KEY_DOWN_ARROW)
@@ -300,7 +341,45 @@ class BluetoothHidController(private val context: Context) {
         scroll(5.toByte())
     }
 
-    fun reelPlayPause() {
-        sendKey(HidKeyCodes.KEY_SPACE)
+    fun reelPlayPause() = sendKey(HidKeyCodes.KEY_SPACE)
+
+    fun keyReturn() = sendKey(HidKeyCodes.KEY_RETURN)
+    fun keyBackspace() = sendKey(HidKeyCodes.KEY_BACKSPACE)
+    fun keyEscape() = sendKey(HidKeyCodes.KEY_ESCAPE)
+    fun keyTab() = sendKey(HidKeyCodes.KEY_TAB)
+    fun keySpace() = sendKey(HidKeyCodes.KEY_SPACE)
+
+    fun arrowUp() = sendKey(HidKeyCodes.KEY_UP_ARROW)
+    fun arrowDown() = sendKey(HidKeyCodes.KEY_DOWN_ARROW)
+    fun arrowLeft() = sendKey(HidKeyCodes.KEY_LEFT_ARROW)
+    fun arrowRight() = sendKey(HidKeyCodes.KEY_RIGHT_ARROW)
+
+    // Common Shortcuts (Windows Ctrl / Mac Cmd)
+    fun copy(isMac: Boolean = false) {
+        val mod = if (isMac) HidKeyCodes.MOD_LGUI else HidKeyCodes.MOD_LCTRL
+        sendKey(HidKeyCodes.KEY_C, mod)
+    }
+
+    fun paste(isMac: Boolean = false) {
+        val mod = if (isMac) HidKeyCodes.MOD_LGUI else HidKeyCodes.MOD_LCTRL
+        sendKey(HidKeyCodes.KEY_V, mod)
+    }
+
+    fun undo(isMac: Boolean = false) {
+        val mod = if (isMac) HidKeyCodes.MOD_LGUI else HidKeyCodes.MOD_LCTRL
+        sendKey(HidKeyCodes.KEY_Z, mod)
+    }
+
+    fun selectAll(isMac: Boolean = false) {
+        val mod = if (isMac) HidKeyCodes.MOD_LGUI else HidKeyCodes.MOD_LCTRL
+        sendKey(HidKeyCodes.KEY_A, mod)
+    }
+
+    fun searchSpotlight(isMac: Boolean = false) {
+        if (isMac) {
+            sendKey(HidKeyCodes.KEY_SPACE, HidKeyCodes.MOD_LGUI)
+        } else {
+            sendKey(HidKeyCodes.KEY_S, HidKeyCodes.MOD_LGUI)
+        }
     }
 }

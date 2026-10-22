@@ -25,7 +25,7 @@ class WifiRemoteServer(port: Int = 8765) : WebSocketServer(InetSocketAddress(por
         Log.d(TAG, "Client connected: ${conn?.remoteSocketAddress}")
         onClientCountChanged?.invoke(connections.size)
         // Send welcome banner
-        conn?.send("{\"type\":\"hello\",\"server\":\"Sentinal AirControl\",\"version\":\"1.0.0\"}")
+        conn?.send("{\"type\":\"hello\",\"server\":\"AirControl\",\"version\":\"1.0.0\"}")
     }
 
     override fun onClose(conn: WebSocket?, code: Int, reason: String?, remote: Boolean) {
