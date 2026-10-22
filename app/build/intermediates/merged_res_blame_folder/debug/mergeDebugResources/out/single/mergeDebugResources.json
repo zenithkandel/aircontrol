@@ -1,55 +1,47 @@
 [
     {
-        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_apple_card.xml.flat",
-        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_apple_card.xml"
-    },
-    {
-        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_apple_key.xml.flat",
-        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_apple_key.xml"
-    },
-    {
-        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_apple_segmented_track.xml.flat",
-        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_apple_segmented_track.xml"
+        "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_apple_segmented_track.xml.flat",
+        "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_apple_segmented_track.xml"
     },
     {
         "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_card_rounded.xml.flat",
         "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_card_rounded.xml"
     },
     {
-        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_apple_btn_secondary.xml.flat",
-        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_apple_btn_secondary.xml"
+        "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_apple_pill_status.xml.flat",
+        "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_apple_pill_status.xml"
     },
     {
-        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_apple_tab_active.xml.flat",
-        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_apple_tab_active.xml"
+        "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_apple_card.xml.flat",
+        "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_apple_card.xml"
+    },
+    {
+        "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_apple_btn_amber.xml.flat",
+        "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_apple_btn_amber.xml"
+    },
+    {
+        "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_apple_key.xml.flat",
+        "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_apple_key.xml"
     },
     {
         "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_tab_selected.xml.flat",
         "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_tab_selected.xml"
     },
     {
-        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_apple_pill_status.xml.flat",
-        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_apple_pill_status.xml"
-    },
-    {
-        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_apple_tab_inactive.xml.flat",
-        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_apple_tab_inactive.xml"
+        "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_apple_input_field.xml.flat",
+        "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_apple_input_field.xml"
     },
     {
         "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\layout_dialog_settings.xml.flat",
         "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\layout\\dialog_settings.xml"
     },
     {
-        "merged": "com.sentinal.aircontrol.app-debug-34:/layout_dialog_settings.xml.flat",
-        "source": "com.sentinal.aircontrol.app-main-36:/layout/dialog_settings.xml"
-    },
-    {
-        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_apple_input_field.xml.flat",
-        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_apple_input_field.xml"
-    },
-    {
         "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_btn_accent.xml.flat",
         "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_btn_accent.xml"
+    },
+    {
+        "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_apple_tab_active.xml.flat",
+        "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_apple_tab_active.xml"
     },
     {
         "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_btn_primary.xml.flat",
@@ -60,10 +52,6 @@
         "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_led_circle.xml"
     },
     {
-        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_apple_btn_primary.xml.flat",
-        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_apple_btn_primary.xml"
-    },
-    {
         "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\layout_activity_main.xml.flat",
         "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\layout\\activity_main.xml"
     },
@@ -72,19 +60,23 @@
         "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_btn_secondary.xml"
     },
     {
+        "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_apple_tab_inactive.xml.flat",
+        "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_apple_tab_inactive.xml"
+    },
+    {
+        "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_apple_btn_secondary.xml.flat",
+        "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_apple_btn_secondary.xml"
+    },
+    {
+        "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_apple_btn_primary.xml.flat",
+        "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_apple_btn_primary.xml"
+    },
+    {
         "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_bg_tab_unselected.xml.flat",
         "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\bg_tab_unselected.xml"
     },
     {
-        "merged": "com.sentinal.aircontrol.app-debug-34:/drawable_bg_apple_btn_amber.xml.flat",
-        "source": "com.sentinal.aircontrol.app-main-36:/drawable/bg_apple_btn_amber.xml"
-    },
-    {
         "merged": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-debug-34:\\drawable_ic_launcher.xml.flat",
         "source": "C:\\Users\\zenith\\.gradle\\daemon\\8.14.3\\com.sentinal.aircontrol.app-main-36:\\drawable\\ic_launcher.xml"
-    },
-    {
-        "merged": "com.sentinal.aircontrol.app-debug-34:/layout_activity_main.xml.flat",
-        "source": "com.sentinal.aircontrol.app-main-36:/layout/activity_main.xml"
     }
 ]

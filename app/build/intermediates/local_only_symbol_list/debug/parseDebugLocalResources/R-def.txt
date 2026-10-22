@@ -30,13 +30,6 @@ drawable bg_apple_pill_status
 drawable bg_apple_segmented_track
 drawable bg_apple_tab_active
 drawable bg_apple_tab_inactive
-drawable bg_btn_accent
-drawable bg_btn_primary
-drawable bg_btn_secondary
-drawable bg_card_rounded
-drawable bg_led_circle
-drawable bg_tab_selected
-drawable bg_tab_unselected
 drawable ic_launcher
 id bottomBarLayout
 id btnArrowDown
