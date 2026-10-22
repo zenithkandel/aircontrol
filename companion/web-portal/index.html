@@ -3,22 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AirControl — Sentinal 3-in-1 Wireless Air Mouse &amp; Controller</title>
+    <title>AirControl — Spatial Remote &amp; Controller</title>
     <style>
         :root {
-            --bg-dark: #080a0f;
-            --bg-surface: #121620;
-            --bg-card: #1a212e;
-            --border-subtle: #2a364b;
-            --cyan-accent: #00e5ff;
-            --cyan-glow: rgba(0, 229, 255, 0.2);
-            --amber-accent: #ffab00;
-            --amber-glow: rgba(255, 171, 0, 0.2);
-            --neon-green: #00e676;
-            --neon-pink: #ff3366;
-            --text-primary: #f0f4fc;
-            --text-secondary: #8a9bb5;
-            --text-muted: #4e5d78;
+            --apple-canvas: #000000;
+            --apple-elevated-1: #161618;
+            --apple-elevated-2: #1c1c1e;
+            --apple-well: #2c2c2e;
+            --apple-selected: #3a3a3c;
+            --apple-hairline: #28282a;
+            --apple-catchlight: #38383a;
+            --apple-blue: #0a84ff;
+            --apple-blue-pressed: #0071e3;
+            --apple-amber: #ff9f0a;
+            --apple-amber-subtle: #33220a;
+            --apple-green: #30d158;
+            --apple-red: #ff453a;
+            --apple-text-primary: #f5f5f7;
+            --apple-text-secondary: #86868b;
+            --apple-text-tertiary: #636366;
         }
 
         * {
@@ -30,9 +33,9 @@
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--apple-canvas);
+            color: var(--apple-text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -42,155 +45,107 @@
 
         .phone-frame {
             width: 100%;
-            max-width: 420px;
-            height: 860px;
-            background: var(--bg-surface);
-            border: 2px solid var(--border-subtle);
-            border-radius: 36px;
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 229, 255, 0.1);
+            max-width: 410px;
+            height: 840px;
+            background: var(--apple-canvas);
+            border: 1px solid var(--apple-hairline);
+            border-radius: 40px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.12);
             display: flex;
             flex-direction: column;
             overflow: hidden;
             position: relative;
         }
 
-        /* Status Bar */
+        /* Top Header */
         .status-header {
-            padding: 16px 20px 8px 20px;
+            padding: 20px 22px 10px 22px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .brand-title {
-            font-size: 1.15rem;
-            font-weight: 800;
-            letter-spacing: 0.12em;
-            color: var(--text-primary);
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.015em;
+            color: var(--apple-text-primary);
         }
 
         .brand-sub {
-            font-size: 0.68rem;
-            letter-spacing: 0.08em;
-            color: var(--cyan-accent);
-            font-weight: 600;
+            font-size: 0.72rem;
+            color: var(--apple-text-secondary);
+            font-weight: 400;
         }
 
-        /* LED Array */
-        .led-array {
-            display: flex;
-            gap: 12px;
-            background: var(--bg-card);
-            padding: 6px 12px;
-            border-radius: 12px;
-            border: 1px solid var(--border-subtle);
-        }
-
-        .led-unit {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-        }
-
-        .led-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #202634;
-            transition: all 0.1s ease;
-        }
-
-        .led-dot.mode-active {
-            background: var(--amber-accent);
-            box-shadow: 0 0 10px var(--amber-accent);
-        }
-
-        .led-dot.ble-active {
-            background: var(--cyan-accent);
-            box-shadow: 0 0 10px var(--cyan-accent);
-        }
-
-        .led-dot.act-active {
-            background: var(--neon-pink);
-            box-shadow: 0 0 10px var(--neon-pink);
-        }
-
-        .led-label {
-            font-size: 0.55rem;
-            color: var(--text-muted);
-            font-weight: bold;
-        }
-
-        /* Connection Pill */
-        .conn-pill {
-            margin: 12px 20px 0 20px;
-            padding: 8px 14px;
-            background: var(--bg-card);
-            border-radius: 12px;
-            border: 1px solid var(--border-subtle);
+        /* Dynamic Status Pill */
+        .dynamic-pill {
+            margin: 8px 22px 0 22px;
+            padding: 9px 16px;
+            background: var(--apple-elevated-1);
+            border-radius: 999px;
+            border: 1px solid var(--apple-hairline);
             display: flex;
             align-items: center;
             justify-content: space-between;
             font-size: 0.75rem;
         }
 
-        .conn-status {
+        .pill-status {
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: var(--cyan-accent);
-            font-weight: 700;
+            gap: 10px;
+            color: var(--apple-green);
+            font-weight: 600;
         }
 
-        .conn-dot {
+        .pill-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: var(--cyan-accent);
-            box-shadow: 0 0 8px var(--cyan-accent);
+            background: var(--apple-green);
+            box-shadow: 0 0 10px var(--apple-green);
         }
 
-        .conn-target {
-            color: var(--text-secondary);
+        .pill-target {
+            color: var(--apple-text-tertiary);
             font-size: 0.7rem;
         }
 
-        /* Mode Switcher Tabs */
-        .mode-tabs {
-            margin: 12px 20px 0 20px;
-            background: var(--bg-card);
-            padding: 4px;
+        /* Segmented Controller */
+        .segmented-track {
+            margin: 12px 22px 0 22px;
+            background: var(--apple-elevated-1);
+            padding: 3px;
             border-radius: 14px;
             display: flex;
-            border: 1px solid var(--border-subtle);
+            border: 1px solid var(--apple-hairline);
         }
 
-        .tab-btn {
+        .segment-btn {
             flex: 1;
-            padding: 10px 0;
+            padding: 9px 0;
             background: transparent;
             border: none;
-            color: var(--text-secondary);
+            color: var(--apple-text-secondary);
             font-size: 0.75rem;
-            font-weight: 700;
+            font-weight: 600;
             border-radius: 10px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.18s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        .tab-btn.active {
-            background: #243447;
-            color: var(--cyan-accent);
-            border: 1px solid var(--cyan-accent);
-            box-shadow: 0 0 12px var(--cyan-glow);
+        .segment-btn.active {
+            background: var(--apple-selected);
+            color: var(--apple-text-primary);
+            border: 1px solid var(--apple-catchlight);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
         }
 
-        /* Main View Container */
+        /* Panels Container */
         .panels-wrapper {
             flex: 1;
-            padding: 16px 20px;
+            padding: 14px 22px;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -201,244 +156,143 @@
             display: none;
             flex-direction: column;
             height: 100%;
-            animation: fadeIn 0.25s ease-in-out;
         }
 
         .panel.active {
             display: flex;
+            animation: appleFadeIn 0.22s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes appleFadeIn {
+            from { opacity: 0; transform: scale(0.985); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        /* Button Common */
+        /* Apple Button System */
         .btn {
             border: none;
-            border-radius: 16px;
+            border-radius: 18px;
             cursor: pointer;
-            font-weight: 700;
-            transition: all 0.12s ease;
+            font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            transition: transform 0.08s ease-out, filter 0.08s ease-out;
         }
 
         .btn:active {
-            transform: scale(0.97);
-            filter: brightness(1.2);
+            transform: scale(0.97) !important;
+            filter: brightness(1.15);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #1a283b, #203650);
-            color: var(--cyan-accent);
-            border: 2px solid var(--cyan-accent);
-            box-shadow: 0 0 16px var(--cyan-glow);
+            background: var(--apple-blue);
+            color: var(--apple-text-primary);
+            box-shadow: 0 4px 14px rgba(10, 132, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .btn-secondary {
-            background: var(--bg-card);
-            color: var(--text-primary);
-            border: 1px solid var(--border-subtle);
+            background: var(--apple-elevated-2);
+            color: var(--apple-text-primary);
+            border: 1px solid var(--apple-hairline);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
         }
 
-        .btn-accent {
-            background: linear-gradient(135deg, #332400, #4d3600);
-            color: var(--amber-accent);
-            border: 2px solid var(--amber-accent);
-            box-shadow: 0 0 16px var(--amber-glow);
+        .btn-amber {
+            background: var(--apple-amber-subtle);
+            color: var(--apple-amber);
+            border: 1px solid var(--apple-amber);
         }
 
-        /* Mode 1: Presentation Remote */
-        .timer-bar {
-            background: var(--bg-card);
-            border-radius: 14px;
-            padding: 10px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 14px;
-            border: 1px solid var(--border-subtle);
+        .apple-card {
+            background: var(--apple-elevated-1);
+            border-radius: 20px;
+            border: 1px solid var(--apple-hairline);
+            padding: 14px 18px;
         }
 
-        .timer-digits {
-            font-family: monospace;
-            font-size: 1.25rem;
-            color: var(--amber-accent);
-            font-weight: 700;
-        }
-
-        .btn-next-slide {
-            flex: 1.4;
-            font-size: 1.35rem;
-            margin-bottom: 12px;
-        }
-
-        .btn-prev-slide {
-            flex: 1;
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-        }
-
-        .quick-actions-row {
+        /* Keyboard Mode */
+        .input-well {
+            background: var(--apple-elevated-1);
+            border: 1px solid var(--apple-hairline);
+            border-radius: 18px;
+            padding: 6px;
             display: flex;
             gap: 8px;
-            height: 52px;
             margin-bottom: 12px;
         }
 
-        .quick-actions-row .btn {
+        .keyboard-field {
             flex: 1;
-            font-size: 0.72rem;
-            padding: 0 4px;
-            text-align: center;
+            background: var(--apple-elevated-2);
+            border: 1px solid var(--apple-hairline);
+            border-radius: 12px;
+            color: var(--apple-text-primary);
+            padding: 10px 14px;
+            font-size: 0.82rem;
+            outline: none;
         }
 
-        /* Mode 2: Air Mouse */
-        .gyro-radar {
-            background: var(--bg-card);
-            border-radius: 14px;
-            padding: 12px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            border: 1px solid var(--border-subtle);
-        }
-
-        .gyro-status-txt {
-            color: var(--neon-green);
-            font-size: 0.8rem;
-            font-weight: 700;
-        }
-
-        .gyro-readout {
-            font-family: monospace;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        .mouse-action-area {
-            flex: 1;
-            display: flex;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        .mouse-btn-left {
-            flex: 1.2;
-            font-size: 1.05rem;
-        }
-
-        .scroll-strip {
-            width: 60px;
-            background: var(--bg-card);
-            border-radius: 14px;
-            border: 1px solid var(--border-subtle);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            padding: 6px 0;
-        }
-
-        .scroll-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 10px;
-        }
-
-        .mouse-btn-right {
-            flex: 1;
-            font-size: 0.95rem;
-        }
-
-        .air-mouse-footer-row {
-            display: flex;
-            gap: 8px;
-            height: 50px;
-        }
-
-        .air-mouse-footer-row .btn {
-            flex: 1;
-            font-size: 0.72rem;
-        }
-
-        /* Mode 3: Reels */
-        .btn-next-reel {
-            flex: 1.3;
-            font-size: 1.35rem;
-            margin-bottom: 12px;
-        }
-
-        .reels-center-row {
-            flex: 1;
-            display: flex;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        .reels-center-row .btn {
-            flex: 1;
-            font-size: 1rem;
-        }
-
-        .reels-media-row {
-            display: flex;
-            gap: 8px;
-            height: 48px;
+        .keyboard-dock {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
             margin-bottom: 10px;
         }
 
-        .reels-media-row .btn {
-            flex: 1;
-            font-size: 0.8rem;
-        }
-
-        /* Volume Hint */
-        .vol-hint {
+        .key-btn {
+            background: var(--apple-elevated-2);
+            border: 1px solid var(--apple-hairline);
+            color: var(--apple-text-primary);
+            border-radius: 10px;
+            padding: 11px 4px;
+            font-size: 0.72rem;
+            font-weight: 500;
+            cursor: pointer;
             text-align: center;
-            font-size: 0.68rem;
-            color: var(--text-muted);
-            margin-top: 4px;
         }
 
-        /* Bottom Cycle Bar */
-        .bottom-bar {
-            padding: 12px 20px 18px 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        .arrow-grid {
+            background: var(--apple-elevated-1);
+            border-radius: 20px;
+            border: 1px solid var(--apple-hairline);
+            padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
         }
 
-        .telemetry-box {
-            background: var(--bg-card);
-            border-radius: 10px;
-            padding: 6px 10px;
-            font-family: monospace;
-            font-size: 0.65rem;
-            color: var(--text-muted);
-            border: 1px solid var(--border-subtle);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .arrow-row {
+            display: flex;
+            gap: 12px;
         }
 
-        .cycle-btn-row {
+        .arrow-btn {
+            width: 74px;
+            height: 42px;
+            background: var(--apple-elevated-2);
+            border: 1px solid var(--apple-hairline);
+            border-radius: 12px;
+            color: var(--apple-text-primary);
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        /* Bottom Controls */
+        .bottom-bar {
+            padding: 10px 22px 20px 22px;
             display: flex;
             gap: 8px;
-            height: 46px;
         }
 
-        .btn-cycle {
-            flex: 1;
-            font-size: 0.78rem;
+        .caption-hint {
+            text-align: center;
+            font-size: 0.68rem;
+            color: var(--apple-text-tertiary);
+            margin-top: 6px;
         }
     </style>
 </head>
@@ -448,233 +302,173 @@
     <!-- Header -->
     <div class="status-header">
         <div>
-            <div class="brand-title">SENTINAL</div>
-            <div class="brand-sub">AIRCONTROL • BLE HID</div>
+            <div class="brand-title">AirControl</div>
+            <div class="brand-sub">Spatial Remote &amp; Controller</div>
         </div>
-        <div class="led-array">
-            <div class="led-unit">
-                <div id="ledMode" class="led-dot"></div>
-                <div class="led-label">MODE</div>
-            </div>
-            <div class="led-unit">
-                <div id="ledBle" class="led-dot ble-active"></div>
-                <div class="led-label">BLE</div>
-            </div>
-            <div class="led-unit">
-                <div id="ledAct" class="led-dot"></div>
-                <div class="led-label">ACT</div>
-            </div>
-        </div>
+        <button class="btn btn-secondary" style="width: 38px; height: 38px; border-radius: 50%; padding: 0;">⚙</button>
     </div>
 
-    <!-- Connection Status -->
-    <div class="conn-pill">
-        <div class="conn-status">
-            <div class="conn-dot"></div>
-            <span id="connState">ADVERTISING AS 'SENTINAL'</span>
+    <!-- Apple Dynamic Status Pill -->
+    <div class="dynamic-pill">
+        <div class="pill-status">
+            <div class="pill-dot"></div>
+            <span id="connState">CONNECTED</span>
         </div>
-        <div class="conn-target" id="connTarget">PAIR IN PC BLUETOOTH</div>
+        <div class="pill-target" id="connTarget">Zenith-Laptop</div>
     </div>
 
-    <!-- Operating Mode Tabs -->
-    <div class="mode-tabs">
-        <button class="tab-btn active" onclick="switchMode(0)">1: SLIDES</button>
-        <button class="tab-btn" onclick="switchMode(1)">2: MOUSE</button>
-        <button class="tab-btn" onclick="switchMode(2)">3: REELS</button>
+    <!-- Segmented Mode Controller -->
+    <div class="segmented-track">
+        <button class="segment-btn active" onclick="switchMode(0)">Slides</button>
+        <button class="segment-btn" onclick="switchMode(1)">Mouse</button>
+        <button class="segment-btn" onclick="switchMode(2)">Keyboard</button>
+        <button class="segment-btn" onclick="switchMode(3)">Media</button>
     </div>
 
-    <!-- Panels Container -->
+    <!-- Panels Wrapper -->
     <div class="panels-wrapper">
-        <!-- MODE 1: PRESENTATION REMOTE -->
+        <!-- MODE 1: SLIDES -->
         <div id="panel0" class="panel active">
-            <div class="timer-bar">
-                <span style="font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.05em;">SLIDE TIMER</span>
-                <span id="timerText" class="timer-digits">00:00</span>
-                <button class="btn btn-secondary" onclick="resetTimer()" style="padding: 4px 10px; font-size: 0.65rem;">RESET</button>
+            <div class="apple-card" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <span style="font-size: 0.72rem; color: var(--apple-text-secondary); font-weight: 600; letter-spacing: 0.05em;">ELAPSED TIME</span>
+                <span id="timerText" style="font-family: monospace; font-size: 1.3rem; font-weight: 700; color: var(--apple-text-primary);">00:00</span>
+                <button class="btn btn-secondary" onclick="resetTimer()" style="padding: 4px 12px; font-size: 0.7rem; border-radius: 10px;">Reset</button>
             </div>
-            <button class="btn btn-primary btn-next-slide" onclick="triggerAction('presentation_next')">NEXT SLIDE  ▶</button>
-            <button class="btn btn-secondary btn-prev-slide" onclick="triggerAction('presentation_prev')">◀  PREV SLIDE</button>
-            <div class="quick-actions-row">
-                <button class="btn btn-secondary" onclick="triggerAction('presentation_f5')">F5 FULLSCREEN</button>
-                <button class="btn btn-secondary" onclick="triggerAction('presentation_black')">BLACK SCREEN</button>
-                <button id="torchBtn" class="btn btn-accent" onmousedown="startTorch()" onmouseup="stopTorch()" ontouchstart="startTorch()" ontouchend="stopTorch()">🔦 TORCH BEAM</button>
+            <button class="btn btn-primary" onclick="triggerAction('next_slide')" style="flex: 1.4; font-size: 1.3rem; margin-bottom: 10px;">Next Slide  ›</button>
+            <button class="btn btn-secondary" onclick="triggerAction('prev_slide')" style="flex: 1; font-size: 1.1rem; margin-bottom: 12px;">‹  Previous Slide</button>
+            <div style="display: flex; gap: 8px; height: 46px; margin-bottom: 8px;">
+                <button class="btn btn-secondary" style="flex: 1; font-size: 0.75rem;" onclick="triggerAction('f5')">F5 Keynote</button>
+                <button class="btn btn-secondary" style="flex: 1; font-size: 0.75rem;" onclick="triggerAction('blank')">Blank (B)</button>
+                <button class="btn btn-amber" style="flex: 1.1; font-size: 0.75rem;" onclick="triggerAction('torch')">🔦 Spotlight</button>
             </div>
-            <div class="vol-hint">⚡ Physical volume keys advance &amp; reverse slides hands-free</div>
+            <div class="caption-hint">Physical volume buttons advance &amp; reverse slides hands-free</div>
         </div>
 
-        <!-- MODE 2: 6-AXIS AIR MOUSE -->
+        <!-- MODE 2: AIR MOUSE -->
         <div id="panel1" class="panel">
-            <div class="gyro-radar">
-                <div id="gyroState" class="gyro-status-txt">GYRO ACTIVE (100 Hz)</div>
-                <div id="gyroDeltas" class="gyro-readout">dX: 0  dY: 0</div>
+            <div class="apple-card" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <span style="font-size: 0.78rem; color: var(--apple-green); font-weight: 600;">Pointer Active (100 Hz)</span>
+                <span id="mouseTelemetry" style="font-family: monospace; font-size: 0.75rem; color: var(--apple-text-secondary);">dX: 0  dY: 0</span>
             </div>
-            <div class="mouse-action-area">
-                <button class="btn btn-primary mouse-btn-left" onclick="triggerAction('mouse_left')">LEFT CLICK<br><span style="font-size:0.75rem; opacity:0.8;">(BUTTON A)</span></button>
-                <div class="scroll-strip">
-                    <button class="scroll-btn" onclick="triggerAction('scroll_up')">▲</button>
-                    <span style="font-size: 0.55rem; color: var(--text-muted); font-weight: bold;">SCROLL</span>
-                    <button class="scroll-btn" onclick="triggerAction('scroll_down')">▼</button>
+            <div style="flex: 1; display: flex; gap: 10px; margin-bottom: 12px;">
+                <button class="btn btn-primary" onclick="triggerAction('left_click')" style="flex: 1.2; font-size: 1.1rem;">Left Click</button>
+                <div class="apple-card" style="width: 56px; padding: 6px 0; display: flex; flex-direction: column; justify-content: space-between; align-items: center;">
+                    <button class="btn" style="background: transparent; color: var(--apple-text-primary); font-size: 1.1rem;" onclick="triggerAction('scroll_up')">▲</button>
+                    <span style="font-size: 0.55rem; color: var(--apple-text-tertiary); font-weight: bold;">SCROLL</span>
+                    <button class="btn" style="background: transparent; color: var(--apple-text-primary); font-size: 1.1rem;" onclick="triggerAction('scroll_down')">▼</button>
                 </div>
-                <button class="btn btn-secondary mouse-btn-right" onclick="triggerAction('mouse_right')">RIGHT CLICK<br><span style="font-size:0.75rem; opacity:0.8;">(BUTTON B)</span></button>
+                <button class="btn btn-secondary" onclick="triggerAction('right_click')" style="flex: 1; font-size: 1rem;">Right Click</button>
             </div>
-            <div class="air-mouse-footer-row">
-                <button class="btn btn-accent" onmousedown="pauseGyro()" onmouseup="resumeGyro()">HOLD TO FREEZE POINTER</button>
-                <button class="btn btn-secondary" onclick="recalibrate()">RECALIBRATE</button>
+            <div style="display: flex; gap: 8px; height: 46px;">
+                <button class="btn btn-amber" style="flex: 1.3; font-size: 0.75rem;">Hold to Freeze Pointer</button>
+                <button class="btn btn-secondary" style="flex: 1; font-size: 0.75rem;" onclick="triggerAction('calibrate')">Recalibrate</button>
             </div>
-            <div class="vol-hint" style="margin-top: 8px;">⚡ Tilt wrist to steer pointer • Volume keys click</div>
+            <div class="caption-hint">Tilt wrist to steer pointer • Volume buttons click</div>
         </div>
 
-        <!-- MODE 3: REEL / SHORT SCROLLER -->
+        <!-- MODE 3: KEYBOARD (NEW!) -->
         <div id="panel2" class="panel">
-            <button class="btn btn-primary btn-next-reel" onclick="triggerAction('reel_next')">NEXT VIDEO  ▼</button>
-            <div class="reels-center-row">
-                <button class="btn btn-secondary" onclick="triggerAction('reel_prev')">▲  PREV VIDEO</button>
-                <button class="btn btn-accent" onclick="triggerAction('reel_play_pause')">⏯ PLAY / PAUSE</button>
+            <div class="input-well">
+                <input id="keyboardInput" class="keyboard-field" placeholder="Type text or use voice dictation..." />
+                <button class="btn btn-primary" style="padding: 0 16px; font-size: 0.75rem; border-radius: 12px;" onclick="sendTypedText()">Send ⏎</button>
             </div>
-            <div class="reels-media-row">
-                <button class="btn btn-secondary" onclick="triggerAction('vol_down')">VOL -</button>
-                <button class="btn btn-secondary" onclick="triggerAction('vol_up')">VOL +</button>
-                <button class="btn btn-secondary" style="color: var(--neon-pink);" onclick="triggerAction('like')">❤️ LIKE</button>
+            <div class="keyboard-dock">
+                <button class="key-btn" onclick="triggerAction('esc')">esc</button>
+                <button class="key-btn" onclick="triggerAction('tab')">tab ⇥</button>
+                <button class="key-btn" onclick="triggerAction('space')">space</button>
+                <button class="key-btn" onclick="triggerAction('backspace')">delete ⌫</button>
+                <button class="key-btn" onclick="triggerAction('return')">return ⏎</button>
             </div>
-            <div class="vol-hint">⚡ TikTok, Instagram Reels, YouTube Shorts compatible</div>
+            <div class="keyboard-dock">
+                <button class="key-btn" onclick="triggerAction('undo')">Undo ↩</button>
+                <button class="key-btn" onclick="triggerAction('copy')">Copy</button>
+                <button class="key-btn" onclick="triggerAction('paste')">Paste</button>
+                <button class="key-btn" onclick="triggerAction('select_all')">Select All</button>
+                <button class="key-btn" style="color: var(--apple-blue);" onclick="triggerAction('search')">🔍 Search</button>
+            </div>
+            <div class="arrow-grid">
+                <div style="font-size: 0.65rem; color: var(--apple-text-tertiary); letter-spacing: 0.05em; margin-bottom: 10px;">ARROW NAVIGATION</div>
+                <button class="arrow-btn" onclick="triggerAction('arrow_up')" style="margin-bottom: 8px;">▲</button>
+                <div class="arrow-row">
+                    <button class="arrow-btn" onclick="triggerAction('arrow_left')">◀</button>
+                    <button class="arrow-btn" onclick="triggerAction('arrow_down')">▼</button>
+                    <button class="arrow-btn" onclick="triggerAction('arrow_right')">▶</button>
+                </div>
+            </div>
+            <div class="caption-hint">Wireless Bluetooth keyboard &amp; shortcut hub</div>
+        </div>
+
+        <!-- MODE 4: MEDIA -->
+        <div id="panel3" class="panel">
+            <button class="btn btn-primary" onclick="triggerAction('next_video')" style="flex: 1.3; font-size: 1.3rem; margin-bottom: 10px;">Next Video  ⌄</button>
+            <div style="flex: 1; display: flex; gap: 10px; margin-bottom: 10px;">
+                <button class="btn btn-secondary" onclick="triggerAction('prev_video')" style="flex: 1; font-size: 1rem;">⌃  Previous Video</button>
+                <button class="btn btn-secondary" onclick="triggerAction('play_pause')" style="flex: 1; font-size: 1rem;">⏯  Play / Pause</button>
+            </div>
+            <div style="display: flex; gap: 8px; height: 46px; margin-bottom: 8px;">
+                <button class="btn btn-secondary" style="flex: 1; font-size: 0.8rem;" onclick="triggerAction('vol_down')">Volume −</button>
+                <button class="btn btn-secondary" style="flex: 1; font-size: 0.8rem;" onclick="triggerAction('vol_up')">Volume +</button>
+                <button class="btn btn-secondary" style="flex: 1; color: var(--apple-red); font-size: 0.8rem;" onclick="triggerAction('like')">Like ❤️</button>
+            </div>
+            <div class="caption-hint">TikTok, Instagram Reels, and YouTube Shorts compatible</div>
         </div>
     </div>
 
     <!-- Bottom Bar -->
     <div class="bottom-bar">
-        <div id="telemetryLog" class="telemetry-box">[CDC] Ready. Tap 'CYCLE OPERATING MODE' to switch 1 ➔ 2 ➔ 3.</div>
-        <div class="cycle-btn-row">
-            <button class="btn btn-secondary btn-cycle" onclick="cycleMode()">CYCLE OPERATING MODE  (1 ➔ 2 ➔ 3)</button>
-        </div>
+        <button class="btn btn-secondary" style="flex: 1; height: 44px; font-size: 0.78rem;" onclick="cycleNextMode()">Next Mode  ➔</button>
     </div>
 </div>
 
 <script>
     let currentMode = 0;
-    let timerSeconds = 0;
-    let timerInterval = null;
-    let gyroActive = false;
+    let timerSecs = 0;
+    let timerInt = null;
 
-    const modeBlinks = [1, 2, 3];
-
-    function switchMode(modeIndex) {
-        currentMode = modeIndex;
-        document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
-            btn.classList.toggle('active', idx === modeIndex);
+    function switchMode(idx) {
+        currentMode = idx;
+        document.querySelectorAll('.segment-btn').forEach((btn, i) => {
+            btn.classList.toggle('active', i === idx);
         });
-        document.querySelectorAll('.panel').forEach((p, idx) => {
-            p.classList.toggle('active', idx === modeIndex);
+        document.querySelectorAll('.panel').forEach((p, i) => {
+            p.classList.toggle('active', i === idx);
         });
-
-        // Blink Mode LED N times
-        blinkModeLed(modeBlinks[modeIndex]);
-        updateTelemetry(`[MODE] Switched to Mode ${modeIndex + 1}: ${['Presentation', 'Air Mouse', 'Reel Scroller'][modeIndex]}`);
-
-        if (modeIndex === 1) {
-            gyroActive = true;
-            document.getElementById('gyroState').innerText = "GYRO ACTIVE (100 Hz)";
-            document.getElementById('gyroState').style.color = "var(--neon-green)";
-        } else {
-            gyroActive = false;
-        }
-
-        // Haptic simulation if available
-        if (navigator.vibrate) navigator.vibrate(modeBlinks[modeIndex] * 40);
     }
 
-    function cycleMode() {
-        switchMode((currentMode + 1) % 3);
+    function cycleNextMode() {
+        switchMode((currentMode + 1) % 4);
     }
 
-    function blinkModeLed(times) {
-        const led = document.getElementById('ledMode');
-        let count = 0;
-        const interval = setInterval(() => {
-            led.classList.toggle('mode-active');
-            count++;
-            if (count >= times * 2) {
-                clearInterval(interval);
-                led.classList.remove('mode-active');
-            }
-        }, 120);
-    }
-
-    function flashActionLed() {
-        const led = document.getElementById('ledAct');
-        led.classList.add('act-active');
-        setTimeout(() => led.classList.remove('act-active'), 80);
-    }
-
-    function triggerAction(actionName) {
-        flashActionLed();
-        if (navigator.vibrate) navigator.vibrate(25);
-        updateTelemetry(`[ACTION] ${actionName.toUpperCase()}`);
-
-        if (actionName === 'presentation_next' || actionName === 'presentation_prev') {
+    function triggerAction(action) {
+        if (navigator.vibrate) navigator.vibrate(15);
+        if (action === 'next_slide' || action === 'prev_slide') {
             startTimer();
         }
     }
 
     function startTimer() {
-        if (!timerInterval) {
-            timerInterval = setInterval(() => {
-                timerSeconds++;
-                const mins = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
-                const secs = String(timerSeconds % 60).padStart(2, '0');
-                document.getElementById('timerText').innerText = `${mins}:${secs}`;
+        if (!timerInt) {
+            timerInt = setInterval(() => {
+                timerSecs++;
+                const m = String(Math.floor(timerSecs / 60)).padStart(2, '0');
+                const s = String(timerSecs % 60).padStart(2, '0');
+                document.getElementById('timerText').innerText = `${m}:${s}`;
             }, 1000);
         }
     }
 
     function resetTimer() {
-        timerSeconds = 0;
-        document.getElementById('timerText').innerText = '00:00';
+        timerSecs = 0;
+        document.getElementById('timerText').innerText = "00:00";
     }
 
-    function startTorch() {
-        flashActionLed();
-        document.getElementById('torchBtn').innerText = "⚡ BEAM ACTIVE";
-        updateTelemetry("[TORCH] Camera flashlight beam ON");
-    }
-
-    function stopTorch() {
-        document.getElementById('torchBtn').innerText = "🔦 TORCH BEAM";
-        updateTelemetry("[TORCH] Camera flashlight beam OFF");
-    }
-
-    function pauseGyro() {
-        gyroActive = false;
-        document.getElementById('gyroState').innerText = "POINTER FROZEN (CLUTCH)";
-        document.getElementById('gyroState').style.color = "var(--amber-accent)";
-        updateTelemetry("[CLUTCH] Hand repositioning active");
-    }
-
-    function resumeGyro() {
-        gyroActive = true;
-        document.getElementById('gyroState').innerText = "GYRO ACTIVE (100 Hz)";
-        document.getElementById('gyroState').style.color = "var(--neon-green)";
-    }
-
-    function recalibrate() {
-        updateTelemetry("[CALIB] 2s stationary zero-rate calibration starting...");
-        setTimeout(() => {
-            updateTelemetry("[CALIB] Calibration successful! Zero offsets stored.");
-            if (navigator.vibrate) navigator.vibrate([40, 60, 80]);
-        }, 2000);
-    }
-
-    function updateTelemetry(msg) {
-        document.getElementById('telemetryLog').innerText = msg;
-    }
-
-    // Interactive mouse drag on screen to simulate air mouse movement
-    window.addEventListener('mousemove', (e) => {
-        if (currentMode === 1 && gyroActive) {
-            const dx = Math.round(e.movementX * 0.4);
-            const dy = Math.round(e.movementY * 0.4);
-            document.getElementById('gyroDeltas').innerText = `dX: ${dx}  dY: ${dy}`;
+    function sendTypedText() {
+        const inp = document.getElementById('keyboardInput');
+        if (inp.value) {
+            triggerAction('type_text');
+            inp.value = '';
         }
-    });
+    }
 </script>
 </body>
 </html>

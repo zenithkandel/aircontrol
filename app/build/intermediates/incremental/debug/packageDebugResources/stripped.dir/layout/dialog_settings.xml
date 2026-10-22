@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/bg_surface"
+    android:background="@color/apple_canvas"
     android:padding="20dp">
 
     <LinearLayout
@@ -15,11 +15,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SETTINGS &amp; TUNING"
-            android:textColor="@color/text_primary"
-            android:textSize="18sp"
+            android:text="Settings &amp; Tuning"
+            android:textColor="@color/apple_text_primary"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:letterSpacing="0.05"
+            android:letterSpacing="-0.015"
             android:layout_marginBottom="16dp" />
 
         <!-- Sensitivity X -->
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sensitivity X (Yaw): 0.22"
-            android:textColor="@color/text_secondary"
+            android:textColor="@color/apple_text_secondary"
             android:textSize="13sp" />
 
         <SeekBar
@@ -37,8 +37,8 @@
             android:layout_height="wrap_content"
             android:max="100"
             android:progress="22"
-            android:progressTint="@color/cyan_accent"
-            android:thumbTint="@color/cyan_accent"
+            android:progressTint="@color/apple_blue"
+            android:thumbTint="@color/apple_blue"
             android:layout_marginBottom="12dp" />
 
         <!-- Sensitivity Y -->
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sensitivity Y (Pitch): 0.22"
-            android:textColor="@color/text_secondary"
+            android:textColor="@color/apple_text_secondary"
             android:textSize="13sp" />
 
         <SeekBar
@@ -56,8 +56,8 @@
             android:layout_height="wrap_content"
             android:max="100"
             android:progress="22"
-            android:progressTint="@color/cyan_accent"
-            android:thumbTint="@color/cyan_accent"
+            android:progressTint="@color/apple_blue"
+            android:thumbTint="@color/apple_blue"
             android:layout_marginBottom="12dp" />
 
         <!-- Gyro Deadzone -->
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gyro Deadzone: 1.25 deg/s"
-            android:textColor="@color/text_secondary"
+            android:textColor="@color/apple_text_secondary"
             android:textSize="13sp" />
 
         <SeekBar
@@ -75,8 +75,8 @@
             android:layout_height="wrap_content"
             android:max="50"
             android:progress="12"
-            android:progressTint="@color/amber_accent"
-            android:thumbTint="@color/amber_accent"
+            android:progressTint="@color/apple_amber"
+            android:thumbTint="@color/apple_amber"
             android:layout_marginBottom="12dp" />
 
         <!-- Smoothing Alpha -->
@@ -85,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Filter Smoothing Alpha: 0.45"
-            android:textColor="@color/text_secondary"
+            android:textColor="@color/apple_text_secondary"
             android:textSize="13sp" />
 
         <SeekBar
@@ -94,85 +94,86 @@
             android:layout_height="wrap_content"
             android:max="100"
             android:progress="45"
-            android:progressTint="@color/neon_green"
-            android:thumbTint="@color/neon_green"
+            android:progressTint="@color/apple_green"
+            android:thumbTint="@color/apple_green"
             android:layout_marginBottom="16dp" />
 
-        <!-- Toggle Switches -->
+        <!-- Apple Switches -->
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switchAccel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dynamic Velocity Acceleration"
-            android:textColor="@color/text_primary"
+            android:text="Velocity Acceleration"
+            android:textColor="@color/apple_text_primary"
             android:checked="true"
-            app:thumbTint="@color/cyan_accent"
-            app:trackTint="@color/cyan_glow" />
+            app:thumbTint="@color/apple_blue"
+            app:trackTint="@color/apple_blue_subtle" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switchInvertX"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Invert Horizontal Axis (X)"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/apple_text_primary"
             android:checked="true"
-            app:thumbTint="@color/cyan_accent"
-            app:trackTint="@color/cyan_glow" />
+            app:thumbTint="@color/apple_blue"
+            app:trackTint="@color/apple_blue_subtle" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switchInvertY"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Invert Vertical Axis (Y)"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/apple_text_primary"
             android:checked="true"
-            app:thumbTint="@color/cyan_accent"
-            app:trackTint="@color/cyan_glow" />
+            app:thumbTint="@color/apple_blue"
+            app:trackTint="@color/apple_blue_subtle" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switchVolumeKeys"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hardware Volume Rocker Actions"
-            android:textColor="@color/text_primary"
+            android:text="Physical Volume Rocker Shortcuts"
+            android:textColor="@color/apple_text_primary"
             android:checked="true"
-            app:thumbTint="@color/amber_accent"
-            app:trackTint="@color/amber_glow" />
+            app:thumbTint="@color/apple_amber"
+            app:trackTint="@color/apple_amber_subtle" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switchHaptics"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tactile Vibration Haptics"
-            android:textColor="@color/text_primary"
+            android:text="Taptic Haptic Feedback"
+            android:textColor="@color/apple_text_primary"
             android:checked="true"
-            app:thumbTint="@color/neon_green"
-            app:trackTint="@color/neon_green_glow" />
+            app:thumbTint="@color/apple_green"
+            app:trackTint="@color/apple_green_subtle" />
 
         <!-- Wi-Fi Companion Information -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@drawable/bg_card_rounded"
-            android:padding="12dp"
+            android:background="@drawable/bg_apple_card"
+            android:padding="14dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="WI-FI COMPANION SERVER (FALLBACK)"
-                android:textColor="@color/cyan_accent"
+                android:text="WI-FI COMPANION SERVER"
+                android:textColor="@color/apple_blue"
                 android:textSize="11sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:letterSpacing="0.05" />
 
             <TextView
                 android:id="@+id/tvWifiServerInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Port: ws://0.0.0.0:8765\nUseful when PC has no Bluetooth or Bluetooth HID is restricted."
-                android:textColor="@color/text_secondary"
+                android:text="WebSocket Server Active on port 8765\nAllows zero-bluetooth operation on local network."
+                android:textColor="@color/apple_text_secondary"
                 android:textSize="11sp"
                 android:layout_marginTop="4dp" />
         </LinearLayout>
@@ -182,10 +183,10 @@
             android:id="@+id/btnCloseSettings"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="SAVE &amp; CLOSE"
-            android:textColor="@color/text_primary"
+            android:text="Save &amp; Close"
+            android:textColor="@color/apple_text_primary"
             android:textStyle="bold"
-            android:background="@drawable/bg_btn_primary" />
+            android:background="@drawable/bg_apple_btn_primary" />
 
     </LinearLayout>
 </ScrollView>

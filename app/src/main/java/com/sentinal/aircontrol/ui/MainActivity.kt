@@ -3,19 +3,22 @@ package com.sentinal.aircontrol.ui
 import android.Manifest
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
+import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.SeekBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -58,10 +61,6 @@ class MainActivity : AppCompatActivity() {
     private var timerRunning = false
     private val timerHandler = Handler(Looper.getMainLooper())
 
-    // LED Simulation
-    private val ledHandler = Handler(Looper.getMainLooper())
-    private var bleLedBlinkState = false
-
     // Telemetry display throttle
     private var lastTelemetryUpdate = 0L
 
@@ -88,11 +87,12 @@ class MainActivity : AppCompatActivity() {
 
         setupListeners()
         setupModeTabs()
+        setupKeyboardMode()
+        setupSpringPressEffects()
         checkAndRequestPermissions()
         startWifiFallback()
-        startStatusLedBlinking()
 
-        // Default: Mode 1 (Presentation Remote) matching Sentinal boot behavior
+        // Default: Mode 1 (Slides)
         setOperatingMode(OperatingMode.PRESENTATION, isBoot = true)
     }
 
@@ -103,7 +103,6 @@ class MainActivity : AppCompatActivity() {
         torchController.setTorch(false)
         wifiServer?.stop()
         timerHandler.removeCallbacksAndMessages(null)
-        ledHandler.removeCallbacksAndMessages(null)
     }
 
     private fun checkAndRequestPermissions() {
@@ -135,7 +134,7 @@ class MainActivity : AppCompatActivity() {
             updateConnectionUI(state, device)
         }
         hidController.onActionFeedback = {
-            triggerActionLed()
+            haptics.tickFeedback()
         }
         hidController.start()
 
@@ -166,10 +165,10 @@ class MainActivity : AppCompatActivity() {
         motionProcessor.onCalibrationComplete = { success ->
             runOnUiThread {
                 if (success) {
-                    Toast.makeText(this, "Zero-rate calibration complete!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Calibration complete", Toast.LENGTH_SHORT).show()
                     haptics.successFeedback()
                 } else {
-                    Toast.makeText(this, "Calibration rejected: Phone moved too much!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Keep phone still during calibration", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -180,21 +179,15 @@ class MainActivity : AppCompatActivity() {
             wifiServer = WifiRemoteServer(8765)
             wifiServer?.start()
         } catch (e: Exception) {
-            // Port might be in use
+            // Port in use
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupListeners() {
-        // Mode Tabs
-        binding.tabPresentation.setOnClickListener { setOperatingMode(OperatingMode.PRESENTATION) }
-        binding.tabAirMouse.setOnClickListener { setOperatingMode(OperatingMode.AIR_MOUSE) }
-        binding.tabReels.setOnClickListener { setOperatingMode(OperatingMode.REEL_SCROLLER) }
-
         // Mode 1: Presentation Remote Controls
         binding.btnNextSlide.setOnClickListener {
             haptics.clickFeedback()
-            triggerActionLed()
             hidController.presentationNext()
             wifiServer?.broadcastKey("presentation_next")
             startSlideTimerIfNotRunning()
@@ -202,7 +195,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnPrevSlide.setOnClickListener {
             haptics.clickFeedback()
-            triggerActionLed()
             hidController.presentationPrev()
             wifiServer?.broadcastKey("presentation_prev")
             startSlideTimerIfNotRunning()
@@ -210,31 +202,28 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnFullscreen.setOnClickListener {
             haptics.heavyClickFeedback()
-            triggerActionLed()
             hidController.presentationFullscreen()
             wifiServer?.broadcastKey("presentation_f5")
         }
 
         binding.btnBlackScreen.setOnClickListener {
             haptics.clickFeedback()
-            triggerActionLed()
             hidController.presentationBlackScreen()
             wifiServer?.broadcastKey("presentation_black")
         }
 
-        // Torch Spotlight / Virtual Laser Pointer
+        // Torch Spotlight Beam
         binding.btnTorchPointer.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     haptics.heavyClickFeedback()
                     torchController.setTorch(true)
-                    binding.btnTorchPointer.text = "⚡ BEAM ACTIVE"
-                    triggerActionLed()
+                    binding.btnTorchPointer.text = "⚡ Beam Active"
                     true
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     torchController.setTorch(false)
-                    binding.btnTorchPointer.text = "🔦 TORCH BEAM"
+                    binding.btnTorchPointer.text = "🔦 Spotlight"
                     true
                 }
                 else -> false
@@ -243,6 +232,7 @@ class MainActivity : AppCompatActivity() {
 
         // Timer Reset
         binding.btnResetTimer.setOnClickListener {
+            haptics.tickFeedback()
             timerStartTime = SystemClock.uptimeMillis()
             binding.tvSlideTimer.text = "00:00"
         }
@@ -250,44 +240,40 @@ class MainActivity : AppCompatActivity() {
         // Mode 2: Air Mouse Controls
         binding.btnLeftClick.setOnClickListener {
             haptics.clickFeedback()
-            triggerActionLed()
             hidController.mouseClick(HidKeyCodes.MOUSE_LEFT)
             wifiServer?.broadcastMotion(0, 0, 0, HidKeyCodes.MOUSE_LEFT)
         }
 
         binding.btnRightClick.setOnClickListener {
             haptics.clickFeedback()
-            triggerActionLed()
             hidController.mouseClick(HidKeyCodes.MOUSE_RIGHT)
             wifiServer?.broadcastMotion(0, 0, 0, HidKeyCodes.MOUSE_RIGHT)
         }
 
         binding.btnScrollUp.setOnClickListener {
-            haptics.clickFeedback()
-            triggerActionLed()
+            haptics.tickFeedback()
             hidController.scroll(3)
         }
 
         binding.btnScrollDown.setOnClickListener {
-            haptics.clickFeedback()
-            triggerActionLed()
+            haptics.tickFeedback()
             hidController.scroll((-3).toByte())
         }
 
-        // Clutch / Freeze Pointer Button (Allows repositioning hand without cursor drift)
+        // Clutch / Freeze Pointer Button
         binding.btnClutch.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     haptics.clickFeedback()
                     motionProcessor.setPaused(true)
-                    binding.tvGyroState.text = "POINTER FROZEN (CLUTCH)"
-                    binding.tvGyroState.setTextColor(ContextCompat.getColor(this, R.color.amber_accent))
+                    binding.tvGyroState.text = "Pointer Frozen (Clutch)"
+                    binding.tvGyroState.setTextColor(ContextCompat.getColor(this, R.color.apple_amber))
                     true
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     motionProcessor.setPaused(false)
-                    binding.tvGyroState.text = "GYRO ACTIVE (100 Hz)"
-                    binding.tvGyroState.setTextColor(ContextCompat.getColor(this, R.color.neon_green))
+                    binding.tvGyroState.text = "Pointer Active (100 Hz)"
+                    binding.tvGyroState.setTextColor(ContextCompat.getColor(this, R.color.apple_green))
                     true
                 }
                 else -> false
@@ -297,67 +283,63 @@ class MainActivity : AppCompatActivity() {
         // Stationary Gyro Recalibration
         binding.btnCalibrate.setOnClickListener {
             haptics.heavyClickFeedback()
-            Toast.makeText(this, "Keep phone still on flat surface for 2s...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Rest phone on flat surface for 2s...", Toast.LENGTH_SHORT).show()
             motionProcessor.startCalibration()
         }
 
-        // Mode 3: Reel Controls
+        // Mode 4: Media Controls
         binding.btnNextReel.setOnClickListener {
             haptics.clickFeedback()
-            triggerActionLed()
             hidController.reelNext()
             wifiServer?.broadcastKey("reel_next")
         }
 
         binding.btnPrevReel.setOnClickListener {
             haptics.clickFeedback()
-            triggerActionLed()
             hidController.reelPrev()
             wifiServer?.broadcastKey("reel_prev")
         }
 
         binding.btnPlayPauseReel.setOnClickListener {
             haptics.clickFeedback()
-            triggerActionLed()
             hidController.reelPlayPause()
             wifiServer?.broadcastKey("reel_play_pause")
         }
 
         binding.btnVolUp.setOnClickListener {
             haptics.clickFeedback()
-            triggerActionLed()
             hidController.sendConsumer(HidKeyCodes.CONSUMER_VOLUME_INCREMENT)
         }
 
         binding.btnVolDown.setOnClickListener {
             haptics.clickFeedback()
-            triggerActionLed()
             hidController.sendConsumer(HidKeyCodes.CONSUMER_VOLUME_DECREMENT)
         }
 
         binding.btnLike.setOnClickListener {
-            haptics.clickFeedback()
-            triggerActionLed()
-            // Double click mouse left or send key
+            haptics.heavyClickFeedback()
             hidController.mouseClick(HidKeyCodes.MOUSE_LEFT)
             binding.root.postDelayed({
                 hidController.mouseClick(HidKeyCodes.MOUSE_LEFT)
             }, 60)
         }
 
-        // Bottom Controls: Cycle Mode button (mirrors Sentinal GPIO 7 button)
+        // Bottom Controls
         binding.btnCycleMode.setOnClickListener {
-            val nextModeId = (currentMode.id + 1) % 3
+            haptics.modeChangeFeedback(currentMode.id)
+            val nextModeId = (currentMode.id + 1) % 4
             setOperatingMode(OperatingMode.fromId(nextModeId))
         }
 
         binding.btnToggleTelemetry.setOnClickListener {
+            haptics.tickFeedback()
             val isVisible = binding.tvTelemetryLog.visibility == View.VISIBLE
             binding.tvTelemetryLog.visibility = if (isVisible) View.GONE else View.VISIBLE
         }
 
         // Settings Dialog
         binding.btnSettings.setOnClickListener {
+            haptics.clickFeedback()
             showSettingsDialog()
         }
     }
@@ -365,33 +347,170 @@ class MainActivity : AppCompatActivity() {
     private fun setupModeTabs() {
         binding.tabPresentation.setOnClickListener { setOperatingMode(OperatingMode.PRESENTATION) }
         binding.tabAirMouse.setOnClickListener { setOperatingMode(OperatingMode.AIR_MOUSE) }
+        binding.tabKeyboard.setOnClickListener { setOperatingMode(OperatingMode.KEYBOARD) }
         binding.tabReels.setOnClickListener { setOperatingMode(OperatingMode.REEL_SCROLLER) }
+    }
+
+    /**
+     * Wireless Keyboard Mode setup: Live typing + Quick Keys + Shortcuts
+     */
+    private fun setupKeyboardMode() {
+        // Send Button
+        binding.btnSendText.setOnClickListener {
+            val text = binding.etKeyboardInput.text.toString()
+            if (text.isNotEmpty()) {
+                haptics.clickFeedback()
+                hidController.sendText(text) {
+                    binding.etKeyboardInput.setText("")
+                }
+            }
+        }
+
+        // IME Action Send on soft keyboard
+        binding.etKeyboardInput.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE) {
+                val text = binding.etKeyboardInput.text.toString()
+                if (text.isNotEmpty()) {
+                    haptics.clickFeedback()
+                    hidController.sendText(text) {
+                        binding.etKeyboardInput.setText("")
+                    }
+                }
+                true
+            } else {
+                false
+            }
+        }
+
+        // Quick Key Row
+        binding.btnKeyEsc.setOnClickListener {
+            haptics.tickFeedback()
+            hidController.keyEscape()
+        }
+
+        binding.btnKeyTab.setOnClickListener {
+            haptics.tickFeedback()
+            hidController.keyTab()
+        }
+
+        binding.btnKeySpace.setOnClickListener {
+            haptics.tickFeedback()
+            hidController.keySpace()
+        }
+
+        binding.btnKeyBackspace.setOnClickListener {
+            haptics.tickFeedback()
+            hidController.keyBackspace()
+        }
+
+        binding.btnKeyReturn.setOnClickListener {
+            haptics.clickFeedback()
+            hidController.keyReturn()
+        }
+
+        // Arrow Keypad
+        binding.btnArrowUp.setOnClickListener {
+            haptics.tickFeedback()
+            hidController.arrowUp()
+        }
+
+        binding.btnArrowDown.setOnClickListener {
+            haptics.tickFeedback()
+            hidController.arrowDown()
+        }
+
+        binding.btnArrowLeft.setOnClickListener {
+            haptics.tickFeedback()
+            hidController.arrowLeft()
+        }
+
+        binding.btnArrowRight.setOnClickListener {
+            haptics.tickFeedback()
+            hidController.arrowRight()
+        }
+
+        // Shortcuts Row
+        binding.btnShortcutUndo.setOnClickListener {
+            haptics.clickFeedback()
+            hidController.undo()
+        }
+
+        binding.btnShortcutCopy.setOnClickListener {
+            haptics.clickFeedback()
+            hidController.copy()
+        }
+
+        binding.btnShortcutPaste.setOnClickListener {
+            haptics.clickFeedback()
+            hidController.paste()
+        }
+
+        binding.btnShortcutSelectAll.setOnClickListener {
+            haptics.clickFeedback()
+            hidController.selectAll()
+        }
+
+        binding.btnShortcutSearch.setOnClickListener {
+            haptics.heavyClickFeedback()
+            hidController.searchSpotlight()
+        }
+    }
+
+    /**
+     * Apple Fluid Interaction: Instant scale down to 0.97 on press with spring return.
+     */
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setupSpringPressEffects() {
+        val interactiveButtons = listOf(
+            binding.btnNextSlide, binding.btnPrevSlide, binding.btnFullscreen, binding.btnBlackScreen,
+            binding.btnLeftClick, binding.btnRightClick, binding.btnScrollUp, binding.btnScrollDown,
+            binding.btnCalibrate, binding.btnNextReel, binding.btnPrevReel, binding.btnPlayPauseReel,
+            binding.btnVolUp, binding.btnVolDown, binding.btnLike, binding.btnCycleMode, binding.btnSettings,
+            binding.btnKeyEsc, binding.btnKeyTab, binding.btnKeySpace, binding.btnKeyBackspace,
+            binding.btnKeyReturn, binding.btnArrowUp, binding.btnArrowDown, binding.btnArrowLeft,
+            binding.btnArrowRight, binding.btnShortcutUndo, binding.btnShortcutCopy,
+            binding.btnShortcutPaste, binding.btnShortcutSelectAll, binding.btnShortcutSearch,
+            binding.btnSendText
+        )
+
+        interactiveButtons.forEach { view ->
+            view.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        v.animate().scaleX(0.97f).scaleY(0.97f).setDuration(60).start()
+                    }
+                    MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                        v.animate().scaleX(1.0f).scaleY(1.0f).setDuration(120).start()
+                    }
+                }
+                false
+            }
+        }
     }
 
     fun setOperatingMode(mode: OperatingMode, isBoot: Boolean = false) {
         currentMode = mode
 
-        // Update Tab visual selection
-        val tabs = listOf(binding.tabPresentation, binding.tabAirMouse, binding.tabReels)
+        // Update Apple Segmented Control selection
+        val tabs = listOf(binding.tabPresentation, binding.tabAirMouse, binding.tabKeyboard, binding.tabReels)
         tabs.forEachIndexed { index, tab ->
             if (index == mode.id) {
-                tab.setBackgroundResource(R.drawable.bg_tab_selected)
-                tab.setTextColor(ContextCompat.getColor(this, R.color.cyan_accent))
+                tab.setBackgroundResource(R.drawable.bg_apple_tab_active)
+                tab.setTextColor(ContextCompat.getColor(this, R.color.apple_text_primary))
             } else {
-                tab.setBackgroundResource(R.drawable.bg_tab_unselected)
-                tab.setTextColor(ContextCompat.getColor(this, R.color.text_secondary))
+                tab.setBackgroundResource(R.drawable.bg_apple_tab_inactive)
+                tab.setTextColor(ContextCompat.getColor(this, R.color.apple_text_secondary))
             }
         }
 
         // Switch Visible Panels
         binding.panelPresentation.visibility = if (mode == OperatingMode.PRESENTATION) View.VISIBLE else View.GONE
         binding.panelAirMouse.visibility = if (mode == OperatingMode.AIR_MOUSE) View.VISIBLE else View.GONE
+        binding.panelKeyboard.visibility = if (mode == OperatingMode.KEYBOARD) View.VISIBLE else View.GONE
         binding.panelReels.visibility = if (mode == OperatingMode.REEL_SCROLLER) View.VISIBLE else View.GONE
 
-        // Configure Gyro Motion according to Sentinal spec:
-        // Mode 1: Presentation -> Motion Paused (zero hand shake on slides)
-        // Mode 2: Air Mouse -> Motion Active (wrist angular velocity pointer)
-        // Mode 3: Reels -> Motion Paused (zero cursor displacement)
+        // Motion pipeline configuration:
+        // Only active in Air Mouse mode
         when (mode) {
             OperatingMode.AIR_MOUSE -> {
                 motionProcessor.setPaused(false)
@@ -400,16 +519,19 @@ class MainActivity : AppCompatActivity() {
             else -> {
                 motionProcessor.setPaused(true)
                 if (isBoot) {
-                    // Start sensor controller so IMU warmup/telemetry works
                     sensorController.start()
                 }
             }
         }
 
-        // Trigger Mode LED burst blinks (1x, 2x, 3x) mirroring Sentinal hardware!
-        blinkModeLed(mode.blinks)
+        // Close soft keyboard if switching away from Keyboard mode
+        if (mode != OperatingMode.KEYBOARD) {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            imm?.hideSoftInputFromWindow(binding.root.windowToken, 0)
+        }
+
         if (!isBoot) {
-            haptics.modeChangeFeedback(mode.blinks)
+            haptics.modeChangeFeedback(mode.id)
         }
     }
 
@@ -427,17 +549,18 @@ class MainActivity : AppCompatActivity() {
                 when (currentMode) {
                     OperatingMode.PRESENTATION -> {
                         haptics.clickFeedback()
-                        triggerActionLed()
                         hidController.presentationNext()
                     }
                     OperatingMode.AIR_MOUSE -> {
                         haptics.clickFeedback()
-                        triggerActionLed()
                         hidController.mouseClick(HidKeyCodes.MOUSE_LEFT)
+                    }
+                    OperatingMode.KEYBOARD -> {
+                        haptics.tickFeedback()
+                        hidController.arrowUp()
                     }
                     OperatingMode.REEL_SCROLLER -> {
                         haptics.clickFeedback()
-                        triggerActionLed()
                         hidController.reelPrev()
                     }
                 }
@@ -447,17 +570,18 @@ class MainActivity : AppCompatActivity() {
                 when (currentMode) {
                     OperatingMode.PRESENTATION -> {
                         haptics.clickFeedback()
-                        triggerActionLed()
                         hidController.presentationPrev()
                     }
                     OperatingMode.AIR_MOUSE -> {
                         haptics.clickFeedback()
-                        triggerActionLed()
                         hidController.mouseClick(HidKeyCodes.MOUSE_RIGHT)
+                    }
+                    OperatingMode.KEYBOARD -> {
+                        haptics.tickFeedback()
+                        hidController.arrowDown()
                     }
                     OperatingMode.REEL_SCROLLER -> {
                         haptics.clickFeedback()
-                        triggerActionLed()
                         hidController.reelNext()
                     }
                 }
@@ -468,88 +592,35 @@ class MainActivity : AppCompatActivity() {
     }
 
     // =========================================================================
-    // Hardware LED Simulation
-    // =========================================================================
-
-    private fun blinkModeLed(blinkCount: Int) {
-        var count = 0
-        val totalTicks = blinkCount * 2
-        val runnable = object : Runnable {
-            override fun run() {
-                val isOn = count % 2 == 0
-                setLedColor(binding.ledMode, if (isOn) R.color.led_orange_on else R.color.led_off)
-                count++
-                if (count < totalTicks) {
-                    ledHandler.postDelayed(this, 120)
-                } else {
-                    setLedColor(binding.ledMode, R.color.led_off)
-                }
-            }
-        }
-        ledHandler.post(runnable)
-    }
-
-    private fun triggerActionLed() {
-        setLedColor(binding.ledAction, R.color.neon_pink)
-        ledHandler.postDelayed({
-            setLedColor(binding.ledAction, R.color.led_off)
-        }, 80)
-    }
-
-    private fun startStatusLedBlinking() {
-        val blinkRunnable = object : Runnable {
-            override fun run() {
-                if (hidController.isConnected()) {
-                    setLedColor(binding.ledStatus, R.color.led_blue_on)
-                } else {
-                    bleLedBlinkState = !bleLedBlinkState
-                    setLedColor(
-                        binding.ledStatus,
-                        if (bleLedBlinkState) R.color.led_blue_on else R.color.led_off
-                    )
-                }
-                ledHandler.postDelayed(this, 1000)
-            }
-        }
-        ledHandler.post(blinkRunnable)
-    }
-
-    private fun setLedColor(view: View, colorRes: Int) {
-        val drawable = view.background as? GradientDrawable ?: return
-        drawable.setColor(ContextCompat.getColor(this, colorRes))
-    }
-
-    // =========================================================================
-    // Connection State Handling
+    // Connection State Handling (Apple Dynamic Pill)
     // =========================================================================
 
     private fun updateConnectionUI(state: ConnectionState, device: BluetoothDevice?) {
+        val dot = binding.dotConnection.background as? GradientDrawable
         when (state) {
             ConnectionState.CONNECTED -> {
                 binding.tvConnectionStatus.text = "CONNECTED"
-                binding.tvConnectionStatus.setTextColor(ContextCompat.getColor(this, R.color.neon_green))
-                binding.tvDeviceTarget.text = device?.name ?: "HOST PC / MAC"
-                val dot = binding.dotConnection.background as? GradientDrawable
-                dot?.setColor(ContextCompat.getColor(this, R.color.neon_green))
+                binding.tvConnectionStatus.setTextColor(ContextCompat.getColor(this, R.color.apple_green))
+                binding.tvDeviceTarget.text = device?.name ?: "Host Computer"
+                dot?.setColor(ContextCompat.getColor(this, R.color.apple_green))
             }
             ConnectionState.CONNECTING -> {
                 binding.tvConnectionStatus.text = "CONNECTING..."
-                binding.tvConnectionStatus.setTextColor(ContextCompat.getColor(this, R.color.amber_accent))
-                binding.tvDeviceTarget.text = device?.name ?: "PAIRING"
+                binding.tvConnectionStatus.setTextColor(ContextCompat.getColor(this, R.color.apple_amber))
+                binding.tvDeviceTarget.text = device?.name ?: "Pairing"
+                dot?.setColor(ContextCompat.getColor(this, R.color.apple_amber))
             }
             ConnectionState.ADVERTISING -> {
-                binding.tvConnectionStatus.text = "ADVERTISING AS 'SENTINAL'"
-                binding.tvConnectionStatus.setTextColor(ContextCompat.getColor(this, R.color.cyan_accent))
-                binding.tvDeviceTarget.text = "PAIR IN PC BLUETOOTH"
-                val dot = binding.dotConnection.background as? GradientDrawable
-                dot?.setColor(ContextCompat.getColor(this, R.color.cyan_accent))
+                binding.tvConnectionStatus.text = "PAIRING: AIRCONTROL"
+                binding.tvConnectionStatus.setTextColor(ContextCompat.getColor(this, R.color.apple_blue))
+                binding.tvDeviceTarget.text = "Ready to pair"
+                dot?.setColor(ContextCompat.getColor(this, R.color.apple_blue))
             }
             ConnectionState.DISCONNECTED, ConnectionState.REGISTERING -> {
                 binding.tvConnectionStatus.text = "DISCONNECTED"
-                binding.tvConnectionStatus.setTextColor(ContextCompat.getColor(this, R.color.text_muted))
-                binding.tvDeviceTarget.text = "ENABLE BLUETOOTH"
-                val dot = binding.dotConnection.background as? GradientDrawable
-                dot?.setColor(ContextCompat.getColor(this, R.color.led_off))
+                binding.tvConnectionStatus.setTextColor(ContextCompat.getColor(this, R.color.apple_text_tertiary))
+                binding.tvDeviceTarget.text = "Enable Bluetooth"
+                dot?.setColor(ContextCompat.getColor(this, R.color.apple_well))
             }
         }
     }
@@ -588,7 +659,6 @@ class MainActivity : AppCompatActivity() {
             .setView(dialogBinding.root)
             .create()
 
-        // Init slider states
         dialogBinding.seekSensX.progress = (settings.sensitivityX * 100).toInt()
         dialogBinding.tvLabelSensX.text = String.format(Locale.US, "Sensitivity X (Yaw): %.2f", settings.sensitivityX)
 
@@ -612,6 +682,7 @@ class MainActivity : AppCompatActivity() {
                 val value = (progress.coerceAtLeast(5)) / 100f
                 settings.sensitivityX = value
                 dialogBinding.tvLabelSensX.text = String.format(Locale.US, "Sensitivity X (Yaw): %.2f", value)
+                if (fromUser) haptics.tickFeedback()
             }
             override fun onStartTrackingTouch(sb: SeekBar?) {}
             override fun onStopTrackingTouch(sb: SeekBar?) {}
@@ -622,6 +693,7 @@ class MainActivity : AppCompatActivity() {
                 val value = (progress.coerceAtLeast(5)) / 100f
                 settings.sensitivityY = value
                 dialogBinding.tvLabelSensY.text = String.format(Locale.US, "Sensitivity Y (Pitch): %.2f", value)
+                if (fromUser) haptics.tickFeedback()
             }
             override fun onStartTrackingTouch(sb: SeekBar?) {}
             override fun onStopTrackingTouch(sb: SeekBar?) {}
@@ -632,6 +704,7 @@ class MainActivity : AppCompatActivity() {
                 val value = progress / 10f
                 settings.deadzoneDps = value
                 dialogBinding.tvLabelDeadzone.text = String.format(Locale.US, "Gyro Deadzone: %.2f deg/s", value)
+                if (fromUser) haptics.tickFeedback()
             }
             override fun onStartTrackingTouch(sb: SeekBar?) {}
             override fun onStopTrackingTouch(sb: SeekBar?) {}
@@ -642,18 +715,35 @@ class MainActivity : AppCompatActivity() {
                 val value = (progress.coerceIn(10, 95)) / 100f
                 settings.filterAlpha = value
                 dialogBinding.tvLabelAlpha.text = String.format(Locale.US, "Filter Smoothing Alpha: %.2f", value)
+                if (fromUser) haptics.tickFeedback()
             }
             override fun onStartTrackingTouch(sb: SeekBar?) {}
             override fun onStopTrackingTouch(sb: SeekBar?) {}
         })
 
-        dialogBinding.switchAccel.setOnCheckedChangeListener { _, isChecked -> settings.accelEnabled = isChecked }
-        dialogBinding.switchInvertX.setOnCheckedChangeListener { _, isChecked -> settings.invertX = isChecked }
-        dialogBinding.switchInvertY.setOnCheckedChangeListener { _, isChecked -> settings.invertY = isChecked }
-        dialogBinding.switchVolumeKeys.setOnCheckedChangeListener { _, isChecked -> settings.volumeKeysEnabled = isChecked }
-        dialogBinding.switchHaptics.setOnCheckedChangeListener { _, isChecked -> settings.hapticsEnabled = isChecked }
+        dialogBinding.switchAccel.setOnCheckedChangeListener { _, isChecked ->
+            haptics.tickFeedback()
+            settings.accelEnabled = isChecked
+        }
+        dialogBinding.switchInvertX.setOnCheckedChangeListener { _, isChecked ->
+            haptics.tickFeedback()
+            settings.invertX = isChecked
+        }
+        dialogBinding.switchInvertY.setOnCheckedChangeListener { _, isChecked ->
+            haptics.tickFeedback()
+            settings.invertY = isChecked
+        }
+        dialogBinding.switchVolumeKeys.setOnCheckedChangeListener { _, isChecked ->
+            haptics.tickFeedback()
+            settings.volumeKeysEnabled = isChecked
+        }
+        dialogBinding.switchHaptics.setOnCheckedChangeListener { _, isChecked ->
+            haptics.tickFeedback()
+            settings.hapticsEnabled = isChecked
+        }
 
         dialogBinding.btnCloseSettings.setOnClickListener {
+            haptics.clickFeedback()
             app.saveSettings()
             dialog.dismiss()
         }
